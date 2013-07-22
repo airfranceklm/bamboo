@@ -62,11 +62,29 @@ link "/etc/init.d/bamboo" do
 end
 
 
+# insert jdbc mysql database_mysql.rb
+if (node[:bamboo][:mysql])
+   remote_file "/opt/bamboo/wrapper/lib/mysql_connector_java-#{node['bamboo']['mysql_connector_version']}.jar" do
+     source "http://repo1.maven.org/maven2/mysql/mysql-connector-java/#{node['bamboo']['mysql_connector_version']}/mysql-connector-java-#{node['bamboo']['mysql_connector_version']}.jar"
+     mode "0644"
+     not_if { ::File.exists?("/opt/bamboo/wrapper/lib/mysql-connector-java-#{node['bamboo']['mysql_connector_version']}.jar") }
+   end
+end
 
-# edit database_mysql.rb
-# install and configure mysql
-# insert mysql jdbc lib in wrapper/lib
 
+service "bamboo" do
+  supports :status => true, :restart => true
+  action :enable
+end
 
-
-
+template "bamboo-init.properties" do
+  path "/opt/bamboo/webapp/WEB-INF/classes/bamboo-init.properties"
+  source "bamboo-init.properties.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  variables({
+         "bamboo_home" => node['bamboo']['bamboo_home']
+            })
+  notifies :restart, resources(:service => "bamboo")
+end

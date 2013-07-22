@@ -27,6 +27,9 @@ default[:bamboo][:download_url]   = "http://www.atlassian.com/software/bamboo/do
 default[:bamboo][:jdbc_username]       = 'bamboo'
 default[:bamboo][:jdbc_password]       = 'bamboo'
 
+default[:bamboo][:mysql]            = "true"
+default[:bamboo][:mysql_connector_version]       = '5.1.25'
+
 
 
 
