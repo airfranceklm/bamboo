@@ -1,7 +1,8 @@
 include_recipe "mysql::server"
 
-# Setup sonar user
-grants_path = "/tmp/bamboo/create_database.sql"
+# Setup bamboo user
+
+grants_path = "/tmp/create_database.sql"
 
 template grants_path do
   source "create_mysql_database.sql.erb"

@@ -18,18 +18,21 @@
 #
 
 # default attributes for all platforms
-default[:bamboo][:bamboo_home]   = '/mnt/data/bamboo/'
+default[:bamboo][:bamboo_home] = '/mnt/data/bamboo/'
 default[:bamboo][:external_data] = 'true'
 
-default[:bamboo][:version]       = '5.0'
-default[:bamboo][:download_url]   = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
+default[:bamboo][:version] = '5.0'
+default[:bamboo][:download_url] = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
 
-default[:bamboo][:jdbc_username]       = 'bamboo'
-default[:bamboo][:jdbc_password]       = 'bamboo'
+default[:bamboo][:jdbc_username] = 'bamboo'
+default[:bamboo][:jdbc_password] = 'bamboo'
 
-default[:bamboo][:mysql]            = "true"
-default[:bamboo][:mysql_connector_version]       = '5.1.25'
+default[:bamboo][:mysql] = "true"
+default[:bamboo][:mysql_connector_version] = '5.1.25'
 
-
+default[:bamboo][:port] = "80"
+default[:bamboo][:xms] = "256m"
+default[:bamboo][:xmx] = "512m"
+default[:bamboo][:permsize] = "256m"
 
 
