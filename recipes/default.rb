@@ -43,6 +43,7 @@ end
 
 # create dir releases
 execute "tar -xvzf /opt/atlassian-bamboo-#{node['bamboo']['version']}.tar.gz -C /opt/" do
+  notifies :stop, resources(:service => "bamboo")
   not_if { ::File.directory?("/opt/atlassian-bamboo-#{node['bamboo']['version']}/") }
 end
 
