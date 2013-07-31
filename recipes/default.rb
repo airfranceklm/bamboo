@@ -31,7 +31,11 @@ end
 
 include_recipe "java"
 
-# create bamboo home_dir
+# create bamboo service
+service "bamboo" do
+  provider Chef::Provider::Service::Upstart
+  supports :status => true, :restart => true, :start => true, :stop => true
+end
 
 # download bamboo
 
@@ -84,10 +88,6 @@ if (node[:bamboo][:mysql])
   end
 end
 
-service "bamboo" do
-  provider Chef::Provider::Service::Upstart
-  supports :status => true, :restart => true, :start => true, :stop => true
-end
 
 template "bamboo.upstart.conf" do
   path "/etc/init/bamboo.conf"
