@@ -18,6 +18,7 @@
 #
 
 # default attributes for all platforms
+default[:bamboo][:url] = 'http://bamboo.eden.klm.com'
 default[:bamboo][:bamboo_home] = '/mnt/data/bamboo/'
 default[:bamboo][:external_data] = 'true'
 
