@@ -36,4 +36,7 @@ default[:bamboo][:xms] = "256m"
 default[:bamboo][:xmx] = "512m"
 default[:bamboo][:permsize] = "256m"
 
+default[:bamboo][:user] = "root"
+default[:bamboo][:group] = "root"
+
 

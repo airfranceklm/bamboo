@@ -42,11 +42,15 @@ end
 remote_file "/opt/atlassian-bamboo-#{node['bamboo']['version']}.tar.gz" do
   source "#{node['bamboo']['download_url']}"
   mode "0644"
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
   not_if { ::File.exists?("/opt/atlassian-bamboo-#{node['bamboo']['version']}.tar.gz") }
 end
 
 # create dir releases
 execute "tar -xvzf /opt/atlassian-bamboo-#{node['bamboo']['version']}.tar.gz -C /opt/" do
+  user  node[:bamboo][:user]
+  group  node[:bamboo][:group]
   notifies :stop, resources(:service => "bamboo")
   not_if { ::File.directory?("/opt/atlassian-bamboo-#{node['bamboo']['version']}/") }
 end
@@ -76,14 +80,16 @@ end
 
 if (node[:bamboo][:mysql])
   directory "/opt/bamboo/lib" do
-    owner  "root"
-    group  "root"
+    owner  node[:bamboo][:user]
+    group  node[:bamboo][:group]
     mode "0775"
     action :create
   end
   remote_file "/opt/bamboo/lib/mysql_connector_java-#{node['bamboo']['mysql_connector_version']}.jar" do
     source "http://repo1.maven.org/maven2/mysql/mysql-connector-java/#{node['bamboo']['mysql_connector_version']}/mysql-connector-java-#{node['bamboo']['mysql_connector_version']}.jar"
     mode "0644"
+    owner  node[:bamboo][:user]
+    group  node[:bamboo][:group]
     not_if { ::File.exists?("/opt/bamboo/wrapper/lib/mysql-connector-java-#{node['bamboo']['mysql_connector_version']}.jar") }
   end
 end
@@ -92,8 +98,8 @@ end
 template "bamboo.upstart.conf" do
   path "/etc/init/bamboo.conf"
   source "bamboo.upstart.conf.erb"
-  owner "root"
-  group "root"
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
   mode "0644"
   notifies :restart, resources(:service => "bamboo")
 end
@@ -101,8 +107,8 @@ end
 template "bamboo-init.properties" do
   path "/opt/bamboo/webapp/WEB-INF/classes/bamboo-init.properties"
   source "bamboo-init.properties.erb"
-  owner "root"
-  group "root"
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
   mode 0644
   variables({
          "bamboo_home" => node['bamboo']['bamboo_home']
@@ -113,8 +119,8 @@ end
 template "wrapper.conf" do
   path "/opt/bamboo/conf/wrapper.conf"
   source "wrapper.conf.erb"
-  owner "root"
-  group "root"
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
   mode 0644
   variables({
          "port" => node['bamboo']['port'],
@@ -134,3 +140,18 @@ end
 link "/opt/bamboo/logs/bamboo.log" do
   to "/var/log/upstart/bamboo.log"
 end
+
+
+#backup_install node.name
+#backup_generate_config node.name
+#gem_package "fog" do
+#  version "~> 1.4.0"
+#end
+#backup_generate_model "mysql" do
+#  description "Our shard"
+#  backup_type "database"
+#  database_type "MySQL"
+#  store_with({"engine" => "local", "settings" => { "local.path" => "/opt/", } } )
+#  options({"db.host" => "\"localhost\"", "db.username" => "#{node['bamboo']['jdbc_username']}", "db.password" => "#{node['bamboo']['jdbc_password']}", "db.name" => "bamboo"})
+#  action :backup_lwrp
+#end
