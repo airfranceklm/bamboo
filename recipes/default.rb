@@ -142,16 +142,22 @@ link "/opt/bamboo/logs/bamboo.log" do
 end
 
 
-#backup_install node.name
-#backup_generate_config node.name
-#gem_package "fog" do
-#  version "~> 1.4.0"
-#end
-#backup_generate_model "mysql" do
-#  description "Our shard"
-#  backup_type "database"
-#  database_type "MySQL"
-#  store_with({"engine" => "local", "settings" => { "local.path" => "/opt/", } } )
-#  options({"db.host" => "\"localhost\"", "db.username" => "#{node['bamboo']['jdbc_username']}", "db.password" => "#{node['bamboo']['jdbc_password']}", "db.name" => "bamboo"})
-#  action :backup_lwrp
-#end
+include_recipe "backup"
+
+backup_install node[:name]
+backup_generate_config node[:name]
+package "ruby1.9.1-dev" do
+  action :install
+end
+gem_package "fog" do
+  version "> 1.9.0"
+end
+backup_generate_model "mysql" do
+  description "Our shard"
+  backup_type "database"
+  database_type "MySQL"
+  store_with({"engine" => "Local", "settings" => { "local.path" => "/opt/backup", "local.keep" => "5", } } )
+  #store_with({"engine" => "S3", "settings" => { "s3.access_key_id" => "1c6c6f540fba4f3fa62dc69233a454f2", "s3.secret_access_key" => "370d72a9aba54e66bbc2fdf110e06e08", "s3.provider" => "http://s3.eden.klm.com/", "s3.region" => "", "s3.bucket" => "sample", "s3.path" => "/", "s3.keep" => 10 } } )
+  options({"db.host" => "\"localhost\"", "db.username" => "\"#{node['bamboo']['jdbc_username']}\"", "db.password" => "\"#{node['bamboo']['jdbc_password']}\"", "db.name" => "\"bamboo\""})
+  action :backup
+end
