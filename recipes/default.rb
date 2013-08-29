@@ -141,14 +141,22 @@ link "/opt/bamboo/logs/bamboo.log" do
   to "/var/log/upstart/bamboo.log"
 end
 
+#package "ruby1.9.1-dev" do
+#  action :install
+#end
+#needed for nokogiri
+package "libxml2-dev" do
+  action :install
+end
+
+package "libxslt-dev" do
+  action :install
+end
 
 include_recipe "backup"
 
 backup_install node[:name]
 backup_generate_config node[:name]
-package "ruby1.9.1-dev" do
-  action :install
-end
 gem_package "fog" do
   version "> 1.9.0"
 end
