@@ -26,6 +26,7 @@ if (node[:bamboo][:external_data])
   mount "/mnt/data" do
     device "/dev/vdc1"
     fstype "ext4"
+    action   [:mount, :enable]
   end
 end
 
@@ -139,6 +140,11 @@ end
 # this is because we use upstart + console option
 link "/opt/bamboo/logs/bamboo.log" do
   to "/var/log/upstart/bamboo.log"
+end
+
+# needed for jasper reports and solve pdf and font problems
+package "libstdc++5" do
+  action :install
 end
 
 #package "ruby1.9.1-dev" do

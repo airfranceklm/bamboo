@@ -8,6 +8,7 @@ if (node[:bamboo][:external_data])
   mount "/mnt/data" do
     device "/dev/vdb1"
     fstype "ext4"
+    action   [:mount, :enable]
   end
 end
 
@@ -41,4 +42,9 @@ end
 service "bamboo-agent" do
   supports :restart => true, :status => true, :start => true, :stop => true
   action [:enable, :start]
+end
+
+# needed for jasper reports and solve pdf and font problems
+package "libstdc++5" do
+  action :install
 end
