@@ -117,6 +117,15 @@ template "bamboo-init.properties" do
   notifies :restart, resources(:service => "bamboo")
 end
 
+template "seraph-config.xml" do
+  path "/opt/bamboo/webapp/WEB-INF/classes/seraph-config.xml"
+  source "seraph-config.xml.erb"
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
+  mode 0644
+  notifies :restart, resources(:service => "bamboo")
+end
+
 template "wrapper.conf" do
   path "/opt/bamboo/conf/wrapper.conf"
   source "wrapper.conf.erb"
