@@ -3,7 +3,7 @@ maintainer        "CC WD eDEn."
 maintainer_email  "ramon.makkelie@klm.com"
 license           "Apache 2.0"
 description       "Installs and configures ceph for OpenStack"
-version           "0.1"
+version           "1.0"
 
 recipe "bamboo", "Installs and configures bamboo"
 

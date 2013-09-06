@@ -184,3 +184,4 @@ backup_generate_model "mysql" do
   options({"db.host" => "\"localhost\"", "db.username" => "\"#{node['bamboo']['jdbc_username']}\"", "db.password" => "\"#{node['bamboo']['jdbc_password']}\"", "db.name" => "\"bamboo\""})
   action :backup
 end
+
