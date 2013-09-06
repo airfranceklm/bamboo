@@ -48,3 +48,15 @@ end
 package "libstdc++5" do
   action :install
 end
+
+#TODO: enable monit
+#package "monit" do
+#  action :install
+#end
+#
+#template 'procfile.monitrc' do
+#  path "/etc/monit/conf.d/bamboo-agent.conf"
+#  owner 'root'
+#  group 'root'
+#  mode '0644'
+#end
