@@ -31,6 +31,16 @@ if (node[:bamboo][:external_data])
 end
 
 include_recipe "java"
+include_recipe "ark"
+
+user node['bamboo']['user'] do
+  comment "Bamboo Service Account"
+  #home    node['bamboo']['home_path']
+  shell   "/bin/bash"
+  supports :manage_home => true
+  system  true
+  action  :create
+end
 
 # create bamboo service
 service "bamboo" do
@@ -39,28 +49,15 @@ service "bamboo" do
 end
 
 # download bamboo
-
-remote_file "/opt/atlassian-bamboo-#{node['bamboo']['version']}.tar.gz" do
-  source "#{node['bamboo']['download_url']}"
-  mode "0644"
-  owner  node[:bamboo][:user]
-  group  node[:bamboo][:group]
-  not_if { ::File.exists?("/opt/atlassian-bamboo-#{node['bamboo']['version']}.tar.gz") }
+ark node['bamboo']['name'] do
+  url node['bamboo']['download_url']
+  home_dir node['bamboo']['install_path']
+  checksum node['bamboo']['checksum']
+  version node['bamboo']['version']
+  owner node['bamboo']['user']
+  group node['bamboo']['group']
 end
 
-# create dir releases
-execute "tar -xvzf /opt/atlassian-bamboo-#{node['bamboo']['version']}.tar.gz -C /opt/" do
-  user  node[:bamboo][:user]
-  group  node[:bamboo][:group]
-  notifies :stop, resources(:service => "bamboo")
-  not_if { ::File.directory?("/opt/atlassian-bamboo-#{node['bamboo']['version']}/") }
-end
-
-# symlink from deployed release to current
-# create dir bamboo/current
-link "/opt/bamboo" do
-  to "/opt/atlassian-bamboo-#{node['bamboo']['version']}"
-end
 
 # COMMENTED OUT BECAUSE WRAPPER IS BROKEN
 # make symlink from wrapper/start-bamboo to /etc/init.d/bamboo
@@ -70,43 +67,25 @@ end
 #end
 
 
-# insert jdbc mysql database_mysql.rb
-#if (node[:bamboo][:mysql])
-#   remote_file "/opt/bamboo/wrapper/lib/mysql_connector_java-#{node['bamboo']['mysql_connector_version']}.jar" do
-#     source "http://repo1.maven.org/maven2/mysql/mysql-connector-java/#{node['bamboo']['mysql_connector_version']}/mysql-connector-java-#{node['bamboo']['mysql_connector_version']}.jar"
-#     mode "0644"
-#     not_if { ::File.exists?("/opt/bamboo/wrapper/lib/mysql-connector-java-#{node['bamboo']['mysql_connector_version']}.jar") }
-#   end
-#end
-
 if (node[:bamboo][:mysql])
-  directory "/opt/bamboo/lib" do
+  directory "#{node['bamboo']['install_path']}/lib" do
     owner  node[:bamboo][:user]
     group  node[:bamboo][:group]
     mode "0775"
     action :create
   end
-  remote_file "/opt/bamboo/lib/mysql_connector_java-#{node['bamboo']['mysql_connector_version']}.jar" do
-    source "http://repo1.maven.org/maven2/mysql/mysql-connector-java/#{node['bamboo']['mysql_connector_version']}/mysql-connector-java-#{node['bamboo']['mysql_connector_version']}.jar"
-    mode "0644"
-    owner  node[:bamboo][:user]
-    group  node[:bamboo][:group]
-    not_if { ::File.exists?("/opt/bamboo/wrapper/lib/mysql-connector-java-#{node['bamboo']['mysql_connector_version']}.jar") }
-  end
+
+  mysql_connector_j "#{node['bamboo']['install_path']}/lib"
 end
 
-
-template "bamboo.upstart.conf" do
-  path "/etc/init/bamboo.conf"
-  source "bamboo.upstart.conf.erb"
-  owner  node[:bamboo][:user]
-  group  node[:bamboo][:group]
-  mode "0644"
-  notifies :restart, resources(:service => "bamboo")
+template "/etc/init.d/bamboo" do
+  source "bamboo.init.erb"
+  mode   "0755"
+  notifies :restart, "service[bamboo]", :delayed
 end
 
 template "bamboo-init.properties" do
-  path "/opt/bamboo/webapp/WEB-INF/classes/bamboo-init.properties"
+  path "#{node['bamboo']['install_path']}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties"
   source "bamboo-init.properties.erb"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
@@ -114,41 +93,27 @@ template "bamboo-init.properties" do
   variables({
          "bamboo_home" => node['bamboo']['bamboo_home']
             })
-  notifies :restart, resources(:service => "bamboo")
+  notifies :restart, "service[bamboo]", :delayed
 end
 
 template "seraph-config.xml" do
-  path "/opt/bamboo/webapp/WEB-INF/classes/seraph-config.xml"
+  path "#{node['bamboo']['install_path']}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
   source "seraph-config.xml.erb"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   mode 0644
-  notifies :restart, resources(:service => "bamboo")
+  notifies :restart, "service[bamboo]", :delayed
 end
 
-template "wrapper.conf" do
-  path "/opt/bamboo/conf/wrapper.conf"
-  source "wrapper.conf.erb"
-  owner  node[:bamboo][:user]
-  group  node[:bamboo][:group]
-  mode 0644
-  variables({
-         "port" => node['bamboo']['port'],
-         "xms" => node['bamboo']['xms'],
-         "xmx" => node['bamboo']['xmx'],
-         "permsize" => node['bamboo']['permsize']
-            })
-  notifies :restart, resources(:service => "bamboo")
+template "#{node['bamboo']['install_path']}/bin/setenv.sh" do
+  source "setenv.sh.erb"
+  owner  ode[:bamboo][:user]
+  mode   "0755"
+  notifies :restart, "service[bamboo]", :delayed
 end
 
 service "bamboo" do
   action [:enable, :start]
-end
-
-# link logs to logical location
-# this is because we use upstart + console option
-link "/opt/bamboo/logs/bamboo.log" do
-  to "/var/log/upstart/bamboo.log"
 end
 
 # needed for jasper reports and solve pdf and font problems
@@ -156,6 +121,7 @@ package "libstdc++5" do
   action :install
 end
 
+#TODO: fix backup
 #package "ruby1.9.1-dev" do
 #  action :install
 #end

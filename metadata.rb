@@ -18,3 +18,7 @@ end
 %w{ mysql }.each do |cb|
   depends cb
 end
+
+%w{ ark }.each do |cb|
+  depends cb
+end

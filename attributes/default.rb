@@ -20,6 +20,7 @@
 # default attributes for all platforms
 default[:bamboo][:url] = 'http://bamboo.eden.klm.com'
 default[:bamboo][:bamboo_home] = '/mnt/data/bamboo/'
+default[:bamboo][:install_path] = '/opt/bamboo/'
 default[:bamboo][:external_data] = 'true'
 
 default[:bamboo][:version] = '5.0'
@@ -29,14 +30,20 @@ default[:bamboo][:jdbc_username] = 'bamboo'
 default[:bamboo][:jdbc_password] = 'bamboo'
 
 default[:bamboo][:mysql] = "true"
-default[:bamboo][:mysql_connector_version] = '5.1.25'
 
-default[:bamboo][:port] = "80"
-default[:bamboo][:xms] = "256m"
-default[:bamboo][:xmx] = "512m"
-default[:bamboo][:permsize] = "256m"
+default[:bamboo][:jvm][:minimum_memory] = "256m"
+default[:bamboo][:jvm][:maximum_memory] = "512m"
+default[:bamboo][:jvm][:maximum_permgen] = "256m"
+default[:bamboo][:jvm][:support_args] = ""
 
-default[:bamboo][:user] = "root"
-default[:bamboo][:group] = "root"
+default[:bamboo][:user] = "bamboo"
+default[:bamboo][:group] = "bamboo"
+
+#TODO: ssl yes or no
+default['stash']['tomcat']['keyAlias']     = "tomcat"
+default['stash']['tomcat']['keystoreFile'] = "#{node['stash']['home_path']}/.keystore"
+default['stash']['tomcat']['keystorePass'] = "changeit"
+default['stash']['tomcat']['port']         = "8085"
+default['stash']['tomcat']['ssl_port']     = "8443"
 
 
