@@ -41,7 +41,7 @@ default[:bamboo][:group] = "bamboo"
 
 #TODO: ssl yes or no
 default[:bamboo][:tomcat][:keyAlias]     = "tomcat"
-default[:bamboo][:tomcat][:keystoreFile] = "#{node['stash']['home_path']}/.keystore"
+default[:bamboo][:tomcat][:keystoreFile] = "#{node[:bamboo][:bamboo_home]}/.keystore"
 default[:bamboo][:tomcat][:keystorePass] = "changeit"
 default[:bamboo][:tomcat][:port]         = "8085"
 default[:bamboo][:tomcat][:ssl_port]     = "8443"
