@@ -40,10 +40,10 @@ default[:bamboo][:user] = "bamboo"
 default[:bamboo][:group] = "bamboo"
 
 #TODO: ssl yes or no
-default['stash']['tomcat']['keyAlias']     = "tomcat"
-default['stash']['tomcat']['keystoreFile'] = "#{node['stash']['home_path']}/.keystore"
-default['stash']['tomcat']['keystorePass'] = "changeit"
-default['stash']['tomcat']['port']         = "8085"
-default['stash']['tomcat']['ssl_port']     = "8443"
+default[:bamboo][:tomcat][:keyAlias]     = "tomcat"
+default[:bamboo][:tomcat][:keystoreFile] = "#{node['stash']['home_path']}/.keystore"
+default[:bamboo][:tomcat][:keystorePass] = "changeit"
+default[:bamboo][:tomcat][:port]         = "8085"
+default[:bamboo][:tomcat][:ssl_port]     = "8443"
 
 
