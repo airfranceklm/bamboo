@@ -11,14 +11,6 @@ recipe "bamboo", "Installs and configures bamboo"
   supports os
 end
 
-%w{ java }.each do |cb|
-  depends cb
-end
-
-%w{ mysql }.each do |cb|
-  depends cb
-end
-
-%w{ ark }.each do |cb|
+%w{ apache2 cron database git java mysql mysql_connector perl ark java }.each do |cb|
   depends cb
 end

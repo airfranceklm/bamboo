@@ -15,7 +15,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
+#TODO: CREATED UPGRADE SCRIPT
+
 if (node[:bamboo][:external_data])
   directory "/mnt/data" do
     owner  "root"
@@ -42,11 +44,6 @@ user node['bamboo']['user'] do
   action  :create
 end
 
-# create bamboo service
-service "bamboo" do
-  provider Chef::Provider::Service::Upstart
-  supports :status => true, :restart => true, :start => true, :stop => true
-end
 
 # download bamboo
 ark node['bamboo']['name'] do
@@ -57,14 +54,6 @@ ark node['bamboo']['name'] do
   owner node['bamboo']['user']
   group node['bamboo']['group']
 end
-
-
-# COMMENTED OUT BECAUSE WRAPPER IS BROKEN
-# make symlink from wrapper/start-bamboo to /etc/init.d/bamboo
-# add start service at system start
-#link "/etc/init.d/bamboo" do
-#  to "/opt/bamboo/wrapper/start-bamboo"
-#end
 
 
 if (node[:bamboo][:mysql])
@@ -107,12 +96,13 @@ end
 
 template "#{node['bamboo']['install_path']}/bin/setenv.sh" do
   source "setenv.sh.erb"
-  owner  ode[:bamboo][:user]
+  owner  node[:bamboo][:user]
   mode   "0755"
   notifies :restart, "service[bamboo]", :delayed
 end
 
 service "bamboo" do
+  supports :status => true, :restart => true, :start => true, :stop => true
   action [:enable, :start]
 end
 
