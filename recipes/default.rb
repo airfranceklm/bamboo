@@ -20,8 +20,8 @@
 
 if (node[:bamboo][:external_data])
   directory "/mnt/data" do
-    owner  "root"
-    group  "root"
+    owner node[:bamboo][:user]
+    group  node['bamboo']['group']
     mode "0775"
     action :create
   end
@@ -44,7 +44,7 @@ user node['bamboo']['user'] do
   action  :create
 end
 
-
+#TODO: need to notify service to stop before downloading new package
 # download bamboo
 ark node['bamboo']['name'] do
   url node['bamboo']['download_url']
