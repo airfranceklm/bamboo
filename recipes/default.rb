@@ -141,7 +141,7 @@ backup_generate_model "mysql" do
   action :backup
 end
 
-if (node[:bamboo][:graylog])
-  include_recipe "graylog"
+if (node[:bamboo][:graylog][:enabled])
+  include_recipe "bamboo::graylog"
 end
 

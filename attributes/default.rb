@@ -49,7 +49,7 @@ default[:bamboo][:tomcat][:port] = "8085"
 default[:bamboo][:tomcat][:ssl_port] = "8443"
 
 # graylog2
-default[:bamboo][:graylog] = "true"
+default[:bamboo][:graylog][:enabled] = "true"
 default[:bamboo][:graylog][:facility] = "bamboo"
 default[:bamboo][:graylog][:host] = "kl12c0y5.is.klmcorp.net"
 default[:bamboo][:graylog][:origin] = "bamboo.eden.klm.com"
