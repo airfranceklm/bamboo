@@ -103,7 +103,7 @@ end
 
 service "bamboo" do
   supports :status => true, :restart => true, :start => true, :stop => true
-  action [:enable, :start]
+  action :enable
 end
 
 # needed for jasper reports and solve pdf and font problems
