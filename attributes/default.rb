@@ -42,10 +42,14 @@ default[:bamboo][:user] = "bamboo"
 default[:bamboo][:group] = "bamboo"
 
 #TODO: ssl yes or no
-default[:bamboo][:tomcat][:keyAlias]     = "tomcat"
+default[:bamboo][:tomcat][:keyAlias] = "tomcat"
 default[:bamboo][:tomcat][:keystoreFile] = "#{node[:bamboo][:bamboo_home]}/.keystore"
 default[:bamboo][:tomcat][:keystorePass] = "changeit"
-default[:bamboo][:tomcat][:port]         = "8085"
-default[:bamboo][:tomcat][:ssl_port]     = "8443"
+default[:bamboo][:tomcat][:port] = "8085"
+default[:bamboo][:tomcat][:ssl_port] = "8443"
 
-
+# graylog2
+default[:bamboo][:graylog] = "true"
+default[:bamboo][:graylog][:facility] = "bamboo"
+default[:bamboo][:graylog][:host] = "kl12c0y5.is.klmcorp.net"
+default[:bamboo][:graylog][:origin] = "bamboo.eden.klm.com"
