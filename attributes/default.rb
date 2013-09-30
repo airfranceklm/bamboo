@@ -21,7 +21,7 @@
 default[:bamboo][:url] = 'http://bamboo.eden.klm.com'
 default[:bamboo][:bamboo_home] = '/mnt/data/bamboo/'
 default[:bamboo][:install_path] = '/opt/bamboo'
-default[:bamboo][:external_data] = 'true'
+default[:bamboo][:external_data] = true
 
 default[:bamboo][:name] = 'bamboo'
 default[:bamboo][:version] = '5.1.1'
@@ -52,4 +52,4 @@ default[:bamboo][:tomcat][:ssl_port] = "8443"
 default[:bamboo][:graylog][:enabled] = "true"
 default[:bamboo][:graylog][:facility] = "bamboo"
 default[:bamboo][:graylog][:host] = "kl12c0y5.is.klmcorp.net"
-default[:bamboo][:graylog][:origin] = "bamboo.eden.klm.com"
+default[:bamboo][:graylog][:origin] = "#{node["fqdn"]}"

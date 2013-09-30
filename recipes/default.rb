@@ -18,7 +18,7 @@
 
 #TODO: CREATED UPGRADE SCRIPT
 
-if (node[:bamboo][:external_data])
+if (node[:bamboo][:external_data]) == true
   directory "/mnt/data" do
     owner node[:bamboo][:user]
     group  node['bamboo']['group']
