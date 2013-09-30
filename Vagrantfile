@@ -53,6 +53,7 @@ Vagrant.configure("2") do |config|
     }
 
     chef.run_list = %w{
+      recipe[apt]
       recipe[java]
       recipe[backup]
       recipe[bamboo::apache2]
