@@ -1,5 +1,36 @@
+.rake_test_cache
+
+#
+# Ignore Chef key files and secrets
+#
+*.pem
+data_bags/encrypted_data_bag_secret
+
+#
+# IntelliJ files (https://github.com/github/gitignore/blob/master/Global/IntelliJ.gitignore)
+#
+*.iml
+*.ipr
+*.iws
+.idea/
+
+#
+# OSX
+#
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# vagrant
 .vagrant
 Berksfile.lock
+Gemfile.lock
 *~
 *#
 .#*
@@ -15,3 +46,6 @@ bin/*
 
 .kitchen/
 .kitchen.local.yml
+test/kitchen/.kitchen/
+
+
