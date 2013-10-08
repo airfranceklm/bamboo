@@ -34,7 +34,7 @@ default[:bamboo][:jdbc_password] = 'bamboo'
 default[:bamboo][:mysql] = "true"
 
 default[:bamboo][:jvm][:minimum_memory] = "256m"
-default[:bamboo][:jvm][:maximum_memory] = "512m"
+default[:bamboo][:jvm][:maximum_memory] = "2048m"
 default[:bamboo][:jvm][:maximum_permgen] = "256m"
 default[:bamboo][:jvm][:support_args] = ""
 
