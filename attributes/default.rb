@@ -31,10 +31,10 @@ default[:bamboo][:download_url] = "http://www.atlassian.com/software/bamboo/down
 default[:bamboo][:jdbc_username] = 'bamboo'
 default[:bamboo][:jdbc_password] = 'bamboo'
 
-default[:bamboo][:mysql] = "true"
+default[:bamboo][:mysql] = true
 
-default[:bamboo][:jvm][:minimum_memory] = "256m"
-default[:bamboo][:jvm][:maximum_memory] = "512m"
+default[:bamboo][:jvm][:minimum_memory] = "512m"
+default[:bamboo][:jvm][:maximum_memory] = "2048m"
 default[:bamboo][:jvm][:maximum_permgen] = "256m"
 default[:bamboo][:jvm][:support_args] = ""
 
@@ -52,4 +52,4 @@ default[:bamboo][:tomcat][:ssl_port] = "8443"
 default[:bamboo][:graylog][:enabled] = "true"
 default[:bamboo][:graylog][:facility] = "bamboo"
 default[:bamboo][:graylog][:host] = "kl12c0y5.is.klmcorp.net"
-default[:bamboo][:graylog][:origin] = "#{node["fqdn"]}"
+default[:bamboo][:graylog][:origin] = node[:fqdn]

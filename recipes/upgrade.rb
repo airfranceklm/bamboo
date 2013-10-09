@@ -31,7 +31,7 @@ file "/opt/bamboo" do
   action :delete
 end
 
-include_recipe "bamboo"
+include_recipe "bamboo::apache2"
 
 ruby_block "remove_recipe_bamboo_upgrade" do
   block { node.run_list.remove("recipe[bamboo::upgrade]") }

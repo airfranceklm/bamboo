@@ -17,22 +17,22 @@
 # limitations under the License.
 #
 
-default['bamboo']['apache2']['access_log']         = ""
-default['bamboo']['apache2']['error_log']          = ""
-default['bamboo']['apache2']['port']               = 80
-default['bamboo']['apache2']['virtual_host_alias'] = node['fqdn']
-default['bamboo']['apache2']['virtual_host_name']  = node['hostname']
+default[:bamboo][:apache2][:access_log]         = ""
+default[:bamboo][:apache2][:error_log]          = ""
+default[:bamboo][:apache2][:port]               = 80
+default[:bamboo][:apache2][:virtual_host_alias] = node[:fqdn]
+default[:bamboo][:apache2][:virtual_host_name]  = node[:hostname]
 
-default['bamboo']['apache2']['ssl']['access_log']       = ""
-default['bamboo']['apache2']['ssl']['chain_file']       = ""
-default['bamboo']['apache2']['ssl']['error_log']        = ""
-default['bamboo']['apache2']['ssl']['port']             = 443
+default[:bamboo][:apache2][:ssl][:access_log]       = ""
+default[:bamboo][:apache2][:ssl][:chain_file]       = ""
+default[:bamboo][:apache2][:ssl][:error_log]        = ""
+default[:bamboo][:apache2][:ssl][:port]             = 443
 
-case node['platform_family']
+case node[:platform_family]
 when 'rhel'
-  default['bamboo']['apache2']['ssl']['certificate_file'] = "/etc/pki/tls/certs/localhost.crt"
-  default['bamboo']['apache2']['ssl']['key_file']         = "/etc/pki/tls/private/localhost.key"
+  default[:bamboo][:apache2][:ssl][:certificate_file] = "/etc/pki/tls/certs/localhost.crt"
+  default[:bamboo][:apache2][:ssl][:key_file]         = "/etc/pki/tls/private/localhost.key"
 else
-  default['bamboo']['apache2']['ssl']['certificate_file'] = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-  default['bamboo']['apache2']['ssl']['key_file']         = "/etc/ssl/private/ssl-cert-snakeoil.key"
+  default[:bamboo][:apache2][:ssl][:certificate_file] = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+  default[:bamboo][:apache2][:ssl][:key_file]         = "/etc/ssl/private/ssl-cert-snakeoil.key"
 end

@@ -15,14 +15,14 @@ end
 include_recipe "java"
 
 remote_file "/opt/atlassian-bamboo-agent-installer.jar" do
-  source "#{node['bamboo']['url']}/agentServer/agentInstaller/atlassian-bamboo-agent-installer-#{node['bamboo']['version']}.jar"
+  source "#{node[:bamboo][:url]}/agentServer/agentInstaller/atlassian-bamboo-agent-installer-#{node[:bamboo][:version]}.jar"
   mode "0644"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   not_if { ::File.exists?("/opt/atlassian-bamboo-agent-installer.jar") }
 end
 
-execute "java -Dbamboo.home=/mnt/data/bamboo -jar /opt/atlassian-bamboo-agent-installer.jar #{node['bamboo']['url']}/agentServer/ install" do
+execute "java -Dbamboo.home=/mnt/data/bamboo -jar /opt/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
   user  node[:bamboo][:user]
   group  node[:bamboo][:group]
   not_if { ::File.exists?("/mnt/data/bamboo/installer.properties") }

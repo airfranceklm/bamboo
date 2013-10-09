@@ -3,7 +3,7 @@ maintainer        "CC WD eDEn."
 maintainer_email  "ramon.makkelie@klm.com"
 license           "Apache 2.0"
 description       "Installs and configures ceph for OpenStack"
-version           "1.0"
+version           "1.0.0"
 
 recipe "bamboo", "Installs and configures bamboo"
 
@@ -11,6 +11,6 @@ recipe "bamboo", "Installs and configures bamboo"
   supports os
 end
 
-%w{ apache2 cron database git java mysql mysql_connector perl ark java }.each do |cb|
+%w{ apache2 cron database git java mysql mysql_connector perl ark java backup }.each do |cb|
   depends cb
 end

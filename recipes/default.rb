@@ -17,11 +17,19 @@
 # limitations under the License.
 
 #TODO: CREATED UPGRADE SCRIPT
+user node[:bamboo][:user] do
+  comment "Bamboo Service Account"
+  #home    node['bamboo']['home_path']
+  shell   "/bin/bash"
+  supports :manage_home => true
+  system  true
+  action  :create
+end
 
 if (node[:bamboo][:external_data]) == true
   directory "/mnt/data" do
     owner node[:bamboo][:user]
-    group  node['bamboo']['group']
+    group  node[:bamboo][:group]
     mode "0775"
     action :create
   end
@@ -35,36 +43,27 @@ end
 include_recipe "java"
 include_recipe "ark"
 
-user node['bamboo']['user'] do
-  comment "Bamboo Service Account"
-  #home    node['bamboo']['home_path']
-  shell   "/bin/bash"
-  supports :manage_home => true
-  system  true
-  action  :create
-end
-
 #TODO: need to notify service to stop before downloading new package
 # download bamboo
-ark node['bamboo']['name'] do
-  url node['bamboo']['download_url']
-  home_dir node['bamboo']['install_path']
-  checksum node['bamboo']['checksum']
-  version node['bamboo']['version']
-  owner node['bamboo']['user']
-  group node['bamboo']['group']
+ark node[:bamboo][:name] do
+  url node[:bamboo][:download_url]
+  home_dir node[:bamboo][:install_path]
+  checksum node[:bamboo][:checksum]
+  version node[:bamboo][:version]
+  owner node[:bamboo][:user]
+  group node[:bamboo][:group]
 end
 
 
-if (node[:bamboo][:mysql])
-  directory "#{node['bamboo']['install_path']}/lib" do
+if (node[:bamboo][:mysql]) == true
+  directory "#{node[:bamboo][:install_path]}/lib" do
     owner  node[:bamboo][:user]
     group  node[:bamboo][:group]
     mode "0775"
     action :create
   end
 
-  mysql_connector_j "#{node['bamboo']['install_path']}/lib"
+  mysql_connector_j "#{node[:bamboo][:install_path]}/lib"
 end
 
 template "/etc/init.d/bamboo" do
@@ -74,19 +73,19 @@ template "/etc/init.d/bamboo" do
 end
 
 template "bamboo-init.properties" do
-  path "#{node['bamboo']['install_path']}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties"
+  path "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties"
   source "bamboo-init.properties.erb"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   mode 0644
   variables({
-         "bamboo_home" => node['bamboo']['bamboo_home']
+         "bamboo_home" => node[:bamboo][:bamboo_home]
             })
   notifies :restart, "service[bamboo]", :delayed
 end
 
 template "seraph-config.xml" do
-  path "#{node['bamboo']['install_path']}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
+  path "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
   source "seraph-config.xml.erb"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
@@ -94,7 +93,7 @@ template "seraph-config.xml" do
   notifies :restart, "service[bamboo]", :delayed
 end
 
-template "#{node['bamboo']['install_path']}/bin/setenv.sh" do
+template "#{node[:bamboo][:install_path]}/bin/setenv.sh" do
   source "setenv.sh.erb"
   owner  node[:bamboo][:user]
   mode   "0755"
@@ -116,18 +115,17 @@ end
 #  action :install
 #end
 #needed for nokogiri
-package "libxml2-dev" do
-  action :install
-end
 
-package "libxslt-dev" do
-  action :install
+%w{libxml2-dev libxslt-dev}.each do |pkg|
+  package pkg do
+    action :install
+  end
 end
 
 include_recipe "backup"
 
-backup_install node[:name]
-backup_generate_config node[:name]
+backup_install node.name
+backup_generate_config node.name
 gem_package "fog" do
   version "> 1.9.0"
 end
@@ -137,7 +135,7 @@ backup_generate_model "mysql" do
   database_type "MySQL"
   store_with({"engine" => "Local", "settings" => { "local.path" => "/opt/backup", "local.keep" => "5", } } )
   #store_with({"engine" => "S3", "settings" => { "s3.access_key_id" => "1c6c6f540fba4f3fa62dc69233a454f2", "s3.secret_access_key" => "370d72a9aba54e66bbc2fdf110e06e08", "s3.provider" => "http://s3.eden.klm.com/", "s3.region" => "", "s3.bucket" => "sample", "s3.path" => "/", "s3.keep" => 10 } } )
-  options({"db.host" => "\"localhost\"", "db.username" => "\"#{node['bamboo']['jdbc_username']}\"", "db.password" => "\"#{node['bamboo']['jdbc_password']}\"", "db.name" => "\"bamboo\""})
+  options({"db.host" => "\"localhost\"", "db.username" => "\"#{node[:bamboo][:jdbc_username]}\"", "db.password" => "\"#{node[:bamboo][:jdbc_password]}\"", "db.name" => "\"bamboo\""})
   action :backup
 end
 
