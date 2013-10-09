@@ -18,6 +18,8 @@
 	CustomLog <%= node['bamboo']['apache2']['access_log'].empty? ? node['apache']['log_dir']+"/bamboo-access.log" : node['bamboo']['apache2']['access_log'] %> combined
 	ErrorLog <%= node['bamboo']['apache2']['error_log'].empty? ? node['apache']['log_dir']+"/bamboo-error.log" : node['bamboo']['apache2']['error_log'] %>
 	LogLevel warn
+    ProxyRequests Off
+    ProxyPreserveHost On
 
 	<Proxy *>
 		Order Deny,Allow
