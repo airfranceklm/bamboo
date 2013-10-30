@@ -1,3 +1,12 @@
+user node[:bamboo][:user] do
+  comment "Bamboo Service Account"
+  #home    node['bamboo']['home_path']
+  shell   "/bin/bash"
+  supports :manage_home => true
+  system  true
+  action  :create
+end
+
 if (node[:bamboo][:external_data])
   directory "/mnt/data" do
     owner  "root"
@@ -22,7 +31,7 @@ remote_file "/opt/atlassian-bamboo-agent-installer.jar" do
   not_if { ::File.exists?("/opt/atlassian-bamboo-agent-installer.jar") }
 end
 
-execute "java -Dbamboo.home=/mnt/data/bamboo -jar /opt/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
+execute "java -Ddisable_agent_auto_capability_detection=true -Dbamboo.home=/mnt/data/bamboo -jar /opt/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
   user  node[:bamboo][:user]
   group  node[:bamboo][:group]
   not_if { ::File.exists?("/mnt/data/bamboo/installer.properties") }
