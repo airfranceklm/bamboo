@@ -1,7 +1,17 @@
-if (node[:bamboo][:external_data])
+user node[:bamboo][:user] do
+  comment "Bamboo Service Account"
+  #home    node['bamboo']['home_path']
+  shell   "/bin/bash"
+  supports :manage_home => true
+  system  true
+  action  :create
+end
+
+if (node[:bamboo][:external_data]) == true
+
   directory "/mnt/data" do
-    owner  "root"
-    group  "root"
+    owner  node[:bamboo][:user]
+    group  node[:bamboo][:group]
     mode "0775"
     action :create
   end
@@ -22,18 +32,23 @@ remote_file "/opt/atlassian-bamboo-agent-installer.jar" do
   not_if { ::File.exists?("/opt/atlassian-bamboo-agent-installer.jar") }
 end
 
-execute "java -Dbamboo.home=/mnt/data/bamboo -jar /opt/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
-  user  node[:bamboo][:user]
+execute "java -Ddisable_agent_auto_capability_detection=true -Dbamboo.home=#{node[:bamboo][:bamboo_home]} -jar /opt/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
+  user   node[:bamboo][:user]
   group  node[:bamboo][:group]
   not_if { ::File.exists?("/mnt/data/bamboo/installer.properties") }
 end
 
-#file "/opt/bamboo/.installed" do
-#  owner  node[:bamboo][:user]
-#  group  node[:bamboo][:group]
-#  mode "0755"
-#  action :create_if_missing
-#end
+template "bamboo-agent.sh" do
+  path "#{node[:bamboo][:bamboo_home]}/bin/bamboo-agent.sh"
+  source "bamboo-agent.sh.erb"
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
+  mode 0755
+  variables({
+                "bamboo_user" => node[:bamboo][:user]
+            })
+  notifies :restart, "service[bamboo-agent]", :delayed
+end
 
 link "/etc/init.d/bamboo-agent" do
   to "/mnt/data/bamboo/bin/bamboo-agent.sh"
