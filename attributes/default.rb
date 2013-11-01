@@ -22,6 +22,7 @@ default[:bamboo][:url] = 'http://bamboo.eden.klm.com'
 default[:bamboo][:bamboo_home] = '/mnt/data/bamboo/'
 default[:bamboo][:install_path] = '/opt/bamboo'
 default[:bamboo][:external_data] = true
+default[:bamboo][:home_path] = "/home/bamboo"
 
 default[:bamboo][:name] = 'bamboo'
 default[:bamboo][:version] = '5.1.1'
