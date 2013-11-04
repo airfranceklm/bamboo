@@ -42,6 +42,8 @@ default[:bamboo][:jvm][:support_args] = ""
 default[:bamboo][:user] = "bamboo"
 default[:bamboo][:group] = "bamboo"
 
+default[:bamboo][:agent][:additional_path] = "/opt/rbenv/shims"
+
 #TODO: ssl yes or no
 default[:bamboo][:tomcat][:keyAlias] = "tomcat"
 default[:bamboo][:tomcat][:keystoreFile] = "#{node[:bamboo][:bamboo_home]}/.keystore"
