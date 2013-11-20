@@ -507,7 +507,11 @@ dump() {
     fi
 }
 
+<% if node[:bamboo][:agent][:additional_path].empty? -%>
 PATH="$JAVA_HOME/bin:$PATH"
+<% else %>
+PATH="<%= node[:bamboo][:agent][:additional_path] %>:$JAVA_HOME/bin:$PATH"
+<% end %>
 export PATH
 
 case "$1" in

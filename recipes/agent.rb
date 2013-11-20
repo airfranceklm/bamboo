@@ -1,6 +1,6 @@
 user node[:bamboo][:user] do
   comment "Bamboo Service Account"
-  #home    node['bamboo']['home_path']
+  home    node['bamboo']['home_path']
   shell   "/bin/bash"
   supports :manage_home => true
   system  true
