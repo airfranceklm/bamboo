@@ -110,34 +110,21 @@ package "libstdc++5" do
   action :install
 end
 
-#TODO: fix backup
-#package "ruby1.9.1-dev" do
-#  action :install
-#end
-#needed for nokogiri
-
-%w{libxml2-dev libxslt-dev}.each do |pkg|
-  package pkg do
-    action :install
-  end
-end
-
 include_recipe "backup"
 
 backup_install node.name
 backup_generate_config node.name
-gem_package "fog" do
-  version "> 1.9.0"
-end
+
 backup_generate_model "mysql" do
   description "Our shard"
   backup_type "database"
   database_type "MySQL"
-  store_with({"engine" => "Local", "settings" => { "local.path" => "/opt/backup", "local.keep" => "5", } } )
-  #store_with({"engine" => "S3", "settings" => { "s3.access_key_id" => "1c6c6f540fba4f3fa62dc69233a454f2", "s3.secret_access_key" => "370d72a9aba54e66bbc2fdf110e06e08", "s3.provider" => "http://s3.eden.klm.com/", "s3.region" => "", "s3.bucket" => "sample", "s3.path" => "/", "s3.keep" => 10 } } )
+  store_with({"engine" => "S3", "settings" => { "s3.access_key_id" => "BN588NGSSFPKQHD1NX21", "s3.secret_access_key" => "8abEbk+jZyx3c9Td2etAMO031bkXmqQEGjET8WcE", "s3.bucket" => "backups", "s3.path" => "bamboo", "s3.keep" => 10, "s3.fog_options" => {  :host => 's3.eden.klm.com', :scheme => 'http', :port => 80 } } } )
   options({"db.host" => "\"localhost\"", "db.username" => "\"#{node[:bamboo][:jdbc_username]}\"", "db.password" => "\"#{node[:bamboo][:jdbc_password]}\"", "db.name" => "\"bamboo\""})
   action :backup
 end
+
+
 
 if (node[:bamboo][:graylog][:enabled])
   include_recipe "bamboo::graylog"
