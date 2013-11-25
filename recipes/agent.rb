@@ -9,16 +9,16 @@ end
 
 if (node[:bamboo][:external_data]) == true
 
+  mount "/mnt/data" do
+    device "/dev/vdb1"
+    fstype "ext4"
+    action   [:mount, :enable]
+  end
   directory "/mnt/data" do
     owner  node[:bamboo][:user]
     group  node[:bamboo][:group]
     mode "0775"
     action :create
-  end
-  mount "/mnt/data" do
-    device "/dev/vdb1"
-    fstype "ext4"
-    action   [:mount, :enable]
   end
 end
 

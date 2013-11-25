@@ -39,6 +39,7 @@ PIDDIR="."
 #  the JVM and is not useful in situations where a privileged resource or
 #  port needs to be allocated prior to the user being changed.
 RUN_AS_USER=<%= @bamboo_user %>
+export HOME=<%= node[:bamboo][:home_path] %>
 
 # The following two lines are used by the chkconfig command. Change as is
 #  appropriate for your application.  They should remain commented.
