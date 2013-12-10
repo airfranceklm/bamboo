@@ -3,7 +3,6 @@
 # bamboo-agent
 # ---------------------------------------------------------------
 
-check process selenium with pidfile /mnt/data/bamboo/bin/bamboo-agent.pid
+check process bamboo with pidfile /mnt/data/bamboo/bin/bamboo-agent.pid
 start program "/bin/bash -c 'PID_FILE=/mnt/data/bamboo/bin/bamboo-agent.pid /etc/init.d/bamboo-agent start'" with timeout 60 seconds
 stop program  = "/bin/bash -c 'PID_FILE=/mnt/data/bamboo/bin/bamboo-agent.pid /etc/init.d/bamboo-agent stop'"
-#group bamboo
