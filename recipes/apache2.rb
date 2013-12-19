@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe "bamboo"
-
 node.set[:apache][:listen_ports] = node[:apache][:listen_ports] + [ node[:bamboo][:apache2][:port] ] unless node[:apache][:listen_ports].include?(node[:bamboo][:apache2][:port])
 node.set[:apache][:listen_ports] = node[:apache][:listen_ports] + [ node[:bamboo][:apache2][:ssl][:port] ] unless node[:apache][:listen_ports].include?(node[:bamboo][:apache2][:ssl][:port])
 

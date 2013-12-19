@@ -56,3 +56,6 @@ default[:bamboo][:graylog][:enabled] = "true"
 default[:bamboo][:graylog][:facility] = "bamboo"
 default[:bamboo][:graylog][:host] = "kl12c0y5.is.klmcorp.net"
 default[:bamboo][:graylog][:origin] = node[:fqdn]
+
+# backup to s3
+default[:bamboo][:backup][:enabled] = "true"
