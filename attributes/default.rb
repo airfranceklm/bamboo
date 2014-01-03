@@ -19,7 +19,7 @@
 
 # default attributes for all platforms
 default[:bamboo][:url] = 'http://bamboo.eden.klm.com'
-default[:bamboo][:bamboo_home] = '/opt/data/bamboo/'
+default[:bamboo][:bamboo_home] = '/var/bamboo/'
 default[:bamboo][:install_path] = '/opt/bamboo'
 default[:bamboo][:external_data] = true
 default[:bamboo][:home_path] = "/home/bamboo"

@@ -10,7 +10,7 @@ template grants_path do
   group "root"
   mode "0600"
   action :create
-  notifies :restart, "service[bamboo]", :delayed
+  #notifies :restart, "service[bamboo]", :delayed
 end
 
 execute "mysql-install-application-privileges" do

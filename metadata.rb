@@ -16,13 +16,12 @@ end
 
 # Always specify the version of your dependencies
 depends "ark", "= 0.4.0"
-depends "apache2", "= 1.8.14"
+depends "apache2", "= 1.8.4"
 depends "backup", "= 0.0.5"
 depends "cron", "= 1.2.8"
 depends "database", "= 1.5.2"
-depends "git", "= 2.9.0"
+depends "git", "= 2.7.0"
 depends "java", "= 1.12.0"
 depends "mysql", "= 3.0.2"
-depends "mysql_connector", "= 0.5.0"
+depends "mysql_connector", "= 0.4.1"
 depends "perl", "= 1.2.0"
-depends "chef-oracle-sqlplus", "= 0.1.1"
