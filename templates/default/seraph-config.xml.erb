@@ -54,7 +54,7 @@
 
     <!-- Determines what roles (permissions) a user has. -->
     <rolemapper class="com.atlassian.bamboo.user.authentication.BambooRoleMapper"/> -->
-    <!--  <authenticator class="com.atlassian.bamboo.user.authentication.BambooAuthenticator"/>  -->
+    <!--    -->
     <controller class="com.atlassian.bamboo.user.authentication.BambooSecurityController"/>
     <elevatedsecurityguard class="com.atlassian.bamboo.user.authentication.BambooElevatedSecurityGuard"/>
 
@@ -63,7 +63,11 @@
          Crowd property changes at runtime. If you need to switch back to local users, revert the change and
          restart Bamboo again.
      -->
+  <% if node['bamboo']['crowd'] == true -%>
     <authenticator class="com.atlassian.crowd.integration.seraph.v25.BambooAuthenticator"/>
+  <% else -%>
+    <authenticator class="com.atlassian.bamboo.user.authentication.BambooAuthenticator"/>
+  <% end -%>
 
   <services>
         <!-- Specifies role requirements for accessing specified URL paths -->
