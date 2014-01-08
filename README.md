@@ -1,23 +1,18 @@
-# chef-Bamboo  [![Build Status](https://secure.travis-ci.org/bflad/chef-Bamboo.png?branch=master)](http://travis-ci.org/bflad/chef-Bamboo)
 
 ## Description
 
-Installs/Configures [Atlassian Bamboo](https://www.atlassian.com/software/Bamboo/) server and [Atlassian Bamboo Backup Client](https://marketplace.atlassian.com/plugins/com.atlassian.Bamboo.backup.client). Provides LWRPs for code deployment via Bamboo as well as for hook and repository management. Please see [COMPATIBILITY.md](COMPATIBILITY.md) for more information about Bamboo releases (versions and checksums) that are tested and supported by cookbook versions.
+Installs/Configures [Atlassian Bamboo](https://www.atlassian.com/software/Bamboo/)
 
 ## Requirements
 
 ### Platforms
 
-* CentOS 6
-* RHEL 6
 * Ubuntu 12.04, 12.10, 13.04
 
 ### Databases
 
-* HSQLDB (not recommended for production usage)
-* Microsoft SQL Server
 * MySQL
-* Postgres
+
 
 ### Cookbooks
 
@@ -30,12 +25,11 @@ Required [Opscode Cookbooks](https://github.com/opscode-cookbooks/)
 * [java](https://github.com/opscode-cookbooks/java)
 * [mysql](https://github.com/opscode-cookbooks/mysql)
 * [cron](http://github.com/opscode-cookbooks/cron)
-* [mysql_connector](https://github.com/bflad/chef-mysql_connector)
-* [backup](https://github.com/ramonskie/backup) (if using backup)
 
 Third-Party Cookbooks
 
 * [mysql_connector](https://github.com/bflad/chef-mysql_connector) (if using MySQL database)
+* [backup](https://github.com/ramonskie/backup) (if using backup)
 
 ## Attributes
 
