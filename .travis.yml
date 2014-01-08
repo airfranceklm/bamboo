@@ -6,4 +6,4 @@ before_script:
 script: 
   # - bundle exec knife cookbook test -a -o .
   - bundle exec foodcritic -f any .
-  #- bundle exec rubocop
+  - bundle exec rubocop
