@@ -25,12 +25,20 @@ default[:bamboo][:external_data] = true
 default[:bamboo][:home_path] = "/home/bamboo"
 
 default[:bamboo][:name] = 'bamboo'
-default[:bamboo][:version] = '5.1.1'
-default[:bamboo][:checksum] = '8ebb5fd045cef2765fde13e3f3b88e48da7262f2508ce209a24e9a446c761b8b'
+default[:bamboo][:version] = '5.3'
 default[:bamboo][:download_url] = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
 
-default[:bamboo][:jdbc_username] = 'bamboo'
-default[:bamboo][:jdbc_password] = 'bamboo'
+default[:bamboo][:checksum] =
+case node[:bamboo][:version]
+  when '5.1.1' then '8ebb5fd045cef2765fde13e3f3b88e48da7262f2508ce209a24e9a446c761b8b'
+  when '5.3'   then '814e9bc11a48ca475621de94b9b22abb4be6b9b6997967b1cc568492f0220064'
+end
+
+default[:bamboo][:database][:host] = 'localhost'
+default[:bamboo][:database][:port] = 3306
+default[:bamboo][:database][:name] = 'bamboo'
+default[:bamboo][:database][:user] = 'bamboo'
+default[:bamboo][:database][:password] = 'bamboo'
 
 default[:bamboo][:mysql] = true
 
@@ -44,6 +52,12 @@ default[:bamboo][:group] = "bamboo"
 
 default[:bamboo][:agent][:additional_path] = "/opt/rbenv/shims"
 
+# If you're authenticating against a Crowd server you can use this authenticator for single sign-on.
+# Enable it after configuring your Crowd properties through user management and restart Bamboo. It does not support
+# Crowd property changes at runtime. If you need to switch back to local users, revert the change and
+# restart Bamboo again.
+default[:bamboo][:crowd] = false
+
 #TODO: ssl yes or no
 default[:bamboo][:tomcat][:keyAlias] = "tomcat"
 default[:bamboo][:tomcat][:keystoreFile] = "#{node[:bamboo][:bamboo_home]}/.keystore"
@@ -52,10 +66,13 @@ default[:bamboo][:tomcat][:port] = "8085"
 default[:bamboo][:tomcat][:ssl_port] = "8443"
 
 # graylog2
-default[:bamboo][:graylog][:enabled] = "true"
+default[:bamboo][:graylog][:enabled] = true
 default[:bamboo][:graylog][:facility] = "bamboo"
 default[:bamboo][:graylog][:host] = "kl12c0y5.is.klmcorp.net"
 default[:bamboo][:graylog][:origin] = node[:fqdn]
 
 # backup to s3
-default[:bamboo][:backup][:enabled] = "true"
+default[:bamboo][:backup][:enabled] = true
+default[:bamboo][:backup][:s3_access_key_id] = "BN588NGSSFPKQHD1NX21"
+default[:bamboo][:backup][:s3_secret_access_key] = "8abEbk+jZyx3c9Td2etAMO031bkXmqQEGjET8WcE"
+default[:bamboo][:backup][:s3_bucket] = "backups"

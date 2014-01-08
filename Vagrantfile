@@ -41,22 +41,18 @@ Vagrant.configure("2") do |config|
             "server_root_password" => "iloverandompasswordsbutthiswilldo",
             "server_repl_password" => "iloverandompasswordsbutthiswilldo",
             "server_debian_password" => "iloverandompasswordsbutthiswilldo",
-            "bind_address" => "0.0.0.0",
+            "bind_address" => "localhost",
             "tunable" => {
                 "wait_timeout" => "28800"
             }
         },
         "bamboo" => {
-            'bamboo_home' => '/opt/data/bamboo/',
             'external_data' => false
         }
     }
 
     chef.run_list = %w{
-      recipe[apt]
-      recipe[java]
-      recipe[backup]
-      recipe[bamboo::apache2]
+      recipe[bamboo]
     }
   end
 
