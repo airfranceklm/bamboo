@@ -151,4 +151,5 @@ Please use standard Github issues/pull requests and if possible, in combination 
 
 Please see license information in: [LICENSE](LICENSE)
 
-* @ramonskie
+* ramonskie (ramonmakkelie@gmail.com)
+* soudmaijer (soudmaijer@gmail.com)
