@@ -16,7 +16,7 @@ class Chef::Recipe::Bamboo
         end
       end
     ensure
-      settings ||= node['bamboo']
+      settings ||= node[:bamboo]
 
       case settings['database']['type']
       when 'mysql'

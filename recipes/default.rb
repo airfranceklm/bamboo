@@ -19,9 +19,5 @@
 include_recipe 'bamboo::database_mysql'
 include_recipe 'bamboo::apache2'
 include_recipe 'bamboo::server'
-if (node[:bamboo][:backup][:enabled])
-  include_recipe 'bamboo::backup'
-end
-if (node[:bamboo][:graylog][:enabled])
-  include_recipe "bamboo::graylog"
-end
+include_recipe 'bamboo::backup' unless node[:bamboo][:backup][:enabled]
+include_recipe 'bamboo::graylog' unless node[:bamboo][:graylog][:enabled]

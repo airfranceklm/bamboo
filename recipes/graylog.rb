@@ -18,24 +18,24 @@
 # limitations under the License.
 #
 cookbook_file "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/lib/gelfj-1.1.2.jar" do
-  source "gelfj-1.1.2.jar"
+  source 'gelfj-1.1.2.jar'
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
-  mode "0775"
+  mode '0775'
 end
 
 cookbook_file "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/lib/json-simple-1.1.jar" do
-  source "json-simple-1.1.jar"
+  source 'json-simple-1.1.jar'
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
-  mode "0775"
+  mode '0775'
 end
 
-template "log4j.properties" do
+template 'log4j.properties' do
   path "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/classes/log4j.properties"
-  source "log4j.properties.erb"
+  source 'log4j.properties.erb'
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   mode 0644
-  notifies :restart, "service[bamboo]", :delayed
+  notifies :restart, 'service[bamboo]', :delayed
 end
