@@ -55,14 +55,14 @@ ark node[:bamboo][:name] do
 end
 
 if (node[:bamboo][:mysql]) == true
-  directory '#{node[:bamboo][:install_path]}/lib' do
+  directory "#{node[:bamboo][:install_path]}/lib" do
     owner  node[:bamboo][:user]
     group  node[:bamboo][:group]
     mode '0775'
     action :create
   end
 
-  mysql_connector_j '#{node[:bamboo][:install_path]}/lib'
+  mysql_connector_j "#{node[:bamboo][:install_path]}/lib"
 end
 
 template '/etc/init.d/bamboo' do
