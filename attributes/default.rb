@@ -68,11 +68,11 @@ default[:bamboo][:tomcat][:ssl_port] = "8443"
 # graylog2
 default[:bamboo][:graylog][:enabled] = true
 default[:bamboo][:graylog][:facility] = "bamboo"
-default[:bamboo][:graylog][:host] = "kl12c0y5.is.klmcorp.net"
+default[:bamboo][:graylog][:host] = "graylog.YOURDOMAIN.com"
 default[:bamboo][:graylog][:origin] = node[:fqdn]
 
 # backup to s3
 default[:bamboo][:backup][:enabled] = true
-default[:bamboo][:backup][:s3_access_key_id] = "BN588NGSSFPKQHD1NX21"
-default[:bamboo][:backup][:s3_secret_access_key] = "8abEbk+jZyx3c9Td2etAMO031bkXmqQEGjET8WcE"
-default[:bamboo][:backup][:s3_bucket] = "backups"
+default[:bamboo][:backup][:s3_access_key_id] = "changeit"
+default[:bamboo][:backup][:s3_secret_access_key] = "changeit"
+default[:bamboo][:backup][:s3_bucket] = "bamboo"
