@@ -34,7 +34,7 @@ class Chef::Recipe::Bamboo
       1433
     else
       Chef::Log.warn("Unsupported database type (#{type}) in Stash cookbook.")
-      Chef::Log.warn('Please add to Stash cookbook or hard set Stash database port.')
+      Chef::Log.warn('Please add to Bamboo cookbook or hard set Bamboo database port.')
       nil
     end
   end

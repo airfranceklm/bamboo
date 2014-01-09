@@ -6,3 +6,4 @@ gem 'kitchen-vagrant', :group => :integration
 gem 'kitchen-openstack'
 gem 'foodcritic'
 gem 'rubocop'
+gem 'rake'
