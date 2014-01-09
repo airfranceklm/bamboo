@@ -1,3 +1,4 @@
+# Bamboo status [![Build Status](https://travis-ci.org/ramonskie/bamboo.png?branch=master)](https://travis-ci.org/ramonskie/bamboo)
 
 ## Description
 
@@ -111,6 +112,7 @@ s3_bucket | your bucket in S3 | String | bamboo
 * recipe "bamboo::default", "Installs the bamboo server with optional backup in place and logging to graylog."
 * recipe "bamboo::server", "Only installs the bamboo server."
 * recipe "bamboo::agent", "Installs a bamboo agent."
+
 
 ## Usage
 

@@ -17,19 +17,25 @@ class Chef::Recipe::Bamboo
       end
     ensure
       settings ||= node[:bamboo]
-
-      case settings['database']['type']
-      when 'mysql'
-        settings['database']['port'] ||= 3306
-      when 'postgresql'
-        settings['database']['port'] ||= 5432
-      when 'sqlserver'
-        settings['database']['port'] ||= 1433
-      else
-        Chef::Log.warn('Unsupported database type.')
-      end
+      settings[:database:][:port] ||= default_database_port settings[:database][:type]
+      settings[:database:][:testInterval] ||= 2
     end
 
     settings
+  end
+
+  def default_database_port(type)
+    case type
+    when 'mysql'
+      3306
+    when 'postgresql'
+      5432
+    when 'sqlserver'
+      1433
+    else
+      Chef::Log.warn("Unsupported database type (#{type}) in Stash cookbook.")
+      Chef::Log.warn('Please add to Stash cookbook or hard set Stash database port.')
+      nil
+    end
   end
 end

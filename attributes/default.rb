@@ -39,8 +39,8 @@ default[:bamboo][:database][:port] = 3306
 default[:bamboo][:database][:name] = 'bamboo'
 default[:bamboo][:database][:user] = 'bamboo'
 default[:bamboo][:database][:password] = 'bamboo'
-
-default[:bamboo][:mysql] = true
+default[:bamboo][:database][:type] = 'mysql'
+default[:bamboo][:database][:testInterval] = 2
 
 default[:bamboo][:jvm][:minimum_memory] = '512m'
 default[:bamboo][:jvm][:maximum_memory] = '2048m'

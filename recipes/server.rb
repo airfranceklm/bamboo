@@ -54,7 +54,7 @@ ark node[:bamboo][:name] do
   group node[:bamboo][:group]
 end
 
-if (node[:bamboo][:mysql]) == true
+if (node[:bamboo][:database][:type]) == 'mysql'
   directory "#{node[:bamboo][:install_path]}/lib" do
     owner  node[:bamboo][:user]
     group  node[:bamboo][:group]
