@@ -1,5 +1,3 @@
-#!/usr/bin/env rake
-
 desc "Runs foodcritic linter"
 task :foodcritic do
   if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
@@ -17,7 +15,7 @@ task :default => 'foodcritic'
 private
 
 def prepare_foodcritic_sandbox(sandbox)
-  files = %w{*.md *.rb attributes definitions files libraries providers
+  files = %w{*.md *.rb attributes definitions files providers
 recipes resources templates}
 
   rm_rf sandbox
