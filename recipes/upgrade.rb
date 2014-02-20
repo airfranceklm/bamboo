@@ -17,22 +17,22 @@
 # limitations under the License.
 #
 
-service "Stopping bamboo" do
-  service_name "bamboo"
+service 'Stopping bamboo' do
+  service_name 'bamboo'
   action :stop
 end
 
-file "/etc/init/bamboo" do
+file '/etc/init/bamboo' do
   action :delete
 end
 
-#TODO: its a symlink so could also be a dir
-file "/opt/bamboo" do
+# TODO: its a symlink so could also be a dir
+file '/opt/bamboo' do
   action :delete
 end
 
-include_recipe "bamboo::apache2"
+include_recipe 'bamboo::apache2'
 
-ruby_block "remove_recipe_bamboo_upgrade" do
-  block { node.run_list.remove("recipe[bamboo::upgrade]") }
+ruby_block 'remove_recipe_bamboo_upgrade' do
+  block { node.run_list.remove('recipe[bamboo::upgrade]') }
 end
