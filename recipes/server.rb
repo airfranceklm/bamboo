@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: chef-client
+# Cookbook Name:: bamboo
 # Recipe:: server
 #
-# Copyright 2010, Opscode, Inc.
+# Copyright 2014
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-#TODO: CREATED UPGRADE SCRIPT
 user node[:bamboo][:user] do
   comment "Bamboo Service Account"
   home    node[:bamboo][:home_path]
@@ -26,24 +26,23 @@ user node[:bamboo][:user] do
   action  :create
 end
 
-if (node[:bamboo][:external_data]) == true
-  directory "/mnt/data" do
-    owner node[:bamboo][:user]
-    group  node[:bamboo][:group]
-    mode "0775"
-    action :create
-  end
-  mount "/mnt/data" do
-    device "/dev/vdc1"
-    fstype "ext4"
-    action   [:mount, :enable]
-  end
+directory "#{node[:bamboo][:bamboo_install]}" do
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
+  mode "0775"
+  action :create
+end
+
+directory "#{node[:bamboo][:bamboo_home]}" do
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
+  mode "0775"
+  action :create
 end
 
 include_recipe "java"
 include_recipe "ark"
 
-#TODO: need to notify service to stop before downloading new package
 # download bamboo
 ark node[:bamboo][:name] do
   url node[:bamboo][:download_url]
@@ -52,10 +51,11 @@ ark node[:bamboo][:name] do
   version node[:bamboo][:version]
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
+  notifies :restart, "service[bamboo]", :delayed
 end
 
 
-if (node[:bamboo][:mysql]) == true
+if (node[:bamboo][:database][:type] == "mysql")
   directory "#{node[:bamboo][:install_path]}/lib" do
     owner  node[:bamboo][:user]
     group  node[:bamboo][:group]
@@ -78,9 +78,6 @@ template "bamboo-init.properties" do
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   mode 0644
-  variables({
-         "bamboo_home" => node[:bamboo][:bamboo_home]
-            })
   notifies :restart, "service[bamboo]", :delayed
 end
 
@@ -104,10 +101,3 @@ service "bamboo" do
   supports :status => true, :restart => true, :start => true, :stop => true
   action :enable
 end
-
-# needed for jasper reports and solve pdf and font problems
-package "libstdc++5" do
-  action :install
-end
-
-

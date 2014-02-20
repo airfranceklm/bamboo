@@ -3,30 +3,25 @@
 host_cache_path = File.expand_path("../.cache", __FILE__)
 guest_cache_path = "/tmp/vagrant-cache"
 
-Vagrant.require_plugin "vagrant-openstack-plugin"
-
 # ensure the cache path exists
 FileUtils.mkdir(host_cache_path) unless File.exist?(host_cache_path)
 
 Vagrant.configure("2") do |config|
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "ubuntu-server-13.04"
+
+  # The url from where the 'config.vm.box' box will be fetched if it
+  # doesn't already exist on the user's system.
+  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box"
+
+  config.vm.provider :virtualbox do |vb|
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  end
+
   config.berkshelf.enabled = true
   config.omnibus.chef_version = :latest
-  config.vm.box      = 'dummy'
-  config.ssh.username = "ubuntu"
-  config.ssh.private_key_path = '~/.ssh/eindbaas-key'
-
-
-  config.vm.provider :openstack do |os|
-    os.username     = "vagrant"          # e.g. "#{ENV['OS_USERNAME']}"
-    os.api_key      = "vagrant"           # e.g. "#{ENV['OS_PASSWORD']}"
-    os.flavor       = /mx.small/                # Regex or String
-    os.image        = /Ubuntu Server 13.04/                 # Regex or String
-    os.endpoint     = "http://172.21.42.2:5000/v2.0/tokens"      # e.g. "#{ENV['OS_AUTH_URL']}/tokens"
-    os.keypair_name = "eindbaas-key"      # as stored in Nova
-    os.name         = "bamboo-dev"
-    os.server_name  = "bamboo-dev"
-    os.floating_ip  = "172.21.42.159"      # optional (The floating IP to assign for this instance)
-  end
 
   config.vm.provision :chef_solo do |chef|
     chef.provisioning_path = guest_cache_path
@@ -45,9 +40,6 @@ Vagrant.configure("2") do |config|
             "tunable" => {
                 "wait_timeout" => "28800"
             }
-        },
-        "bamboo" => {
-            'external_data' => false
         }
     }
 

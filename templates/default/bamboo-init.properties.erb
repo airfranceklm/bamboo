@@ -1,5 +1,5 @@
 ## You can specify your bamboo.home property here or in your system environment variables.
 
-bamboo.home=<%= @bamboo_home %>
+bamboo.home=<%= node[:bamboo][:bamboo_home] %>
 
-# bamboo.jms.broker.uri=tcp://<%= @bamboo_ip %>:54663
+# bamboo.jms.broker.uri=tcp://<%= node[:fqdn] %>:54663

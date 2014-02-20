@@ -1,3 +1,22 @@
+#
+# Cookbook Name:: bamboo
+# Recipe:: agent
+#
+# Copyright 2014
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
 user node[:bamboo][:user] do
   comment "Bamboo Service Account"
   home    node[:bamboo][:home_path]
@@ -7,35 +26,34 @@ user node[:bamboo][:user] do
   action  :create
 end
 
-if (node[:bamboo][:external_data]) == true
+directory "#{node[:bamboo][:bamboo_install]}" do
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
+  mode "0775"
+  action :create
+end
 
-  mount "/mnt/data" do
-    device "/dev/vdb1"
-    fstype "ext4"
-    action   [:mount, :enable]
-  end
-  directory "/mnt/data" do
-    owner  node[:bamboo][:user]
-    group  node[:bamboo][:group]
-    mode "0775"
-    action :create
-  end
+directory "#{node[:bamboo][:bamboo_home]}" do
+  owner  node[:bamboo][:user]
+  group  node[:bamboo][:group]
+  mode "0775"
+  action :create
 end
 
 include_recipe "java"
 
-remote_file "/opt/atlassian-bamboo-agent-installer.jar" do
+remote_file "#{node[:bamboo][:bamboo_install]}/atlassian-bamboo-agent-installer.jar" do
   source "#{node[:bamboo][:url]}/agentServer/agentInstaller/atlassian-bamboo-agent-installer-#{node[:bamboo][:version]}.jar"
   mode "0644"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
-  not_if { ::File.exists?("/opt/atlassian-bamboo-agent-installer.jar") }
+  not_if { ::File.exists?("#{node[:bamboo][:bamboo_install]}/atlassian-bamboo-agent-installer.jar") }
 end
 
-execute "java -Ddisable_agent_auto_capability_detection=true -Dbamboo.home=#{node[:bamboo][:bamboo_home]} -jar /opt/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
+execute "java -DDISABLE_AGENT_AUTO_CAPABILITY_DETECTION=#{node[:bamboo][:agent][:disable_agent_auto_capability_detection]} -Dbamboo.home=#{node[:bamboo][:bamboo_home]} -jar #{node[:bamboo][:bamboo_install]}/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
   user   node[:bamboo][:user]
   group  node[:bamboo][:group]
-  not_if { ::File.exists?("/mnt/data/bamboo/installer.properties") }
+  not_if { ::File.exists?("#{node[:bamboo][:bamboo_home]}/installer.properties") }
 end
 
 template "bamboo-agent.sh" do
@@ -44,14 +62,11 @@ template "bamboo-agent.sh" do
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   mode 0755
-  variables({
-                "bamboo_user" => node[:bamboo][:user]
-            })
   notifies :restart, "service[bamboo-agent]", :delayed
 end
 
 link "/etc/init.d/bamboo-agent" do
-  to "/mnt/data/bamboo/bin/bamboo-agent.sh"
+  to "#{node[:bamboo][:bamboo_home]}/bin/bamboo-agent.sh"
 end
 
 service "bamboo-agent" do
@@ -59,12 +74,6 @@ service "bamboo-agent" do
   action [:enable, :start]
 end
 
-# needed for jasper reports and solve pdf and font problems
-package "libstdc++5" do
-  action :install
-end
-
-#TODO: enable monit
 package "monit" do
   action :install
 end
