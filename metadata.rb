@@ -17,7 +17,7 @@ end
 # Always specify the version of your dependencies
 depends "ark",                "= 0.4.0"
 depends "apache2",            "= 1.8.4"
-depends "backup",             "= 0.0.5"
+depends "backup",             "= 0.0.9"
 depends "cron",               "= 1.2.8"
 depends "database",           "= 1.5.2"
 depends "git",                "= 2.7.0"
