@@ -26,9 +26,9 @@
 # Name of app ( JIRA, Confluence, etc )
 APP=bamboo
 # Name of the user to run as
-USER=<%= node['bamboo']['run_user'] %>
+USER=<%= node['bamboo']['user'] %>
 # Location of application's base directory
-BASE=<%= node['bamboo']['install_path'] %>
+BASE=<%= node['bamboo']['home_dir'] %>
 
 start() {
   echo "Starting $APP"

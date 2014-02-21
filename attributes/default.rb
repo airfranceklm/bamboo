@@ -16,13 +16,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-default[:bamboo][:url]                            = 'http://bamboo.yourcompany.com'     # bamboo server URL
-default[:bamboo][:install_path]                   = '/opt/bamboo'                       # bamboo installation directory
+default[:bamboo][:url]                            = 'http://localhost'                  # bamboo server URL
+default[:bamboo][:home_dir]                       = '/opt/bamboo'                       # bamboo installation directory
+default[:bamboo][:data_dir]                       = '/var/bamboo'                       # bamboo data directory
 default[:bamboo][:user]                           = "bamboo"                            # bamboo user
 default[:bamboo][:group]                          = "bamboo"                            # bamboo group
-default[:bamboo][:bamboo_home]                    = '/var/bamboo/'                      # bamboo data directory
-default[:bamboo][:home_path]                      = "/home/bamboo"                      # bamboo system user home directory
-default[:bamboo][:name]                           = 'bamboo'                            # bamboo service name
+default[:bamboo][:user_home]                      = "/home/bamboo"                      # bamboo system user home directory
+default[:bamboo][:name]                           = 'bamboo'                            # bamboo application/service name
 default[:bamboo][:version]                        = '5.3'
 default[:bamboo][:download_url]                   = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
 default[:bamboo][:checksum] =

@@ -16,37 +16,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe "ark"
+include_recipe "java"
+
+# Create group and users
+group node[:bamboo][:group] do
+  action :create
+end
 
 user node[:bamboo][:user] do
   comment "Bamboo Service Account"
-  home    node[:bamboo][:home_path]
+  home    node[:bamboo][:user_home]
   shell   "/bin/bash"
   supports :manage_home => true
+  gid     node[:bamboo][:group]
   system  true
   action  :create
 end
 
-directory "#{node[:bamboo][:bamboo_install]}" do
+# Create required directories
+directory "#{node[:bamboo][:data_dir]}" do
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   mode "0775"
   action :create
 end
 
-directory "#{node[:bamboo][:bamboo_home]}" do
-  owner  node[:bamboo][:user]
-  group  node[:bamboo][:group]
-  mode "0775"
-  action :create
-end
-
-include_recipe "java"
-include_recipe "ark"
-
-# download bamboo
+# Download and install the bamboo package
 ark node[:bamboo][:name] do
   url node[:bamboo][:download_url]
-  home_dir node[:bamboo][:install_path]
+  home_dir node[:bamboo][:home_dir]
   checksum node[:bamboo][:checksum]
   version node[:bamboo][:version]
   owner node[:bamboo][:user]
@@ -54,18 +53,18 @@ ark node[:bamboo][:name] do
   notifies :restart, "service[bamboo]", :delayed
 end
 
-
-if (node[:bamboo][:database][:type] == "mysql")
-  directory "#{node[:bamboo][:install_path]}/lib" do
+if node[:bamboo][:database][:type] == "mysql"
+  directory "#{node[:bamboo][:home_dir]}/lib" do
     owner  node[:bamboo][:user]
     group  node[:bamboo][:group]
     mode "0775"
     action :create
   end
 
-  mysql_connector_j "#{node[:bamboo][:install_path]}/lib"
+  mysql_connector_j "#{node[:bamboo][:home_dir]}/lib"
 end
 
+# Install templates
 template "/etc/init.d/bamboo" do
   source "bamboo.init.erb"
   mode   "0755"
@@ -73,7 +72,7 @@ template "/etc/init.d/bamboo" do
 end
 
 template "bamboo-init.properties" do
-  path "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties"
+  path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties"
   source "bamboo-init.properties.erb"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
@@ -82,7 +81,7 @@ template "bamboo-init.properties" do
 end
 
 template "seraph-config.xml" do
-  path "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
+  path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
   source "seraph-config.xml.erb"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
@@ -90,14 +89,17 @@ template "seraph-config.xml" do
   notifies :restart, "service[bamboo]", :delayed
 end
 
-template "#{node[:bamboo][:install_path]}/bin/setenv.sh" do
+template "#{node[:bamboo][:home_dir]}/bin/setenv.sh" do
   source "setenv.sh.erb"
   owner  node[:bamboo][:user]
   mode   "0755"
   notifies :restart, "service[bamboo]", :delayed
 end
 
+# Create and enable service
 service "bamboo" do
   supports :status => true, :restart => true, :start => true, :stop => true
   action :enable
 end
+
+# TODO monit would be nice!

@@ -16,48 +16,56 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe "java"
+
+# Create group and users
+group node[:bamboo][:group] do
+  action :create
+end
 
 user node[:bamboo][:user] do
   comment "Bamboo Service Account"
-  home    node[:bamboo][:home_path]
-  shell   "/bin/bash"
+  gid     node[:bamboo][:group]
+  home    node[:bamboo][:user_home]
   supports :manage_home => true
+  shell   "/bin/bash"
   system  true
   action  :create
 end
 
-directory "#{node[:bamboo][:bamboo_install]}" do
+# Create required directories
+directory "#{node[:bamboo][:home_dir]}" do
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   mode "0775"
   action :create
 end
 
-directory "#{node[:bamboo][:bamboo_home]}" do
+directory "#{node[:bamboo][:data_dir]}" do
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
   mode "0775"
   action :create
 end
 
-include_recipe "java"
-
-remote_file "#{node[:bamboo][:bamboo_install]}/atlassian-bamboo-agent-installer.jar" do
+# Download and install the bamboo package
+remote_file "#{node[:bamboo][:home_dir]}/atlassian-bamboo-agent-installer.jar" do
   source "#{node[:bamboo][:url]}/agentServer/agentInstaller/atlassian-bamboo-agent-installer-#{node[:bamboo][:version]}.jar"
   mode "0644"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
-  not_if { ::File.exists?("#{node[:bamboo][:bamboo_install]}/atlassian-bamboo-agent-installer.jar") }
+  not_if { ::File.exists?("#{node[:bamboo][:home_dir]}/atlassian-bamboo-agent-installer.jar") }
 end
 
-execute "java -DDISABLE_AGENT_AUTO_CAPABILITY_DETECTION=#{node[:bamboo][:agent][:disable_agent_auto_capability_detection]} -Dbamboo.home=#{node[:bamboo][:bamboo_home]} -jar #{node[:bamboo][:bamboo_install]}/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
+execute "java -Ddisable_agent_auto_capability_detection=#{node[:bamboo][:agent][:disable_agent_auto_capability_detection]} -Dbamboo.home=#{node[:bamboo][:data_dir]} -jar #{node[:bamboo][:home_dir]}/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
   user   node[:bamboo][:user]
   group  node[:bamboo][:group]
-  not_if { ::File.exists?("#{node[:bamboo][:bamboo_home]}/installer.properties") }
+  not_if { ::File.exists?("#{node[:bamboo][:data_dir]}/installer.properties") }
 end
 
+# Install templates
 template "bamboo-agent.sh" do
-  path "#{node[:bamboo][:bamboo_home]}/bin/bamboo-agent.sh"
+  path "#{node[:bamboo][:data_dir]}/bin/bamboo-agent.sh"
   source "bamboo-agent.sh.erb"
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
@@ -66,14 +74,16 @@ template "bamboo-agent.sh" do
 end
 
 link "/etc/init.d/bamboo-agent" do
-  to "#{node[:bamboo][:bamboo_home]}/bin/bamboo-agent.sh"
+  to "#{node[:bamboo][:data_dir]}/bin/bamboo-agent.sh"
 end
 
+# Create and enable service
 service "bamboo-agent" do
   supports :restart => true, :status => true, :start => true, :stop => true
   action [:enable, :start]
 end
 
+# Setup monit
 package "monit" do
   action :install
 end

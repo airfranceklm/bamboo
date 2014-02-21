@@ -14,7 +14,6 @@ Installs/Configures [Atlassian Bamboo](https://www.atlassian.com/software/Bamboo
 
 * MySQL
 
-
 ### Cookbooks
 
 Required [Opscode Cookbooks](https://github.com/opscode-cookbooks/)
@@ -38,13 +37,15 @@ These attributes are under the `node['bamboo']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
-checksum | SHA256 checksum for Bamboo install | String | auto-detected (see attributes/default.rb)
-home_path | home data directory for Bamboo user | String | /home/bamboo
-install_path | location to install Bamboo | String | /opt/bamboo
-download_url | URL for Bamboo install | String | auto-detected (see attributes/default.rb)
+url | Url for your bamboo installation | String | http://localhost
+home_dir | location to install Bamboo | String | /opt/bamboo
+data_dir | home data directory for Bamboo user | String | /var/bamboo
 user | user to run Bamboo | String | bamboo
+group | group for user bamboo | String | bamboo
+user_home | home dir for user bamboo | String | /home/bamboo
 version | Bamboo version to install | String | 5.3
-
+download_url | URL for Bamboo install | String | auto-detected (see attributes/default.rb)
+checksum | SHA256 checksum for Bamboo install | String | auto-detected (see attributes/default.rb)
 
 ### Bamboo Database Attributes
 
@@ -52,6 +53,7 @@ These attributes are under the `node['bamboo']['database']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
+type | Bamboo database type | String | mysql (only database supported atm)
 host | FQDN or "localhost" (localhost automatically installs `['database']['type']` server) | String | localhost
 name | Bamboo database name | String | Bamboo
 password | Bamboo database user password | String | changeit
@@ -70,27 +72,13 @@ maximum_memory | JVM maximum memory | String | 2048m
 maximum_permgen | JVM maximum PermGen memory | String | 256m
 support_args | additional JAVA_OPTS recommended by Atlassian support for Bamboo JVM during startup | String | ""
 
-### Bamboo Tomcat Attributes
-
-These attributes are under the `node['bamboo']['tomcat']` namespace.
-
-Any `node['Bamboo']['tomcat']['key*']` attributes are overridden by `Bamboo/Bamboo` encrypted data bag (Hosted Chef) or data bag (Chef Solo), if it exists
-
-Attribute | Description | Type | Default
-----------|-------------|------|--------
-keyAlias | Tomcat SSL keystore alias | String | tomcat
-keystoreFile | Tomcat SSL keystore file - will automatically generate self-signed keystore file if left as default | String | `#{node['Bamboo']['home_path']}/.keystore`
-keystorePass | Tomcat SSL keystore passphrase | String | changeit
-port | Tomcat HTTP port | Fixnum | 8085
-ssl_port | Tomcat HTTPS port | Fixnum | 8443
-
 ### Bamboo Graylog Attributes
 
 These attributes are under the `node['bamboo']['graylog']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
-enabled | Enable graylog True/Falseyes/no | String | True
+enabled | Enable graylog True/Falseyes/no | String | false
 facility | The facility name in graylog | string | bamboo
 host | Hostname of the graylog server | string | graylog.yourdomian.com
 origin | origin of the host | string | auto-detected (see attributes/default.rb)
@@ -101,11 +89,13 @@ These attributes are under the `node['bamboo']['backup']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
-enabled | Enable graylog True/Falseyes/no | String | True
+enabled | Enable backup to s3 True/False yes/no | String | false
+s3_host | your bucket in S3 | String | s3.amazonaws.com
+s3_scheme | your bucket in S3 | String | http
+s3_port | your bucket in S3 | String | 80
 s3_access_key_id | Your acces key for S3 | String | changeit
 s3_secret_access_key | Your secret key for S3  | String | changeit
 s3_bucket | your bucket in S3 | String | bamboo
-
 
 ## Recipes
 
@@ -113,14 +103,11 @@ s3_bucket | your bucket in S3 | String | bamboo
 * recipe "bamboo::server", "Only installs the bamboo server."
 * recipe "bamboo::agent", "Installs a bamboo agent."
 
-
 ## Usage
-
 
 ### Bamboo Server Default Installation
 
 * Add `recipe[bamboo]` to your node's run list.
-
 
 ### Code Deployment From Bamboo
 
