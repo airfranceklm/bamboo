@@ -38,8 +38,8 @@ These attributes are under the `node['bamboo']` namespace.
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
 url | Url for your bamboo installation | String | http://localhost
-home_dir | location to install Bamboo | String | /opt/bamboo
-data_dir | home data directory for Bamboo user | String | /var/bamboo
+home_dir | Bamboo install directory | String | /opt/bamboo
+data_dir | Bamboo data directory | String | /var/bamboo
 user | user to run Bamboo | String | bamboo
 group | group for user bamboo | String | bamboo
 user_home | home dir for user bamboo | String | /home/bamboo
