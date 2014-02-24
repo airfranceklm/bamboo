@@ -13,7 +13,7 @@
 	ServerAlias <%= virtual_host_alias %>
 	<% end -%>
 	<% end -%>
-	DocumentRoot <%= node['bamboo']['install_path'] %>
+	DocumentRoot <%= node['bamboo']['home_dir'] %>
 	
 	CustomLog <%= node['bamboo']['apache2']['access_log'].empty? ? node['apache']['log_dir']+"/bamboo-access.log" : node['bamboo']['apache2']['access_log'] %> combined
 	ErrorLog <%= node['bamboo']['apache2']['error_log'].empty? ? node['apache']['log_dir']+"/bamboo-error.log" : node['bamboo']['apache2']['error_log'] %>
@@ -25,8 +25,8 @@
 		Order Deny,Allow
 		Allow from all
 	</Proxy>
-	ProxyPass        / http://localhost:<%= node['bamboo']['tomcat']['port'] %>/ connectiontimeout=5 timeout=300
-	ProxyPassReverse / http://localhost:<%= node['bamboo']['tomcat']['port'] %>/
+	ProxyPass        / http://localhost:8085/ connectiontimeout=5 timeout=300
+	ProxyPassReverse / http://localhost:8085/
 </VirtualHost>
 
 <VirtualHost *:<%= node['bamboo']['apache2']['ssl']['port'] %>>
@@ -39,7 +39,7 @@
 	ServerAlias <%= virtual_host_alias %>
 	<% end -%>
 	<% end -%>
-	DocumentRoot <%= node['bamboo']['install_path'] %>
+	DocumentRoot <%= node['bamboo']['home_dir'] %>
 
 	CustomLog <%= node['bamboo']['apache2']['ssl']['access_log'].empty? ? node['apache']['log_dir']+"/bamboo-ssl-access.log" : node['bamboo']['apache2']['ssl']['access_log'] %> combined
 	ErrorLog <%= node['bamboo']['apache2']['ssl']['error_log'].empty? ? node['apache']['log_dir']+"/bamboo-ssl-error.log" : node['bamboo']['apache2']['ssl']['error_log'] %>
@@ -49,8 +49,8 @@
 		Order Deny,Allow
 		Allow from all
 	</Proxy>
-	ProxyPass        / http://localhost:<%= node['bamboo']['tomcat']['port'] %>/ connectiontimeout=5 timeout=300
-	ProxyPassReverse / http://localhost:<%= node['bamboo']['tomcat']['port'] %>/
+	ProxyPass        / http://localhost:8085/ connectiontimeout=5 timeout=300
+	ProxyPassReverse / http://localhost:8085/
 
 	SSLEngine on
 	SSLCertificateFile <%= node['bamboo']['apache2']['ssl']['certificate_file'] %>

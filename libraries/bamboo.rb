@@ -18,7 +18,6 @@ class Chef::Recipe::Bamboo
     ensure
       settings ||= node[:bamboo]
       settings[:database][:port] ||= default_database_port settings[:database][:type]
-      settings[:database][:testInterval] ||= 2
     end
 
     settings
