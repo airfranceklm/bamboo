@@ -16,6 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+# bamboo server
 default[:bamboo][:url]                            = 'http://localhost'                  # bamboo server URL
 default[:bamboo][:home_dir]                       = '/opt/bamboo'                       # bamboo installation directory
 default[:bamboo][:data_dir]                       = '/var/bamboo'                       # bamboo data directory
@@ -43,6 +45,13 @@ default[:bamboo][:jvm][:maximum_memory]           = "2048m"
 default[:bamboo][:jvm][:maximum_permgen]          = "256m"
 default[:bamboo][:jvm][:support_args]             = ""
 
+# bamboo agent
+default[:bamboo][:agent][:home_dir]               = '/opt/bamboo'                       # bamboo installation directory
+default[:bamboo][:agent][:data_dir]               = '/var/bamboo'                       # bamboo data directory
+default[:bamboo][:agent][:user]                   = "bamboo"                            # bamboo user
+default[:bamboo][:agent][:group]                  = "bamboo"                            # bamboo group
+default[:bamboo][:agent][:user_home]              = "/home/bamboo"                      # bamboo system user home directory
+default[:bamboo][:agent][:data_dir]               = '/var/bamboo'                       # bamboo data directory
 default[:bamboo][:agent][:disable_agent_auto_capability_detection] = true
 default[:bamboo][:agent][:additional_path]        = ""
 

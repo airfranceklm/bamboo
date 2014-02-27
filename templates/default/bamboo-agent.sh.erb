@@ -38,8 +38,8 @@ PIDDIR="."
 # NOTE - This will set the user which is used to run the Wrapper as well as
 #  the JVM and is not useful in situations where a privileged resource or
 #  port needs to be allocated prior to the user being changed.
-RUN_AS_USER=<%= node[:bamboo][:user] %>
-export HOME=<%= node[:bamboo][:user_home] %>
+RUN_AS_USER=<%= node[:bamboo][:agent][:user] %>
+export HOME=<%= node[:bamboo][:agent][:user_home] %>
 
 # The following two lines are used by the chkconfig command. Change as is
 #  appropriate for your application.  They should remain commented.
