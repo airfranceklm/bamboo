@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: nova
+# Cookbook Name:: bamboo
 # Attributes:: default
 #
 # Author:: Ramon Makkelie, Stephan Oudmaijer
@@ -25,10 +25,11 @@ default[:bamboo][:user]                           = "bamboo"                    
 default[:bamboo][:group]                          = "bamboo"                            # bamboo group
 default[:bamboo][:user_home]                      = "/home/bamboo"                      # bamboo system user home directory
 default[:bamboo][:name]                           = 'bamboo'                            # bamboo application/service name
-default[:bamboo][:version]                        = '5.3'
+default[:bamboo][:version]                        = '5.4.1'
 default[:bamboo][:download_url]                   = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
 default[:bamboo][:checksum] =
 case node[:bamboo][:version]
+  when '5.4.1' then '61657B5B585613E148EDA68B778ED94D782B31869C38E0170EE5B1EB4B332FA6'
   when '5.1.1' then '8ebb5fd045cef2765fde13e3f3b88e48da7262f2508ce209a24e9a446c761b8b'
   when '5.3'   then '814e9bc11a48ca475621de94b9b22abb4be6b9b6997967b1cc568492f0220064'
 end
