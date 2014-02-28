@@ -4,6 +4,22 @@
 
 Installs/Configures [Atlassian Bamboo](https://www.atlassian.com/software/Bamboo/)
 
+## Usage
+
+### Bamboo Server Installation
+
+* Add `recipe[bamboo]` to your node's run list.
+
+### Bamboo Agent Installation
+
+* Add `recipe[bamboo::agent]` to your node's run list.
+
+## Recipes
+
+* recipe "bamboo::default", "Installs the bamboo server with optional backup in place and logging to graylog."
+* recipe "bamboo::server", "Only installs the bamboo server."
+* recipe "bamboo::agent", "Installs a bamboo agent."
+
 ## Requirements
 
 ### Platforms
@@ -14,7 +30,7 @@ Installs/Configures [Atlassian Bamboo](https://www.atlassian.com/software/Bamboo
 
 * MySQL
 
-### Cookbooks
+### Cookbook dependencies
 
 Required [Opscode Cookbooks](https://github.com/opscode-cookbooks/)
 
@@ -31,9 +47,9 @@ Third-Party Cookbooks
 * [mysql_connector](https://github.com/bflad/chef-mysql_connector) (if using MySQL database)
 * [backup](https://github.com/ramonskie/backup) (if using backup)
 
-## Attributes
+## Bamboo attributes
 
-These attributes are under the `node['bamboo']` namespace.
+These attributes are under the `node[:bamboo]` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
@@ -47,9 +63,23 @@ version | Bamboo version to install | String | 5.3
 download_url | URL for Bamboo install | String | auto-detected (see attributes/default.rb)
 checksum | SHA256 checksum for Bamboo install | String | auto-detected (see attributes/default.rb)
 
+## Bamboo agent attributes
+
+These attributes are under the `node[:bamboo][:agent]` namespace. Agents attributes can be different than the server attributes.
+
+Attribute | Description | Type | Default
+----------|-------------|------|--------
+home_dir | Bamboo install directory | String | /opt/bamboo
+data_dir | Bamboo data directory | String | /var/bamboo
+user | user to run Bamboo | String | bamboo
+group | group for user bamboo | String | bamboo
+user_home | home dir for user bamboo | String | /home/bamboo
+disable_agent_auto_capability_detection | sets the flag on the agent | String | true
+additional_path | will be added to the $PATH of the agent process | String |
+
 ### Bamboo Database Attributes
 
-These attributes are under the `node['bamboo']['database']` namespace.
+These attributes are under the `node[:bamboo][:database]` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
@@ -63,7 +93,7 @@ user | Bamboo database user | String | Bamboo
 
 ### Bamboo JVM Attributes
 
-These attributes are under the `node['bamboo']['jvm']` namespace.
+These attributes are under the `node[:bamboo][:jvm]` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
@@ -74,7 +104,7 @@ support_args | additional JAVA_OPTS recommended by Atlassian support for Bamboo 
 
 ### Bamboo Graylog Attributes
 
-These attributes are under the `node['bamboo']['graylog']` namespace.
+These attributes are under the `node[:bamboo][:graylog]` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
@@ -85,7 +115,7 @@ origin | origin of the host | string | auto-detected (see attributes/default.rb)
 
 ### Bamboo Backup Attributes
 
-These attributes are under the `node['bamboo']['backup']` namespace.
+These attributes are under the `node[:bamboo][:backup]` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
@@ -96,18 +126,6 @@ s3_port | your bucket in S3 | String | 80
 s3_access_key_id | Your acces key for S3 | String | changeit
 s3_secret_access_key | Your secret key for S3  | String | changeit
 s3_bucket | your bucket in S3 | String | bamboo
-
-## Recipes
-
-* recipe "bamboo::default", "Installs the bamboo server with optional backup in place and logging to graylog."
-* recipe "bamboo::server", "Only installs the bamboo server."
-* recipe "bamboo::agent", "Installs a bamboo agent."
-
-## Usage
-
-### Bamboo Server Default Installation
-
-* Add `recipe[bamboo]` to your node's run list.
 
 ### Code Deployment From Bamboo
 
