@@ -93,4 +93,5 @@ template 'procfile.monitrc' do
   owner 'root'
   group 'root'
   mode '0644'
+  notifies :restart, "service[monit]", :delayed
 end
