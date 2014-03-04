@@ -95,3 +95,9 @@ template 'procfile.monitrc' do
   mode '0644'
   notifies :restart, "service[monit]", :delayed
 end
+
+# Create and enable service
+service "monit" do
+  supports :restart => true, :status => true, :start => true, :stop => true
+  action [:enable, :start]
+end
