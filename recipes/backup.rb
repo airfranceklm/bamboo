@@ -27,7 +27,7 @@ backup_generate_model "database" do
   backup_type "database"
   database_type "MySQL"
   store_with({"engine" => "S3", "settings" => { "s3.access_key_id" => "#{node[:bamboo][:backup][:s3_access_key_id]}", "s3.secret_access_key" => "#{node[:bamboo][:backup][:s3_secret_access_key]}", "s3.bucket" => "#{node[:bamboo][:backup][:s3_bucket]}", "s3.path" => "bamboo-database", "s3.keep" => 5, "s3.fog_options" => {  :host => "#{node[:bamboo][:backup][:s3_host]}", :scheme => "#{node[:bamboo][:backup][:s3_scheme]}", :port => "#{node[:bamboo][:backup][:s3_port]}" } } } )
-  options({"db.host" => "\"localhost\"", "db.username" => "\"#{node[:bamboo][:database][:user]}\"", "db.password" => "\"#{node[:bamboo][:database][:password]}\"", "db.name" => "\"#{node[:bamboo][:database][:name]}\""})
+  options({"db.host" => "\"#{node[:bamboo][:database][:host]}\"", "db.port" => "\"#{node[:bamboo][:database][:port]}\"", "db.username" => "\"#{node[:bamboo][:database][:user]}\"", "db.password" => "\"#{node[:bamboo][:database][:password]}\"", "db.name" => "\"#{node[:bamboo][:database][:name]}\""})
   action :backup
 end
 
