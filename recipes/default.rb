@@ -16,8 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'bamboo::database_mysql' unless node[:bamboo][:database][:type] == 'mysql'
+include_recipe 'bamboo::database_mysql' if node[:bamboo][:database][:type] == 'mysql'
 include_recipe 'bamboo::apache2'
 include_recipe 'bamboo::server'
-include_recipe 'bamboo::backup' unless node[:bamboo][:backup][:enabled]
-include_recipe 'bamboo::graylog' unless node[:bamboo][:graylog][:enabled]
+include_recipe 'bamboo::backup' if node[:bamboo][:backup][:enabled]
+include_recipe 'bamboo::graylog' if node[:bamboo][:graylog][:enabled]
