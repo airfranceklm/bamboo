@@ -17,14 +17,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-cookbook_file "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/lib/gelfj-1.1.2.jar" do
+cookbook_file "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/lib/gelfj-1.1.2.jar" do
   source 'gelfj-1.1.2.jar'
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
   mode '0775'
 end
 
-cookbook_file "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/lib/json-simple-1.1.jar" do
+cookbook_file "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/lib/json-simple-1.1.jar" do
   source 'json-simple-1.1.jar'
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
@@ -32,7 +32,7 @@ cookbook_file "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/lib/json
 end
 
 template 'log4j.properties' do
-  path "#{node[:bamboo][:install_path]}/atlassian-bamboo/WEB-INF/classes/log4j.properties"
+  path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties"
   source 'log4j.properties.erb'
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]

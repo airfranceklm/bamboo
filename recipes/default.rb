@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: chef-client
+# Cookbook Name:: bamboo
 # Recipe:: default
 #
-# Copyright 2010, Opscode, Inc.
+# Copyright 2014
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
 include_recipe 'bamboo::database_mysql' if node[:bamboo][:database][:type] == 'mysql'
 include_recipe 'bamboo::apache2'
