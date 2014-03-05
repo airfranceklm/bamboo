@@ -27,7 +27,7 @@ JVM_REQUIRED_ARGS=""
 #
 # Needs to be set on the bamboo server to disable agent capability detection
 #
-JVM_AGENT_AUTO_CAP_DET="-Ddisable_agent_auto_capability_detection=<%= node[:bamboo][:agent][:disable_agent_auto_capability_detection] %>"
+JVM_AGENT_AUTO_CAP_DET="-DDISABLE_AGENT_AUTO_CAPABILITY_DETECTION=<%= node[:bamboo][:agent][:disable_agent_auto_capability_detection] %>"
 
 #-----------------------------------------------------------------------------------
 #
