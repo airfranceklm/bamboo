@@ -24,6 +24,11 @@ JVM_MAXIMUM_MEMORY="<%= node['bamboo']['jvm']['maximum_memory'] %>"
 #
 JVM_REQUIRED_ARGS=""
 
+#
+# Needs to be set on the bamboo server to disable agent capability detection
+#
+JVM_AGENT_AUTO_CAP_DET="-Ddisable_agent_auto_capability_detection=<%= node[:bamboo][:agent][:disable_agent_auto_capability_detection] %>"
+
 #-----------------------------------------------------------------------------------
 #
 # In general don't make changes below here
@@ -46,7 +51,7 @@ cat "${PRGDIR}"/bamboobanner.txt
 #   fi
 #i
 
-JAVA_OPTS="-Xms${JVM_MINIMUM_MEMORY} -Xmx${JVM_MAXIMUM_MEMORY} ${JAVA_OPTS} ${JVM_REQUIRED_ARGS} ${JVM_SUPPORT_RECOMMENDED_ARGS} " #${BAMBOO_HOME_MINUSD}"
+JAVA_OPTS="-Xms${JVM_MINIMUM_MEMORY} -Xmx${JVM_MAXIMUM_MEMORY} ${JAVA_OPTS} ${JVM_REQUIRED_ARGS} ${JVM_SUPPORT_RECOMMENDED_ARGS} ${JVM_AGENT_AUTO_CAP_DET}" #${BAMBOO_HOME_MINUSD}"
 
 
 # Perm Gen size needs to be increased if encountering OutOfMemoryError: PermGen problems. Specifying PermGen size is not valid on IBM JDKs
