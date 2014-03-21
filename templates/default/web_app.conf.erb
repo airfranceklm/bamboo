@@ -44,6 +44,8 @@
 	CustomLog <%= node['bamboo']['apache2']['ssl']['access_log'].empty? ? node['apache']['log_dir']+"/bamboo-ssl-access.log" : node['bamboo']['apache2']['ssl']['access_log'] %> combined
 	ErrorLog <%= node['bamboo']['apache2']['ssl']['error_log'].empty? ? node['apache']['log_dir']+"/bamboo-ssl-error.log" : node['bamboo']['apache2']['ssl']['error_log'] %>
 	LogLevel warn
+    ProxyRequests Off
+    ProxyPreserveHost On
 
 	<Proxy *>
 		Order Deny,Allow
