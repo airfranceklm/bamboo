@@ -7,3 +7,7 @@ gem 'kitchen-openstack'
 gem 'foodcritic'
 gem 'rubocop'
 gem 'rake'
+
+gem 'chef'
+gem 'chefspec'
+gem 'rspec'

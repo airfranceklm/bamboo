@@ -34,14 +34,14 @@ user node[:bamboo][:agent][:user] do
 end
 
 # Create required directories
-directory "#{node[:bamboo][:agent][:home_dir]}" do
+directory node[:bamboo][:agent][:home_dir] do
   owner  node[:bamboo][:agent][:user]
   group  node[:bamboo][:agent][:group]
   mode "0775"
   action :create
 end
 
-directory "#{node[:bamboo][:agent][:data_dir]}" do
+directory node[:bamboo][:agent][:data_dir] do
   owner  node[:bamboo][:agent][:user]
   group  node[:bamboo][:agent][:group]
   mode "0775"
