@@ -1,9 +1,9 @@
 rvm:
   - 2.0.0
-bundler_args: --without development
+#bundler_args: --without development
 before_script:
   - bundle exec berks install
 script: 
   # - bundle exec knife cookbook test -a -o .
-  - bundle exec rake foodcritic
+  - bundle exec rake
   # - bundle exec rubocop
