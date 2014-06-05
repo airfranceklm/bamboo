@@ -1,6 +1,7 @@
 require "foodcritic"
 require "rspec/core/rake_task"
 require "rubocop/rake_task"
+require 'rake/dsl_definition'
 
 # desc "Run RuboCop style and lint checks"
 # Rubocop::RakeTask.new(:rubocop)
