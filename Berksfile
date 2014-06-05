@@ -1,8 +1,8 @@
-site :opscode
+source "https://api.berkshelf.com"
 
 metadata
-cookbook 'backup', github: 'damm/backup', protocol: :https
-cookbook 'mysql_connector', github: 'bflad/chef-mysql_connector', protocol: :https
+cookbook 'backup', git: 'https://github.com/damm/backup'
+cookbook 'mysql_connector', git: 'https://github.com/bflad/chef-mysql_connector'
 
 group :integration do
   cookbook "apt"
