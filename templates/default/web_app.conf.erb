@@ -15,8 +15,8 @@
 	<% end -%>
 	DocumentRoot <%= node['bamboo']['home_dir'] %>
 	
-	<% unless node['bamboo']['apache2']['error_docs']['503'].empty? -%>
-	ErrorDocument 503 <%= node['bamboo']['apache2']['error_docs']['503'] %>
+	<% unless node['bamboo']['apache2']['error_docs']['e503'].empty? -%>
+	ErrorDocument 503 <%= node['bamboo']['apache2']['error_docs']['e503'] %>
 	<% end -%>
 	
 	CustomLog <%= node['bamboo']['apache2']['access_log'].empty? ? node['apache']['log_dir']+"/bamboo-access.log" : node['bamboo']['apache2']['access_log'] %> combined
@@ -45,8 +45,8 @@
 	<% end -%>
 	DocumentRoot <%= node['bamboo']['home_dir'] %>
 
-	<% unless node['bamboo']['apache2']['error_docs']['503'].empty? -%>
-	ErrorDocument 503 <%= node['bamboo']['apache2']['error_docs']['503'] %>
+	<% unless node['bamboo']['apache2']['error_docs']['e503'].empty? -%>
+	ErrorDocument 503 <%= node['bamboo']['apache2']['error_docs']['e503'] %>
 	<% end -%>
 
 	CustomLog <%= node['bamboo']['apache2']['ssl']['access_log'].empty? ? node['apache']['log_dir']+"/bamboo-ssl-access.log" : node['bamboo']['apache2']['ssl']['access_log'] %> combined
