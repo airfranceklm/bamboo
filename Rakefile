@@ -8,7 +8,12 @@ require 'rake/dsl_definition'
 
 desc "Run Foodcritic lint checks"
 FoodCritic::Rake::LintTask.new(:foodcritic) do |t|
-  t.options = { :fail_tags => ["any"] }
+  t.options = {
+      tags: %w(~FC001 ),
+      fail_tags: ['any'],
+      #include_rules: '',
+      context: true,
+  }
 end
 
 desc "Run ChefSpec examples"
@@ -28,4 +33,4 @@ task :default => :foodcritic
 #   task :test => :integration
 # rescue LoadError
 #   puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
-# end
+# en
