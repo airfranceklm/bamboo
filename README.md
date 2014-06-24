@@ -113,6 +113,15 @@ facility | The facility name in graylog | string | bamboo
 host | Hostname of the graylog server | string | graylog.yourdomian.com
 origin | origin of the host | string | auto-detected (see attributes/default.rb)
 
+### Bamboo Graylog Attributes
+
+These attributes are under the `node[:bamboo][:graylog]` namespace.
+
+Attribute | Description | Type | Default
+----------|-------------|------|--------
+error_docs| Provide custom error docs | Array | e503 - empty
+
+
 ### Bamboo Backup Attributes
 
 These attributes are under the `node[:bamboo][:backup]` namespace.
