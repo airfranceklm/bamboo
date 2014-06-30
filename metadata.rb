@@ -15,13 +15,14 @@ recipe "bamboo::agent",       "Installs a bamboo agent."
 end
 
 # Always specify the version of your dependencies
+depends "apt"                 "= 2.3.8"
 depends "ark",                "= 0.4.0"
 depends "apache2",            "= 1.8.4"
-depends "backup",             "= 0.1.0"
+depends "backup",             "= 0.2.0"
 depends "cron",               "= 1.2.8"
 depends "database",           "= 1.5.2"
 depends "git",                "= 2.7.0"
 depends "java",               "= 1.22.0"
 depends "mysql",              "= 3.0.2"
-depends "mysql_connector",    "= 0.7.1"
+depends "mysql_connector",    "= 0.7.2"
 depends "perl",               "= 1.2.0"
