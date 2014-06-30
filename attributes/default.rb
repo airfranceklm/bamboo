@@ -46,6 +46,9 @@ default[:bamboo][:jvm][:maximum_memory]           = "2048m"
 default[:bamboo][:jvm][:maximum_permgen]          = "256m"
 default[:bamboo][:jvm][:support_args]             = ""
 
+default[:java][:install_flavor]                   = 'openjdk'
+default[:java][:jdk_version]                      = '7'
+
 # bamboo agent
 default[:bamboo][:agent][:home_dir]               = '/opt/bamboo'                       # bamboo installation directory
 default[:bamboo][:agent][:data_dir]               = '/var/bamboo'                       # bamboo data directory
