@@ -1,24 +1,32 @@
 ---
-driver_plugin: vagrant
-driver_config:
-  require_chef_omnibus: true
+driver_plugin: openstack
+
+provisioner:
+  name: chef_zero
 
 platforms:
- - name: openstack
-   driver_config:
-    box: dummy
-    openstack_username: vagrant
-    openstack_api_key:  vagrant
-    openstack_auth_url:  http://172.21.42.2:5000/v2.0/tokens
-    image_ref: a702eb59-97a4-428f-9990-b963bce061e6
-    flavor_ref: fea03d7c-7502-4347-8a49-f96b172d45b9
-    key_name: eindbaas-key
-    ssh_key: ~/.ssh/eindbaas-key
-    public_key_path: ~/.ssh/eindbaas-key.pub
-    username: ubuntu
-    name: stash-test
+- name: ubuntu-13.04
+driver_config:
+  openstack_username: vagrant
+  openstack_api_key: vagrant
+  openstack_auth_url: http://172.21.42.2:5000/v2.0/tokens
+  require_chef_omnibus: latest
+  image_ref: Ubuntu Server 13.04
+  flavor_ref: mx.medium
+  floating_ip_pool: nova
+  key_name: eindbaas-key
+  private_key_path: /home/klm21904/.ssh/eindbaas-key
+  username: ubuntu
+  server_name: bamboo-dev
+  disable_ssl_validation: true
 
 suites:
-- name: default
-  run_list: ["recipe[bamboo]"]
-  attributes: {}
+  - name: default
+    run_list:
+      - recipe[apt]
+      - recipe[bamboo]
+    attributes:
+      bamboo:
+        name: bamboo-dev
+      apt:
+        compiletime: true
