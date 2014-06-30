@@ -15,7 +15,7 @@ recipe "bamboo::agent",       "Installs a bamboo agent."
 end
 
 # Always specify the version of your dependencies
-depends "apt"                 "= 2.3.8"
+depends "apt"
 depends "ark",                "= 0.4.0"
 depends "apache2",            "= 1.8.4"
 depends "backup",             "= 0.2.0"
