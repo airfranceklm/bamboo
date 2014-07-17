@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+default[:apache][:version] = '2.4' unless node[:platform_version] < '13.10'
+
 default[:bamboo][:apache2][:access_log]         = ''
 default[:bamboo][:apache2][:error_log]          = ''
 default[:bamboo][:apache2][:port]               = 80

@@ -25,4 +25,9 @@ include_recipe 'apache2::mod_proxy'
 include_recipe 'apache2::mod_proxy_http'
 include_recipe 'apache2::mod_ssl'
 
-web_app node[:bamboo][:apache2][:virtual_host_name]
+# TODO: this can be resolved after this BUG is fixed: https://github.com/onehealth-cookbooks/apache2/issues/149
+if node[:apache][:version] == '2.4'
+  web_app node[:bamboo][:apache2][:virtual_host_name]
+else
+  web_app "#{node[:bamboo][:apache2][:virtual_host_name]}.conf"
+end

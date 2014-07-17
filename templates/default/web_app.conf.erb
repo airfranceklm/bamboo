@@ -26,9 +26,14 @@
     ProxyPreserveHost On
 
 	<Proxy *>
+      <% if node['apache']['version'] == '2.4' -%>
+        Require all granted
+      <% else -%>
 		Order Deny,Allow
 		Allow from all
+    <% end -%>
 	</Proxy>
+
 	ProxyPass        / http://localhost:8085/ connectiontimeout=5 timeout=300
 	ProxyPassReverse / http://localhost:8085/
 </VirtualHost>
@@ -56,8 +61,12 @@
     ProxyPreserveHost On
 
 	<Proxy *>
-		Order Deny,Allow
-		Allow from all
+      <% if node['apache']['version'] == '2.4' -%>
+         Require all granted
+      <% else -%>
+        Order Deny,Allow
+        Allow from all
+      <% end -%>
 	</Proxy>
 	ProxyPass        / http://localhost:8085/ connectiontimeout=5 timeout=300
 	ProxyPassReverse / http://localhost:8085/
