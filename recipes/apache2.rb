@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+
 node.set[:apache][:listen_ports] = node[:apache][:listen_ports] + [node[:bamboo][:apache2][:port]] unless node[:apache][:listen_ports].include?(node[:bamboo][:apache2][:port])
 node.set[:apache][:listen_ports] = node[:apache][:listen_ports] + [node[:bamboo][:apache2][:ssl][:port]] unless node[:apache][:listen_ports].include?(node[:bamboo][:apache2][:ssl][:port])
 
@@ -25,9 +26,15 @@ include_recipe 'apache2::mod_proxy'
 include_recipe 'apache2::mod_proxy_http'
 include_recipe 'apache2::mod_ssl'
 
-# TODO: this can be resolved after this BUG is fixed: https://github.com/onehealth-cookbooks/apache2/issues/149
-if node[:apache][:version] == '2.4'
-  web_app node[:bamboo][:apache2][:virtual_host_name]
-else
-  web_app "#{node[:bamboo][:apache2][:virtual_host_name]}.conf"
+web_app "bamboo" do
 end
+
+web_app "000-default" do
+  enable false
+end
+
+# TODO: see bug https://github.com/onehealth-cookbooks/apache2/issues/187
+# execute "restart_apache" do
+#   command "service apache2 restart"
+#   action :run
+# end

@@ -5,13 +5,13 @@ provisioner:
   name: chef_zero
 
 platforms:
-- name: ubuntu-13.10
+- name: ubuntu-14.04
 driver_config:
   openstack_username: vagrant
   openstack_api_key: vagrant
   openstack_auth_url: http://172.21.42.2:5000/v2.0/tokens
   require_chef_omnibus: latest
-  image_ref: Ubuntu Server 12.04
+  image_ref: Ubuntu Server 14.04
   flavor_ref: mx.medium
   floating_ip_pool: nova
   key_name: eindbaas-key
