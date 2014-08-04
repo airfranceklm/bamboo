@@ -2,7 +2,8 @@ AllCops:
   Excludes:
     - test/**
     - vendor/**
-
+Documentation:
+  Enabled: false
 AlignParameters:
   Enabled: false
 Encoding:
@@ -13,3 +14,13 @@ LineLength:
   Enabled: false
 MethodLength:
   Max: 30
+#
+# we like our neatly-aligned code too much
+#
+SingleSpaceBeforeFirstArg:
+  Enabled: false
+#
+# couldn't figure it out so set this
+#
+ClassAndModuleChildren:
+  EnforcedStyle: compact

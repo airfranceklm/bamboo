@@ -28,5 +28,7 @@ suites:
     attributes:
       bamboo:
         name: bamboo-dev
+        backup:
+          enabled: false
       apt:
         compiletime: true

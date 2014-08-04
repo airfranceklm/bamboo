@@ -1,8 +1,8 @@
 settings = Bamboo.settings(node)
 
 database_connection = {
-    :host => settings[:database][:host],
-    :port => settings[:database][:port]
+  :host => settings[:database][:host],
+  :port => settings[:database][:port]
 }
 
 include_recipe 'mysql::server'
