@@ -21,7 +21,7 @@ RSpec::Core::RakeTask.new(:spec)
 
 desc 'Run all tests'
 task :test => [:rubocop, :foodcritic, :spec]
-task :default => :foodcritic
+task :default => :test
 
 # begin
 #   require "kitchen/rake_tasks"
