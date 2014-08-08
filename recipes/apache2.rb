@@ -27,9 +27,3 @@ include_recipe 'apache2::mod_ssl'
 
 web_app 'bamboo' do
 end
-
-# TODO: see bug https://github.com/onehealth-cookbooks/apache2/issues/187
-# execute "restart_apache" do
-#   command "service apache2 restart"
-#   action :run
-# end

@@ -1,6 +1,11 @@
 .rake_test_cache
 
 #
+# rbenv files
+#
+.ruby-version
+
+#
 # Ignore Chef key files and secrets
 #
 *.pem
