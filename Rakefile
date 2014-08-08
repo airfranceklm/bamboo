@@ -20,7 +20,7 @@ desc 'Run ChefSpec examples'
 RSpec::Core::RakeTask.new(:spec)
 
 desc 'Run all tests'
-task :test => [:rubocop, :foodcritic]
+task :test => [:rubocop, :foodcritic, :spec]
 task :default => :test
 
 # begin
