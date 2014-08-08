@@ -77,6 +77,18 @@ link '/etc/init.d/bamboo-agent' do
   to "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-agent.sh"
 end
 
+template 'bamboo-capabilities.properties' do
+  path "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-capabilities.properties"
+  source 'bamboo-capabilities.properties.erb'
+  owner  node[:bamboo][:agent][:user]
+  group  node[:bamboo][:agent][:group]
+  mode 0644
+  variables(
+      :options => node[:bamboo][:agent][:attributes]
+  )
+  notifies :restart, 'service[bamboo-agent]', :delayed
+end
+
 # Create and enable service
 service 'bamboo-agent' do
   supports :restart => true, :status => true, :start => true, :stop => true

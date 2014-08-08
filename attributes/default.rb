@@ -59,6 +59,11 @@ default[:bamboo][:agent][:user_home]              = '/home/bamboo'              
 default[:bamboo][:agent][:data_dir]               = '/var/bamboo'                       # bamboo data directory
 default[:bamboo][:agent][:disable_agent_auto_capability_detection] = true
 default[:bamboo][:agent][:additional_path]        = ''
+default[:bamboo][:agent][:attributes]                = {
+  'system.jdk.JDK\ 1.7'                           => '/usr/lib/jvm/java-7-openjdk-amd64',
+  'system.git.executable'                         => '/usr/bin/git',
+  'system.builder.mvn3.Maven3'                    => '/opt/maven/bin/'
+}
 
 # If you're authenticating against a Crowd server you can use this authenticator for single sign-on.
 # Enable it after configuring your Crowd properties through user management and restart Bamboo. It does not support
