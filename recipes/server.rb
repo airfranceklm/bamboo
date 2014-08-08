@@ -16,8 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "ark"
-include_recipe "java"
+include_recipe 'ark'
+include_recipe 'java'
 
 # Create group and users
 group node[:bamboo][:group] do
@@ -25,39 +25,39 @@ group node[:bamboo][:group] do
 end
 
 user node[:bamboo][:user] do
-  comment "Bamboo Service Account"
-  home    node[:bamboo][:user_home]
-  shell   "/bin/bash"
+  comment 'Bamboo Service Account'
+  home node[:bamboo][:user_home]
+  shell '/bin/bash'
   supports :manage_home => true
-  gid     node[:bamboo][:group]
-  system  true
-  action  :create
+  gid node[:bamboo][:group]
+  system true
+  action :create
 end
 
 # Create required directories
 directory node[:bamboo][:data_dir] do
-  owner  node[:bamboo][:user]
-  group  node[:bamboo][:group]
-  mode "0775"
+  owner node[:bamboo][:user]
+  group node[:bamboo][:group]
+  mode 0775
   action :create
 end
 
 # Download and install the bamboo package
 ark node[:bamboo][:name] do
-  url node[:bamboo][:download_url]
+  url      node[:bamboo][:download_url]
   home_dir node[:bamboo][:home_dir]
   checksum node[:bamboo][:checksum]
-  version node[:bamboo][:version]
-  owner node[:bamboo][:user]
-  group node[:bamboo][:group]
-  notifies :restart, "service[bamboo]", :delayed
+  version  node[:bamboo][:version]
+  owner    node[:bamboo][:user]
+  group    node[:bamboo][:group]
+  notifies :restart, 'service[bamboo]', :delayed
 end
 
-if node[:bamboo][:database][:type] == "mysql"
+if node[:bamboo][:database][:type] == 'mysql'
   directory "#{node[:bamboo][:home_dir]}/lib" do
-    owner  node[:bamboo][:user]
-    group  node[:bamboo][:group]
-    mode "0775"
+    owner node[:bamboo][:user]
+    group node[:bamboo][:group]
+    mode 0775
     action :create
   end
 
@@ -65,41 +65,39 @@ if node[:bamboo][:database][:type] == "mysql"
 end
 
 # Install templates
-template "/etc/init.d/bamboo" do
-  source "bamboo.init.erb"
-  mode   "0755"
-  notifies :restart, "service[bamboo]", :delayed
+template '/etc/init.d/bamboo' do
+  source 'bamboo.init.erb'
+  mode 0755
+  notifies :restart, 'service[bamboo]', :delayed
 end
 
-template "bamboo-init.properties" do
+template 'bamboo-init.properties' do
   path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties"
-  source "bamboo-init.properties.erb"
-  owner  node[:bamboo][:user]
-  group  node[:bamboo][:group]
+  source 'bamboo-init.properties.erb'
+  owner node[:bamboo][:user]
+  group node[:bamboo][:group]
   mode 0644
-  notifies :restart, "service[bamboo]", :delayed
+  notifies :restart, 'service[bamboo]', :delayed
 end
 
-template "seraph-config.xml" do
+template 'seraph-config.xml' do
   path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
-  source "seraph-config.xml.erb"
-  owner  node[:bamboo][:user]
-  group  node[:bamboo][:group]
+  source 'seraph-config.xml.erb'
+  owner node[:bamboo][:user]
+  group node[:bamboo][:group]
   mode 0644
-  notifies :restart, "service[bamboo]", :delayed
+  notifies :restart, 'service[bamboo]', :delayed
 end
 
 template "#{node[:bamboo][:home_dir]}/bin/setenv.sh" do
-  source "setenv.sh.erb"
-  owner  node[:bamboo][:user]
-  mode   "0755"
-  notifies :restart, "service[bamboo]", :delayed
+  source 'setenv.sh.erb'
+  owner node[:bamboo][:user]
+  mode 0755
+  notifies :restart, 'service[bamboo]', :delayed
 end
 
 # Create and enable service
-service "bamboo" do
+service 'bamboo' do
   supports :status => true, :restart => true, :start => true, :stop => true
   action :enable
 end
-
-# TODO monit would be nice!

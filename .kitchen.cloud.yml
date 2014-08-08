@@ -1,0 +1,52 @@
+---
+driver_config:
+  openstack_username: <%= ENV['OPENSTACK_USERNAME'] %>
+  openstack_api_key: <%= ENV['OPENSTACK_API_KEY'] %>
+  openstack_auth_url: <%= ENV['OPENSTACK_AUTH_URL'] %>
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: latest
+
+platforms:
+- name: ubuntu-12.04
+  driver_plugin: openstack
+  driver_config:
+    image_ref: Ubuntu Server 12.04
+    flavor_ref: mx.medium
+    floating_ip_pool: nova
+    key_name: <%= ENV['KEY_NAME'] %>
+    private_key_path: <%= ENV['PRIVATE_KEY_PATH'] %>
+    username: ubuntu
+    server_name: bamboo-dev
+    disable_ssl_validation: true
+  run_list:
+    - recipe[apt]
+- name: ubuntu-14.04
+  driver_plugin: openstack
+  driver_config:
+    image_ref: Ubuntu Server 14.04
+    flavor_ref: mx.medium
+    floating_ip_pool: nova
+    key_name: <%= ENV['KEY_NAME'] %>
+    private_key_path: <%= ENV['PRIVATE_KEY_PATH'] %>
+    username: ubuntu
+    server_name: bamboo-dev
+    disable_ssl_validation: true
+  run_list:
+    - recipe[apt]
+
+suites:
+  - name: default
+    run_list:
+      - recipe[bamboo]
+    attributes:
+      bamboo:
+        name: bamboo-dev
+        backup:
+          enabled: false
+        agent:
+          data_dir: /var/bamboo-agent
+          home_dir: /opt/bamboo-agent
+      apt:
+        compiletime: true

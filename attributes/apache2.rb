@@ -17,6 +17,10 @@
 # limitations under the License.
 #
 
+if node[:platform] == 'ubuntu' && node[:platform_version].to_f >= 13.10
+  default[:apache][:mpm] = 'event'
+end
+
 default[:bamboo][:apache2][:access_log]         = ''
 default[:bamboo][:apache2][:error_log]          = ''
 default[:bamboo][:apache2][:port]               = 80

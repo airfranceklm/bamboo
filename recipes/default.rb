@@ -24,4 +24,4 @@ include_recipe 'bamboo::database_mysql' if node[:bamboo][:database][:type] == 'm
 include_recipe 'bamboo::apache2'
 include_recipe 'bamboo::server'
 include_recipe 'bamboo::backup' unless node[:bamboo][:backup][:enabled] == false
-include_recipe 'bamboo::graylog' unless node[:bamboo][:graylog][:enabled] ==false
+include_recipe 'bamboo::graylog' unless node[:bamboo][:graylog][:enabled] == false
