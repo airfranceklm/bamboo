@@ -45,7 +45,7 @@ Required [Opscode Cookbooks](https://github.com/opscode-cookbooks/)
 Third-Party Cookbooks
 
 * [mysql_connector](https://github.com/bflad/chef-mysql_connector) (if using MySQL database)
-* [backup](https://github.com/ramonskie/backup) (if using backup)
+* [backup](https://github.com/damm/backup) (if using backup)
 
 ## Bamboo attributes
 
