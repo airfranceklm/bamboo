@@ -62,7 +62,7 @@ default[:bamboo][:agent][:additional_path]        = ''
 default[:bamboo][:agent][:attributes]                = {
   'system.jdk.JDK\ 1.7'                           => '/usr/lib/jvm/java-7-openjdk-amd64',
   'system.git.executable'                         => '/usr/bin/git',
-  'system.builder.mvn3.Maven3'                    => '/opt/maven/bin/'
+  'system.builder.mvn3.Maven\ 3'                    => '/opt/maven/bin/'
 }
 
 # If you're authenticating against a Crowd server you can use this authenticator for single sign-on.
@@ -70,6 +70,7 @@ default[:bamboo][:agent][:attributes]                = {
 # Crowd property changes at runtime. If you need to switch back to local users, revert the change and
 # restart Bamboo again.
 default[:bamboo][:crowd]                          = false
+default[:bamboo][:crowd][:sso]                    = false
 
 # graylog2 integrations
 default[:bamboo][:graylog][:enabled]              = false

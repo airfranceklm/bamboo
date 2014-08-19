@@ -63,7 +63,7 @@
          Crowd property changes at runtime. If you need to switch back to local users, revert the change and
          restart Bamboo again.
      -->
-  <% if node['bamboo']['crowd'] == true -%>
+  <% if node['bamboo']['crowd']['sso'] == true -%>
     <authenticator class="com.atlassian.crowd.integration.seraph.v25.BambooAuthenticator"/>
   <% else -%>
     <authenticator class="com.atlassian.bamboo.user.authentication.BambooAuthenticator"/>
