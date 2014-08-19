@@ -70,7 +70,7 @@ default[:bamboo][:agent][:attributes]                = {
 # Crowd property changes at runtime. If you need to switch back to local users, revert the change and
 # restart Bamboo again.
 default[:bamboo][:crowd]                          = false
-default[:bamboo][:crowd][:sso]                    = false
+
 
 # graylog2 integrations
 default[:bamboo][:graylog][:enabled]              = false
