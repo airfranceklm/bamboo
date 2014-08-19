@@ -41,6 +41,7 @@ default[:bamboo][:database][:port]                = 3306
 default[:bamboo][:database][:name]                = 'bamboo'
 default[:bamboo][:database][:user]                = 'bamboo'
 default[:bamboo][:database][:password]            = 'bamboo'
+default[:mysql][:bind_address]                    = 'localhost'
 
 default[:bamboo][:jvm][:minimum_memory]           = '512m'
 default[:bamboo][:jvm][:maximum_memory]           = '2048m'
@@ -70,7 +71,6 @@ default[:bamboo][:agent][:attributes]                = {
 # Crowd property changes at runtime. If you need to switch back to local users, revert the change and
 # restart Bamboo again.
 default[:bamboo][:crowd]                          = false
-
 
 # graylog2 integrations
 default[:bamboo][:graylog][:enabled]              = false
