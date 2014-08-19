@@ -3,6 +3,8 @@ AllCops:
     - test/**
     - vendor/**/*
     - spec/**
+    - Thorfile
+    - Vagrantfile
 Documentation:
   Enabled: false
 AlignParameters:
