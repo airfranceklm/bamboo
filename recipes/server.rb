@@ -96,6 +96,12 @@ template "#{node[:bamboo][:home_dir]}/bin/setenv.sh" do
   notifies :restart, 'service[bamboo]', :delayed
 end
 
+template "#{node[:bamboo][:home_dir]}/bin/stop-bamboo.sh" do
+  source 'stop-bamboo.sh.erb'
+  owner node[:bamboo][:user]
+  mode 0755
+end
+
 # Create and enable service
 service 'bamboo' do
   supports :status => true, :restart => true, :start => true, :stop => true

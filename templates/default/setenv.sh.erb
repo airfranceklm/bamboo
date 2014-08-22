@@ -37,6 +37,7 @@ JVM_AGENT_AUTO_CAP_DET="-DDISABLE_AGENT_AUTO_CAPABILITY_DETECTION=<%= node[:bamb
 
 PRGDIR=`dirname "$0"`
 cat "${PRGDIR}"/bamboobanner.txt
+export CATALINA_PID=<%= node[:bamboo][:data_dir] %>/<%= node[:bamboo][:name] %>.pid
 
 #BAMBOO_HOME_MINUSD=""
 #if [ "$BAMBOO_HOME" != "" ]; then

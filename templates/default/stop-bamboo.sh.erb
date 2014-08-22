@@ -1,0 +1,39 @@
+#!/bin/sh
+# resolve links - $0 may be a softlink - stolen from catalina.sh
+PRG="$0"
+while [ -h "$PRG" ]; do
+  ls=`ls -ld "$PRG"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '/.*' > /dev/null; then
+    PRG="$link"
+  else
+    PRG=`dirname "$PRG"`/"$link"
+  fi
+done
+PRGDIR=`dirname "$PRG"`
+
+$PRGDIR/shutdown.sh $@
+
+
+echo 'Now checking if Bamboo is still running...'
+PID="<%= node[:bamboo][:data_dir] %>/<%= node[:bamboo][:name] %>.pid"
+NUM=`cat $PID|awk '{print $1}'`
+TEMP=`ps -U bamboo|grep bamboo |grep -v stop|awk '{print $2}'`
+echo $NUM
+echo $TEMP
+if [ "$NUM" == "$TEMP" ]
+then
+  echo 'sleeping 60 seconds'
+  sleep 60
+
+  echo 'Tomcat Process id is: ' "$NUM"
+  echo 'Force killing Tomcat now...'
+  $PRGDIR/catalina.sh stop -force $NUM
+  echo 'Killed'
+else
+   rm $PID
+   echo 'Tomcat is already shutdown'
+fi
+
+echo
+echo "...done"
