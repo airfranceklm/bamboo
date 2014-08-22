@@ -50,3 +50,5 @@ suites:
           home_dir: /opt/bamboo-agent
       apt:
         compiletime: true
+    excludes:
+      - ubuntu-12.04
