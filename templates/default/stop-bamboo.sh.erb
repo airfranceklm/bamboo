@@ -18,10 +18,10 @@ $PRGDIR/shutdown.sh $@
 echo 'Now checking if Bamboo is still running...'
 PID="<%= node[:bamboo][:data_dir] %>/<%= node[:bamboo][:name] %>.pid"
 NUM=`cat $PID|awk '{print $1}'`
-TEMP=`ps -U bamboo|grep bamboo |grep -v stop|awk '{print $2}'`
-echo $NUM
-echo $TEMP
-if [ "$NUM" == "$TEMP" ]
+TEMP=`pgrep -o -f bamboo`
+echo 'num' $NUM
+echo 'temp' $TEMP
+if [ "$NUM"="$TEMP" ]
 then
   echo 'sleeping 60 seconds'
   sleep 60
