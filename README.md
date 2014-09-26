@@ -83,7 +83,7 @@ These attributes are under the `node[:bamboo][:database]` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
-type | Bamboo database type | String | mysql (only database supported atm)
+type | Bamboo database type | String | mysql (no other database supported atm)
 host | FQDN or "localhost" (localhost automatically installs `['database']['type']` server) | String | localhost
 name | Bamboo database name | String | Bamboo
 password | Bamboo database user password | String | changeit
@@ -110,7 +110,7 @@ Attribute | Description | Type | Default
 ----------|-------------|------|--------
 enabled | Enable graylog True/Falseyes/no | String | false
 facility | The facility name in graylog | string | bamboo
-host | Hostname of the graylog server | string | graylog.yourdomian.com
+host | Hostname of the graylog server | string | graylog.yourdomain.com
 origin | origin of the host | string | auto-detected (see attributes/default.rb)
 
 ### Bamboo Graylog Attributes
