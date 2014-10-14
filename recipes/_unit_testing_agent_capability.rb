@@ -3,7 +3,7 @@ bamboo_agent_capability 'system.git.executable' do
 end
 
 bamboo_agent_capability 'system.of.a.down' do
- value 'Toxicity'
+  value 'Toxicity'
 end
 
 template 'bamboo-capabilities.properties' do
