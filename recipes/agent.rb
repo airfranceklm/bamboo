@@ -77,6 +77,7 @@ link '/etc/init.d/bamboo-agent' do
   to "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-agent.sh"
 end
 
+capabilities = node[:bamboo][:agent_capabilities]
 template 'bamboo-capabilities.properties' do
   path "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-capabilities.properties"
   source 'bamboo-capabilities.properties.erb'
@@ -84,7 +85,7 @@ template 'bamboo-capabilities.properties' do
   group  node[:bamboo][:agent][:group]
   mode 0644
   variables(
-      :options => node[:bamboo][:agent][:attributes]
+      :options => capabilities
   )
   notifies :restart, 'service[bamboo-agent]', :delayed
 end
