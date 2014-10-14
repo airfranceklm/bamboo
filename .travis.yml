@@ -6,4 +6,3 @@ before_script:
 script: 
   # - bundle exec knife cookbook test -a -o .
   - bundle exec rake
-  - bundle exec rspec
