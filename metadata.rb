@@ -3,7 +3,7 @@ maintainer                    'Ramon Makkelie, Stephan Oudmaijer'
 maintainer_email              'ramonmakkelie@gmail.com, soudmaijer@gmail.com'
 license                       'Apache 2.0'
 description                   'Installs and configures Bamboo'
-version                       '1.2.9'
+version                       '1.3.0'
 
 recipe 'bamboo::default',     'Installs the bamboo server with optional backup in place and logging to graylog.'
 recipe 'bamboo::server',      'Only installs the bamboo server.'
@@ -16,7 +16,7 @@ end
 
 # Always specify the version of your dependencies
 depends 'apt'
-depends 'ark',                '~> 0.4.0'
+depends 'ark',                '~> 0.9.0'
 depends 'apache2'
 depends 'backup',             '~> 0.2.1'
 depends 'cron',               '~> 1.2.8'
