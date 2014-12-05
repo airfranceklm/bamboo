@@ -16,8 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-execute 'apt-get-update' do
-  command 'apt-get update'
+if platform_family?('debian')
+  execute 'apt-get-update' do
+    command 'apt-get update'
+  end
 end
 
 include_recipe 'bamboo::database_mysql' if node[:bamboo][:database][:type] == 'mysql'
