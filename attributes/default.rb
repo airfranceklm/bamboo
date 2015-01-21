@@ -38,12 +38,13 @@ when '5.6.2' then '57737a00207642e7be4ceea7b702e30e1caccaaa51e08699c2c9ae588e4c8
 end
 
 default[:bamboo][:database][:type]                = 'mysql'
-default[:bamboo][:database][:host]                = 'localhost'
+default[:bamboo][:database][:host]                = '127.0.0.1'
 default[:bamboo][:database][:port]                = 3306
 default[:bamboo][:database][:name]                = 'bamboo'
 default[:bamboo][:database][:user]                = 'bamboo'
 default[:bamboo][:database][:password]            = 'bamboo'
-default[:mysql][:bind_address]                    = 'localhost'
+#default[:mysql][:bind_address]                    = 'localhost'
+default[:mysql][:server_root_password]            = 'changeme'
 
 default[:bamboo][:jvm][:minimum_memory]           = '512m'
 default[:bamboo][:jvm][:maximum_memory]           = '2048m'
