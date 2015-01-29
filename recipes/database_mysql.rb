@@ -5,10 +5,9 @@ database_connection = {
   :port => settings[:database][:port]
 }
 
-#include_recipe 'mysql::server'
 mysql_service 'default' do
   version '5.6'
-  bind_address '0.0.0.0'
+  bind_address node[:bamboo][:database][:host]
   port '3306'
   initial_root_password node[:mysql][:server_root_password]
   action [:create, :start]
