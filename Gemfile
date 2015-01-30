@@ -8,6 +8,6 @@ gem 'foodcritic', '>=3.0.5'
 gem 'rubocop'
 gem 'rake'
 
-gem 'chef'
+gem 'chef', '>=11'
 gem 'chefspec'
 gem 'rspec'
