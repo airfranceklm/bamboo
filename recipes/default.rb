@@ -16,10 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-if platform_family?('debian')
-  execute 'apt-get-update' do
-    command 'apt-get update'
-  end
+execute 'apt-get-update' do
+  command 'apt-get update'
+  only_if { platform_family?('debian') }
 end
 
 include_recipe 'bamboo::database_mysql' if node[:bamboo][:database][:type] == 'mysql'

@@ -43,7 +43,6 @@ default[:bamboo][:database][:port]                = 3306
 default[:bamboo][:database][:name]                = 'bamboo'
 default[:bamboo][:database][:user]                = 'bamboo'
 default[:bamboo][:database][:password]            = 'bamboo'
-#default[:mysql][:bind_address]                    = 'localhost'
 default[:mysql][:server_root_password]            = 'changeme'
 
 default[:bamboo][:jvm][:minimum_memory]           = '512m'

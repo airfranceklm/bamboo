@@ -25,3 +25,9 @@ SingleSpaceBeforeFirstArg:
 #
 ClassAndModuleChildren:
   EnforcedStyle: compact
+
+#
+# libraries/bamboo is to complex for rubocop
+#
+Metrics/AbcSize:
+ Max: 17
