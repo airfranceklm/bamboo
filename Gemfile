@@ -10,4 +10,4 @@ gem 'rake'
 
 gem 'chef', '>=11'
 gem 'chefspec'
-gem 'rspec'
+gem 'rspec', '>=3.1'
