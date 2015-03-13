@@ -6,7 +6,7 @@ database_connection = {
 }
 
 mysql_service 'default' do
-  version '5.6'
+  version node[:bamboo][:database][:version]
   bind_address node[:bamboo][:database][:host]
   port '3306'
   initial_root_password node[:mysql][:server_root_password]

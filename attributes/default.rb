@@ -39,6 +39,7 @@ when '5.7.2' then 'b378500ea61803333fc27b0a42cfbdfbce5dccc75cead0b464dbc4e5e0bdd
 end
 
 default[:bamboo][:database][:type]                = 'mysql'
+default[:bamboo][:database][:version]             = '5.6'
 default[:bamboo][:database][:host]                = '127.0.0.1'
 default[:bamboo][:database][:port]                = 3306
 default[:bamboo][:database][:name]                = 'bamboo'
@@ -60,7 +61,6 @@ default[:bamboo][:agent][:data_dir]               = '/var/bamboo'               
 default[:bamboo][:agent][:user]                   = 'bamboo'                            # bamboo user
 default[:bamboo][:agent][:group]                  = 'bamboo'                            # bamboo group
 default[:bamboo][:agent][:user_home]              = '/home/bamboo'                      # bamboo system user home directory
-default[:bamboo][:agent][:data_dir]               = '/var/bamboo'                       # bamboo data directory
 default[:bamboo][:agent][:disable_agent_auto_capability_detection] = true
 default[:bamboo][:agent][:additional_path]        = ''
 default[:bamboo][:agent_capabilities]              = {}
