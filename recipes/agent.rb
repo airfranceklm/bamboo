@@ -85,7 +85,7 @@ template 'bamboo-capabilities.properties' do
   group  node[:bamboo][:agent][:group]
   mode 0644
   variables(
-      :options => capabilities
+    :options => capabilities
   )
   notifies :restart, 'service[bamboo-agent]', :delayed
 end

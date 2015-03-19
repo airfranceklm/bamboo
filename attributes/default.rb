@@ -25,7 +25,7 @@ default[:bamboo][:user]                           = 'bamboo'                    
 default[:bamboo][:group]                          = 'bamboo'                            # bamboo group
 default[:bamboo][:user_home]                      = '/home/bamboo'                      # bamboo system user home directory
 default[:bamboo][:name]                           = 'bamboo'                            # bamboo application/service name
-default[:bamboo][:version]                        = '5.6.2'
+default[:bamboo][:version]                        = '5.8.1'
 default[:bamboo][:download_url]                   = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
 default[:bamboo][:checksum] =
 case node[:bamboo][:version]
@@ -35,9 +35,12 @@ when '5.4.1' then '61657B5B585613E148EDA68B778ED94D782B31869C38E0170EE5B1EB4B332
 when '5.5.1' then '1a9229158d7347d8debeca824ce1511d40e1baa8514309aea576e0c07d73cf19'
 when '5.6.0' then '71c72e094fbcc258aa0f0cf74c652e0d63887c35b900f563bc672db99c5d9b98'
 when '5.6.2' then '57737a00207642e7be4ceea7b702e30e1caccaaa51e08699c2c9ae588e4c88b3'
+when '5.7.2' then 'b378500ea61803333fc27b0a42cfbdfbce5dccc75cead0b464dbc4e5e0bddb17'
+when '5.8.1' then 'bb691d22273ceaa999eb435dfb4e8d697c3c803505218845bf5785ec2785cbd8'
 end
 
 default[:bamboo][:database][:type]                = 'mysql'
+default[:bamboo][:database][:version]             = '5.6'
 default[:bamboo][:database][:host]                = '127.0.0.1'
 default[:bamboo][:database][:port]                = 3306
 default[:bamboo][:database][:name]                = 'bamboo'
@@ -59,7 +62,6 @@ default[:bamboo][:agent][:data_dir]               = '/var/bamboo'               
 default[:bamboo][:agent][:user]                   = 'bamboo'                            # bamboo user
 default[:bamboo][:agent][:group]                  = 'bamboo'                            # bamboo group
 default[:bamboo][:agent][:user_home]              = '/home/bamboo'                      # bamboo system user home directory
-default[:bamboo][:agent][:data_dir]               = '/var/bamboo'                       # bamboo data directory
 default[:bamboo][:agent][:disable_agent_auto_capability_detection] = true
 default[:bamboo][:agent][:additional_path]        = ''
 default[:bamboo][:agent_capabilities]              = {}

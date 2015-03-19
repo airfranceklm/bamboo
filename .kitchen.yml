@@ -13,8 +13,6 @@ platforms:
   run_list:
   - recipe[apt]
 - name: centos-6.5
-  run_list:
-  - recipe[apt]
 
 suites:
   - name: default

@@ -13,6 +13,6 @@ template 'bamboo-capabilities.properties' do
   group  node[:bamboo][:agent][:group]
   mode 0644
   variables(
-      :options => node[:bamboo][:agent_capabilities]
+    :options => node[:bamboo][:agent_capabilities]
   )
 end

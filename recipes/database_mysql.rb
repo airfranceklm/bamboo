@@ -6,7 +6,7 @@ database_connection = {
 }
 
 mysql_service 'default' do
-  version '5.6'
+  version node[:bamboo][:database][:version]
   bind_address node[:bamboo][:database][:host]
   port '3306'
   data_dir node[:mysql][:data_dir] if node[:mysql][:data_dir]
