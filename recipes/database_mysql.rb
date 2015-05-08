@@ -5,6 +5,11 @@ database_connection = {
   :port => settings[:database][:port]
 }
 
+include_recipe 'build-essential'
+mysql2_chef_gem 'default' do
+  action :install
+end
+
 mysql_service 'default' do
   version node[:bamboo][:database][:version]
   bind_address node[:bamboo][:database][:host]
@@ -14,7 +19,7 @@ mysql_service 'default' do
   action [:create, :start]
 end
 
-include_recipe 'database::mysql'
+#include_recipe 'database'
 database_connection.merge!(:username => 'root', :password => node[:mysql][:server_root_password])
 
 mysql_database settings[:database][:name] do

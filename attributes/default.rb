@@ -79,6 +79,7 @@ default[:bamboo][:graylog][:host]                 = 'change_me'
 default[:bamboo][:graylog][:origin]               = node[:fqdn]
 
 # backup to an s3 bucket
+default[:bamboo][:backup][:ceph]                  = false
 default[:bamboo][:backup][:enabled]               = false
 default[:bamboo][:backup][:s3_host]               = 's3.amazonaws.com'
 default[:bamboo][:backup][:s3_scheme]             = 'http'
