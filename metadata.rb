@@ -18,7 +18,7 @@ end
 depends 'apt'
 depends 'ark',                '~> 0.9.0'
 depends 'apache2'
-depends 'backup',             '~> 0.2.1'
+depends 'backup',             '~> 0.2.3'
 depends 'cron',               '~> 1.2.8'
 depends 'database',           '~> 4.0.6'
 depends 'git',                '~> 2.7.0'
