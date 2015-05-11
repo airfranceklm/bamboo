@@ -19,7 +19,6 @@ mysql_service 'default' do
   action [:create, :start]
 end
 
-#include_recipe 'database'
 database_connection.merge!(:username => 'root', :password => node[:mysql][:server_root_password])
 
 mysql_database settings[:database][:name] do

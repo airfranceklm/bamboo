@@ -28,9 +28,9 @@ end
 backup_generate_config node.name
 
 if node[:bamboo][:backup][:ceph] == true
-ceph = ", :aws_signature_version => 2"
+  ceph = ', :aws_signature_version => 2'
 else
-ceph = nil
+  ceph = nil
 end
 
 backup_generate_model 'database' do
@@ -46,6 +46,6 @@ backup_generate_model 'data' do
   description 'bamboo data'
   backup_type 'archive'
   options('add' => [node[:bamboo][:data_dir]], 'tar_options' => '-p')
-  store_with('engine' => 'S3', 'settings' => { 's3.access_key_id' => node[:bamboo][:backup][:s3_access_key_id], 's3.secret_access_key' => node[:bamboo][:backup][:s3_secret_access_key], 's3.bucket' => node[:bamboo][:backup][:s3_bucket], 's3.path' => 'bamboo', 's3.keep' => 5, 's3.fog_options' => {  :host => node[:bamboo][:backup][:s3_host], :scheme => node[:bamboo][:backup][:s3_scheme], :port => node[:bamboo][:backup][:s3_port] } })
+  store_with('engine' => 'S3', 'settings' => { 's3.access_key_id' => node[:bamboo][:backup][:s3_access_key_id], 's3.secret_access_key' => node[:bamboo][:backup][:s3_secret_access_key], 's3.bucket' => node[:bamboo][:backup][:s3_bucket], 's3.path' => 'bamboo', 's3.keep' => 5, 's3.fog_options' => "{  :host => #{node[:bamboo][:backup][:s3_host]}, :scheme => #{node[:bamboo][:backup][:s3_scheme]}, :port => #{node[:bamboo][:backup][:s3_port]} #{ceph} }" })
   action :backup
 end
