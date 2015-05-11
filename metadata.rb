@@ -3,7 +3,7 @@ maintainer                    'Ramon Makkelie, Stephan Oudmaijer'
 maintainer_email              'ramonmakkelie@gmail.com, soudmaijer@gmail.com'
 license                       'Apache 2.0'
 description                   'Installs and configures Bamboo'
-version                       '1.4.2'
+version                       '1.4.3'
 
 recipe 'bamboo::default',     'Installs the bamboo server with optional backup in place and logging to graylog.'
 recipe 'bamboo::server',      'Only installs the bamboo server.'
