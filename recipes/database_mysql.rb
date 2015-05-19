@@ -17,7 +17,7 @@ mysql_service 'default' do
   data_dir node[:mysql][:data_dir] if node[:mysql][:data_dir]
   initial_root_password node[:mysql][:server_root_password]
   action [:create, :start]
-end
+end unless node[:bamboo][:database][:external] == true
 
 database_connection.merge!(:username => 'root', :password => node[:mysql][:server_root_password])
 

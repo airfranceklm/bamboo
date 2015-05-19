@@ -19,12 +19,7 @@
 
 include_recipe 'backup'
 
-package 'liblzma-dev'
-package 'zlib1g-dev'
-
-backup_install node.name do
-  version '4.1.10'
-end
+backup_install node.name
 backup_generate_config node.name
 
 fog_options = { :host => node[:bamboo][:backup][:s3_host], :scheme => node[:bamboo][:backup][:s3_scheme], :port => node[:bamboo][:backup][:s3_port] }
@@ -38,6 +33,7 @@ backup_generate_model 'database' do
   database_type 'MySQL'
   store_with('engine' => 'S3', 'settings' => { 's3.access_key_id' => node[:bamboo][:backup][:s3_access_key_id], 's3.secret_access_key' => node[:bamboo][:backup][:s3_secret_access_key], 's3.bucket' => node[:bamboo][:backup][:s3_bucket], 's3.path' => 'bamboo', 's3.keep' => 5, 's3.fog_options' => fog_options })
   options('db.host' => "\"#{node[:bamboo][:database][:host]}\"", 'db.port' => "\"#{node[:bamboo][:database][:port]}\"", 'db.username' => "\"#{node[:bamboo][:database][:user]}\"", 'db.password' => "\"#{node[:bamboo][:database][:password]}\"", 'db.name' => "\"#{node[:bamboo][:database][:name]}\"")
+  cron_path '/bin:/usr/bin:/usr/local/bin:/opt/chef/embedded/bin'
   action :backup
 end
 
@@ -46,5 +42,6 @@ backup_generate_model 'data' do
   backup_type 'archive'
   options('add' => [node[:bamboo][:data_dir]], 'tar_options' => '-p')
   store_with('engine' => 'S3', 'settings' => { 's3.access_key_id' => node[:bamboo][:backup][:s3_access_key_id], 's3.secret_access_key' => node[:bamboo][:backup][:s3_secret_access_key], 's3.bucket' => node[:bamboo][:backup][:s3_bucket], 's3.path' => 'bamboo', 's3.keep' => 5, 's3.fog_options' => fog_options })
+  cron_path '/bin:/usr/bin:/usr/local/bin:/opt/chef/embedded/bin'
   action :backup
 end

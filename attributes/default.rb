@@ -39,6 +39,7 @@ when '5.7.2' then 'b378500ea61803333fc27b0a42cfbdfbce5dccc75cead0b464dbc4e5e0bdd
 when '5.8.1' then 'bb691d22273ceaa999eb435dfb4e8d697c3c803505218845bf5785ec2785cbd8'
 end
 
+default[:bamboo][:database][:type]                = false
 default[:bamboo][:database][:type]                = 'mysql'
 default[:bamboo][:database][:version]             = '5.6'
 default[:bamboo][:database][:host]                = '127.0.0.1'
