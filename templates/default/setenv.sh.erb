@@ -9,6 +9,12 @@
 #BAMBOO_HOME="<%= node['bamboo']['data_dir'] %>"
 
 #
+# Sometimes required to select
+#
+CATALINA_OPTS="$CATALINA_OPTS <%= node['bamboo']['catalina']['opts'] %>"
+export CATALINA_OPTS
+
+#
 #  Occasionally Atlassian Support may recommend that you set some specific JVM arguments.  You can use this variable below to do that.
 #
 JVM_SUPPORT_RECOMMENDED_ARGS="<%= node['bamboo']['jvm']['support_args'] %>"
