@@ -11,7 +11,7 @@
 #
 # Sometimes required to select
 #
-CATALINA_OPTS="$CATALINA_OPTS <%= node['bamboo']['catalina']['opts'] %>"
+CATALINA_OPTS="${CATALINA_OPTS} <%= node['bamboo']['catalina']['opts'] %>"
 export CATALINA_OPTS
 
 #
