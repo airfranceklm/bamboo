@@ -99,7 +99,6 @@ Attribute | Description | Type | Default
 ----------|-------------|------|--------
 minimum_memory | JVM minimum memory | String | 512m
 maximum_memory | JVM maximum memory | String | 2048m
-maximum_permgen | JVM maximum PermGen memory | String | 256m
 support_args | additional JAVA_OPTS recommended by Atlassian support for Bamboo JVM during startup | String | ""
 
 ### Bamboo Graylog Attributes
@@ -129,6 +128,7 @@ These attributes are under the `node[:bamboo][:backup]` namespace.
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
 enabled | Enable backup to s3 True/False yes/no | String | false
+ceph | Enable if you use ceph True/False yes/no | String | false
 s3_host | your bucket in S3 | String | s3.amazonaws.com
 s3_scheme | your bucket in S3 | String | http
 s3_port | your bucket in S3 | String | 80
@@ -140,14 +140,13 @@ s3_bucket | your bucket in S3 | String | bamboo
 
 ## Testing and Development
 
-Here's how you can quickly get testing or developing against the cookbook thanks to [Vagrant](http://vagrantup.com/) and [Berkshelf](http://berkshelf.com/).
+Here's how you can quickly get testing or developing against the cookbook thanks to [Test-Kitchen](http://kitchen.ci) and [Berkshelf](http://berkshelf.com/).
 
-    git clone git://github.com/ramonskie/chef-bamboo.git
-    cd chef-bamboo
-    vagrant plugin install vagrant-berkshelf
-    vagrant plugin install vagrant-cachier
-    vagrant plugin install vagrant-omnibus
-    vagrant up
+    git clone git://github.com/ramonskie/bamboo.git
+    cd bamboo
+    see [TESTING.md](TESTING.md)
+    
+
 
 The running Bamboo server is accessible from the host machine:
 

@@ -1,5 +1,9 @@
 ## test kitchen
 
+### install test kitchen
+
+gem install test-kitchen
+
 ### local
 
 run command "kitchen converge"

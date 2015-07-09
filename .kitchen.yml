@@ -23,6 +23,7 @@ suites:
         name: bamboo-dev
         backup:
           enabled: false
+          ceph: false
         agent:
           data_dir: /var/bamboo-agent
           home_dir: /opt/bamboo-agent

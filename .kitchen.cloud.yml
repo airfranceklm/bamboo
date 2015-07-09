@@ -44,7 +44,7 @@ suites:
       bamboo:
         name: bamboo-dev
         backup:
-          enabled: true
+          enabled: false
           ceph: false
         agent:
           data_dir: /var/bamboo-agent
