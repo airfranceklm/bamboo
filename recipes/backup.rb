@@ -19,7 +19,10 @@
 
 include_recipe 'backup'
 
-backup_install node.name
+backup_install node.name do
+  version '4.1.10'
+end
+
 backup_generate_config node.name
 
 fog_options = { :host => node[:bamboo][:backup][:s3_host], :scheme => node[:bamboo][:backup][:s3_scheme], :port => node[:bamboo][:backup][:s3_port] }
