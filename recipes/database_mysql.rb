@@ -7,6 +7,7 @@ database_connection = {
 
 include_recipe 'build-essential'
 mysql2_chef_gem 'default' do
+  client_version node[:bamboo][:database][:version]
   action :install
 end
 
