@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'debian::bamboo::agent' do
   let(:chef_run) do
-    runner = ChefSpec::Runner.new(
+    runner = ChefSpec::SoloRunner.new(
                                    platform: 'debian',
                                    version: '7.4',
                                    step_into: ['bamboo_agent_capability']
