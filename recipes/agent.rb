@@ -28,7 +28,7 @@ user node[:bamboo][:agent][:user] do
   gid  node[:bamboo][:agent][:group]
   home node[:bamboo][:agent][:user_home]
   supports :manage_home => true
-  shell  '/bin/bash'
+  shell '/bin/bash'
   system  true
   action  :create
 end
