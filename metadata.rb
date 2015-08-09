@@ -18,7 +18,7 @@ end
 depends 'apt'
 depends 'ark',                '~> 0.9.0'
 depends 'apache2'
-depends 'backup',             '= 0.2.4'
+depends 'backup_lwrp',        '= 0.2.5'
 depends 'cron'
 depends 'database',           '~> 4.0.6'
 depends 'git'
