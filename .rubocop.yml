@@ -21,6 +21,12 @@ MethodLength:
 SingleSpaceBeforeFirstArg:
   Enabled: false
 #
+# group of `depends` have some lone lines that we want aligned to group
+#
+ExtraSpacing:
+  Exclude:
+    - metadata.rb
+#
 # couldn't figure it out so set this
 #
 ClassAndModuleChildren:
