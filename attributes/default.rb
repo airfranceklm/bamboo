@@ -42,13 +42,21 @@ end
 
 default[:bamboo][:database][:external]            = false
 default[:bamboo][:database][:type]                = 'mysql'
-default[:bamboo][:database][:version]             = '5.6'
-default[:bamboo][:database][:host]                = '127.0.0.1'
-default[:bamboo][:database][:port]                = 3306
+case node[:bamboo][:database][:type]
+when 'mysql'
+  default[:bamboo][:database][:version]           = '5.6'
+  default[:bamboo][:database][:host]              = '127.0.0.1'
+  default[:bamboo][:database][:port]              = 3306
+when 'postgresql'
+  default[:postgresql][:version]                  = '9.4'
+  default[:bamboo][:database][:host]              = 'localhost'
+  default[:bamboo][:database][:port]              = 5432
+end
 default[:bamboo][:database][:name]                = 'bamboo'
 default[:bamboo][:database][:user]                = 'bamboo'
 default[:bamboo][:database][:password]            = 'bamboo'
 default[:mysql][:server_root_password]            = 'changeme'
+default[:postgresql][:password][:postgres]        = 'changeme'
 
 default[:bamboo][:jvm][:minimum_memory]           = '512m'
 default[:bamboo][:jvm][:maximum_memory]           = '2048m'
@@ -92,3 +100,7 @@ default[:bamboo][:backup][:s3_port]               = 80
 default[:bamboo][:backup][:s3_access_key_id]      = 'change_me'
 default[:bamboo][:backup][:s3_secret_access_key]  = 'change_me'
 default[:bamboo][:backup][:s3_bucket]             = 'change_me'
+
+# damn postgresql:ruby recipe still builds at compile time
+default[:apt][:ompile_time_update] = true
+default[:build_essential][:compiletime] = true
