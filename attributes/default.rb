@@ -25,7 +25,7 @@ default[:bamboo][:user]                           = 'bamboo'                    
 default[:bamboo][:group]                          = 'bamboo'                            # bamboo group
 default[:bamboo][:user_home]                      = '/home/bamboo'                      # bamboo system user home directory
 default[:bamboo][:name]                           = 'bamboo'                            # bamboo application/service name
-default[:bamboo][:version]                        = '5.9.1'
+default[:bamboo][:version]                        = '5.9.4'
 default[:bamboo][:download_url]                   = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
 default[:bamboo][:checksum] =
 case node[:bamboo][:version]
