@@ -29,8 +29,8 @@ user node[:bamboo][:agent][:user] do
   home node[:bamboo][:agent][:user_home]
   supports :manage_home => true
   shell  '/bin/bash'
-  system  true
-  action  :create
+  system true
+  action :create
 end
 
 # Create required directories
