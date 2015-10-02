@@ -1,8 +1,8 @@
 AllCops:
   Exclude:
-    - test/**
+    - test/**/*
     - vendor/**/*
-    - spec/**
+    - spec/**/*
 Documentation:
   Enabled: false
 AlignParameters:

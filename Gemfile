@@ -1,9 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'berkshelf'
-gem 'test-kitchen', :group => :integration
-gem 'kitchen-vagrant', :group => :integration
-gem 'kitchen-openstack'
+
+group :integration do
+  gem 'test-kitchen'
+  gem 'kitchen-vagrant'
+  gem 'kitchen-openstack'
+end
+
 gem 'foodcritic', '>=3.0.5'
 gem 'rubocop'
 gem 'rake'

@@ -17,8 +17,9 @@ platforms:
     floating_ip_pool: nova
     key_name: <%= ENV['KEY_NAME'] %>
     private_key_path: <%= ENV['PRIVATE_KEY_PATH'] %>
-    username: ubuntu
     server_name: bamboo-dev
+  transport:
+    username: ubuntu
     disable_ssl_validation: true
   run_list:
     - recipe[apt]
@@ -28,6 +29,8 @@ suites:
     run_list:
       - recipe[bamboo]
     attributes:
+      apt:
+        compile_time_update: true
       bamboo:
         name: bamboo-dev
         backup:
