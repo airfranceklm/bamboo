@@ -1,5 +1,9 @@
+language: ruby
 rvm:
   - 2.2
+
+sudo: false
+
 #bundler_args: --without development
 before_script:
   - bundle exec berks install
