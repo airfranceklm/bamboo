@@ -4,7 +4,8 @@ rvm:
 
 sudo: false
 
-#bundler_args: --without development
+cache: bundler
+bundler_args: --without integration
 before_script:
   - bundle exec berks install
 script: 
