@@ -23,6 +23,8 @@ suites:
     run_list:
       - recipe[bamboo]
     attributes:
+      apt:
+        compile_time_update: true
       bamboo:
         name: bamboo-dev
         backup:
