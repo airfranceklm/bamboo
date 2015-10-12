@@ -31,8 +31,6 @@ suites:
     attributes:
       bamboo:
         name: bamboo-dev
-        database:
-          type: postgresql
         backup:
           enabled: false
           ceph: false
