@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-cookbook_file "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/lib/gelfj-1.1.2.jar" do
+cookbook_file "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/lib/gelfj-1.1.12.jar" do
   source 'gelfj-1.1.12.jar'
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
