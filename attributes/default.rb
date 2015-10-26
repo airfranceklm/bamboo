@@ -104,6 +104,8 @@ default[:bamboo][:backup][:s3_port]               = 80
 default[:bamboo][:backup][:s3_access_key_id]      = 'change_me'
 default[:bamboo][:backup][:s3_secret_access_key]  = 'change_me'
 default[:bamboo][:backup][:s3_bucket]             = 'change_me'
+default[:bamboo][:backup][:hour]                  = '1'
+default[:bamboo][:backup][:minute]                = '*'
 
 # damn postgresql:ruby recipe still builds at compile time
 default[:apt][:compile_time_update] = true
