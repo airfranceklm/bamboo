@@ -69,9 +69,8 @@ default[:bamboo][:jvm][:support_args]             = ''
 
 default[:bamboo][:catalina][:opts]                = ''
 
-default[:java][:install_flavor]                   = 'oracle'
+default[:java][:install_flavor]                   = 'openjdk'
 default[:java][:jdk_version]                      = '8'
-default[:java][:oracle][:accept_oracle_download_terms] = true
 
 # bamboo agent
 default[:bamboo][:agent][:home_dir]               = '/opt/bamboo'                       # bamboo installation directory
