@@ -9,9 +9,8 @@ include_recipe 'build-essential'
 
 case settings['database']['type']
 when 'mysql'
-  mysql2_chef_gem 'default' do
-    client_version node[:bamboo][:database][:version]
-    action :install
+  mysql_client 'default' do
+    action :create
   end
 
   mysql_service 'default' do
