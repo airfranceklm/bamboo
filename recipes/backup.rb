@@ -30,7 +30,7 @@ fog_options.merge!(ceph) if node[:bamboo][:backup][:ceph] == true
 backup_generate_model 'database' do
   description 'Our shard'
   backup_type 'database'
-  database_type 'MySQL'
+  database_type node[:bamboo][:database_type]
   hour node[:bamboo][:backup][:hour]
   minute node[:bamboo][:backup][:minute]
   store_with('engine' => 'S3', 'settings' => { 's3.access_key_id' => node[:bamboo][:backup][:s3_access_key_id], 's3.secret_access_key' => node[:bamboo][:backup][:s3_secret_access_key], 's3.bucket' => node[:bamboo][:backup][:s3_bucket], 's3.path' => 'bamboo', 's3.keep' => 5, 's3.fog_options' => fog_options })

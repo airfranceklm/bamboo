@@ -42,19 +42,21 @@ when '5.9.4' then '8905a4750ca6d73feefbcc58d91e05be3bd60e2c60ca422f092a080f7263b
 end
 
 default[:bamboo][:database][:external]            = false
-default[:bamboo][:database][:type]                = 'mysql'
+default[:bamboo][:database][:type]                = 'postgresql'
 case node[:bamboo][:database][:type]
 when 'mysql'
   default[:bamboo][:database][:version]           = '5.6'
   default[:bamboo][:database][:host]              = '127.0.0.1'
   default[:bamboo][:database][:port]              = 3306
   default[:bamboo][:database][:root_user_name]    = 'root'
+  default[:bamboo][:database_type]                = 'MySQL'
 when 'postgresql'
   default[:postgresql][:version]                  = '9.4'
   default[:bamboo][:database][:host]              = 'localhost'
   default[:bamboo][:database][:port]              = 5432
   default[:postgresql][:config_pgtune][:db_type]  = 'web'
   default[:bamboo][:database][:root_user_name]    = 'postgres'
+  default[:bamboo][:database_type]                = 'PostgreSQL'
 end
 default[:bamboo][:database][:name]                = 'bamboo'
 default[:bamboo][:database][:user]                = 'bamboo'
