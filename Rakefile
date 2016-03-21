@@ -8,14 +8,7 @@ namespace :style do
   RuboCop::RakeTask.new(:rubocop)
 
   desc 'Run Foodcritic lint checks'
-  FoodCritic::Rake::LintTask.new(:foodcritic) do |t|
-    t.options = {
-      tags: %w(~FC001 ),
-      fail_tags: ['any'],
-      # include_rules: '',
-      context: true
-    }
-  end
+  FoodCritic::Rake::LintTask.new(:foodcritic)
 end
 
 desc 'Run ChefSpec examples'

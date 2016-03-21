@@ -22,10 +22,8 @@ when 'mysql'
     action [:create, :start]
   end unless node[:bamboo][:database][:external] == true
 
-  database_connection.merge!(
-    :username => node[:bamboo][:database][:root_user_name],
-    :password => node[:mysql][:server_root_password]
-  )
+  database_connection[:username] = node[:bamboo][:database][:root_user_name]
+  database_connection[:password] = node[:mysql][:server_root_password]
 
   mysql_database settings[:database][:name] do
     connection database_connection
@@ -51,10 +49,9 @@ when 'mysql'
 when 'postgresql'
   include_recipe 'postgresql::server' unless node[:bamboo][:database][:external] == true
   include_recipe 'database::postgresql'
-  database_connection.merge!(
-    :username => node[:bamboo][:database][:root_user_name],
-    :password => node[:postgresql][:password][:postgres]
-  )
+
+  database_connection[:username] = node[:bamboo][:database][:root_user_name]
+  database_connection[:password] = node[:postgresql][:password][:postgres]
 
   postgresql_database settings[:database][:name] do
     connection database_connection

@@ -18,7 +18,7 @@ MethodLength:
 #
 # we like our neatly-aligned code too much
 #
-SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
 #
 # couldn't figure it out so set this
