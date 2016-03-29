@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-node.set[:apache][:listen_ports] = node[:apache][:listen_ports] + [node[:bamboo][:apache2][:port]] unless node[:apache][:listen_ports].include?(node[:bamboo][:apache2][:port])
-node.set[:apache][:listen_ports] = node[:apache][:listen_ports] + [node[:bamboo][:apache2][:ssl][:port]] unless node[:apache][:listen_ports].include?(node[:bamboo][:apache2][:ssl][:port])
+node.default[:apache][:listen] += ["*:#{node[:bamboo][:apache2][:port]}"]
+node.default[:apache][:listen] += ["*:#{node[:bamboo][:apache2][:ssl][:port]}"]
 
 include_recipe 'apache2'
 include_recipe 'apache2::mod_proxy'

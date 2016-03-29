@@ -3,7 +3,7 @@ maintainer       'Ramon Makkelie, Stephan Oudmaijer'
 maintainer_email 'ramonmakkelie@gmail.com, soudmaijer@gmail.com'
 license          'Apache 2.0'
 description      'Installs and configures Bamboo'
-version          '1.6.0'
+version          '1.6.1'
 issues_url       'https://github.com/ramonskie/bamboo/issues'
 source_url       'https://github.com/ramonskie/bamboo.git'
 
