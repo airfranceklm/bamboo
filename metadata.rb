@@ -12,7 +12,7 @@ recipe 'bamboo::server',      'Only installs the bamboo server.'
 recipe 'bamboo::agent',       'Installs a bamboo agent.'
 
 # We only test on ubuntu, so debian and ubuntu should be rather safe
-%w( debian ubuntu centos redhat amazon ).each do |os|
+%w(debian ubuntu centos redhat amazon).each do |os|
   supports os
 end
 

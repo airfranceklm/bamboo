@@ -38,7 +38,7 @@ end
 directory node[:bamboo][:data_dir] do
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
-  mode 0775
+  mode '0775'
   action :create
 end
 
@@ -57,7 +57,7 @@ if node[:bamboo][:database][:type] == 'mysql'
   directory "#{node[:bamboo][:home_dir]}/lib" do
     owner node[:bamboo][:user]
     group node[:bamboo][:group]
-    mode 0775
+    mode '0775'
     action :create
   end
 
@@ -67,7 +67,7 @@ end
 # Install templates
 template '/etc/init.d/bamboo' do
   source 'bamboo.init.erb'
-  mode 0755
+  mode '0755'
   notifies :restart, 'service[bamboo]', :delayed
 end
 
@@ -76,7 +76,7 @@ template 'bamboo-init.properties' do
   source 'bamboo-init.properties.erb'
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
-  mode 0644
+  mode '0644'
   notifies :restart, 'service[bamboo]', :delayed
 end
 
@@ -85,21 +85,21 @@ template 'seraph-config.xml' do
   source 'seraph-config.xml.erb'
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
-  mode 0644
+  mode '0644'
   notifies :restart, 'service[bamboo]', :delayed
 end
 
 template "#{node[:bamboo][:home_dir]}/bin/setenv.sh" do
   source 'setenv.sh.erb'
   owner node[:bamboo][:user]
-  mode 0755
+  mode '0755'
   notifies :restart, 'service[bamboo]', :delayed
 end
 
 template "#{node[:bamboo][:home_dir]}/bin/stop-bamboo.sh" do
   source 'stop-bamboo.sh.erb'
   owner node[:bamboo][:user]
-  mode 0755
+  mode '0755'
 end
 
 # Create and enable service

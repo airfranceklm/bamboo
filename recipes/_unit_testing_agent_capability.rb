@@ -11,7 +11,7 @@ template 'bamboo-capabilities.properties' do
   source 'bamboo-capabilities.properties.erb'
   owner  node[:bamboo][:agent][:user]
   group  node[:bamboo][:agent][:group]
-  mode 0644
+  mode '0644'
   variables(
     :options => node[:bamboo][:agent_capabilities]
   )

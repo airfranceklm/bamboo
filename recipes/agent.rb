@@ -37,21 +37,21 @@ end
 directory node[:bamboo][:agent][:home_dir] do
   owner   node[:bamboo][:agent][:user]
   group   node[:bamboo][:agent][:group]
-  mode 0775
+  mode '0775'
   action :create
 end
 
 directory node[:bamboo][:agent][:data_dir] do
   owner   node[:bamboo][:agent][:user]
   group   node[:bamboo][:agent][:group]
-  mode 0775
+  mode '0775'
   action :create
 end
 
 # Download and install the bamboo package
 remote_file "#{node[:bamboo][:agent][:home_dir]}/atlassian-bamboo-agent-installer.jar" do
   source "#{node[:bamboo][:url]}/agentServer/agentInstaller/atlassian-bamboo-agent-installer-#{node[:bamboo][:version]}.jar"
-  mode 0644
+  mode '0644'
   owner  node[:bamboo][:agent][:user]
   group  node[:bamboo][:agent][:group]
   not_if { ::File.exist?("#{node[:bamboo][:agent][:home_dir]}/atlassian-bamboo-agent-installer.jar") }
@@ -69,7 +69,7 @@ template 'bamboo-agent.sh' do
   source 'bamboo-agent.sh.erb'
   owner  node[:bamboo][:agent][:user]
   group  node[:bamboo][:agent][:group]
-  mode   0755
+  mode   '0755'
   notifies :restart, 'service[bamboo-agent]', :delayed
 end
 
@@ -83,7 +83,7 @@ template 'bamboo-capabilities.properties' do
   source 'bamboo-capabilities.properties.erb'
   owner  node[:bamboo][:agent][:user]
   group  node[:bamboo][:agent][:group]
-  mode 0644
+  mode '0644'
   variables(
     :options => capabilities
   )
@@ -105,7 +105,7 @@ template 'procfile.monitrc' do
   path   '/etc/monit/conf.d/bamboo-agent.conf'
   owner  'root'
   group  'root'
-  mode 0644
+  mode '0644'
   notifies :restart, 'service[monit]', :delayed
 end
 

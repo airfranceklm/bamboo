@@ -36,6 +36,6 @@ template 'log4j.properties' do
   source 'log4j.properties.erb'
   owner  node[:bamboo][:user]
   group  node[:bamboo][:group]
-  mode 0644
+  mode '0644'
   notifies :restart, 'service[bamboo]', :delayed
 end
