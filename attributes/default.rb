@@ -25,7 +25,7 @@ default[:bamboo][:user]                           = 'bamboo'                    
 default[:bamboo][:group]                          = 'bamboo'                            # bamboo group
 default[:bamboo][:user_home]                      = '/home/bamboo'                      # bamboo system user home directory
 default[:bamboo][:name]                           = 'bamboo'                            # bamboo application/service name
-default[:bamboo][:version]                        = '5.10.3'
+default[:bamboo][:version]                        = '5.12.2'
 default[:bamboo][:download_url]                   = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
 default[:bamboo][:checksum] =
   case node[:bamboo][:version]
@@ -41,6 +41,7 @@ default[:bamboo][:checksum] =
   when '5.9.4'  then '8905a4750ca6d73feefbcc58d91e05be3bd60e2c60ca422f092a080f7263bdb2'
   when '5.9.7'  then '4efd7ed85e1b0886ff262ed388aa9049651b2bccffa60bdc59db73fb1609982f'
   when '5.10.3' then 'da6326d49dd5234319518f4b55fdfe521918931971c48bd43a48d6f6fb2717a6'
+  when '5.12.3.1' then '012d40a06aeda188ccd9d84d5b520d51e92dfd5ef081d1a8a8e9a9f333e01a5b'
   end
 
 default[:bamboo][:database][:external]            = false
