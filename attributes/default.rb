@@ -44,6 +44,10 @@ when 'mysql'
   default[:bamboo][:database_type]                = 'MySQL'
 when 'postgresql'
   default[:postgresql][:version]                  = '9.4'
+  default[:postgresql][:dir]                      = '/etc/postgresql/9.4/main'
+  default[:postgresql][:client][:packages]        = ['postgresql-client-9.4', 'libpq-dev']
+  default[:postgresql][:server][:packages]        = ['postgresql-9.4']
+  default[:postgresql][:contrib][:packages]       = ['postgresql-contrib-9.4']
   default[:bamboo][:database][:host]              = 'localhost'
   default[:bamboo][:database][:port]              = 5432
   default[:postgresql][:config_pgtune][:db_type]  = 'web'
@@ -102,4 +106,4 @@ default[:bamboo][:backup][:minute]                = '*'
 
 # damn postgresql:ruby recipe still builds at compile time
 default[:apt][:compile_time_update] = true
-default[:build_essential][:compiletime] = true
+default['build-essential']['compile_time'] = true
