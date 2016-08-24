@@ -82,7 +82,7 @@ template '/Library/LaunchDaemons/bamboo-agent.plist' do
   source 'bamboo-agent.plist.erb'
   owner 'root'
   group 'wheel'
-  mode 0644
+  mode '0644'
   variables(
     :username => node[:bamboo][:agent][:user],
     :data_dir => node[:bamboo][:agent][:data_dir]
