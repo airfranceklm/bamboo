@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>bamboo-agent</string>
+  <key>ProgramArguments</key>
+    <array>
+      <string><%= @data_dir %>/bin/bamboo-agent.sh</string>
+      <string>start</string>
+    </array>
+  <key>UserName</key>
+  <string><%= @username %></string>
+  <key>KeepAlive</key>
+  <true/>
+</dict>
+</plist>
+
