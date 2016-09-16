@@ -103,6 +103,15 @@ template 'bamboo-capabilities.properties' do
   notifies :restart, 'service[bamboo-agent]', :delayed
 end
 
+template 'wrapper.conf' do
+  path "#{node[:bamboo][:agent][:data_dir]}/conf/wrapper.conf"
+  source 'agent-wrapper.conf.erb'
+  owner  node[:bamboo][:agent][:user]
+  group  node[:bamboo][:agent][:group]
+  mode '0644'
+  notifies :restart, 'service[bamboo-agent]', :delayed
+end
+
 # Create and enable service
 service 'bamboo-agent' do
   supports :restart => true, :status => true, :start => true, :stop => true
