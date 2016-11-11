@@ -3,9 +3,9 @@ maintainer       'Ramon Makkelie, Stephan Oudmaijer'
 maintainer_email 'ramonmakkelie@gmail.com, soudmaijer@gmail.com'
 license          'Apache 2.0'
 description      'Installs and configures Bamboo'
-version          '1.7.0'
-issues_url       'https://github.com/ramonskie/bamboo/issues' if respond_to?(:issues_url)
-source_url       'https://github.com/ramonskie/bamboo.git' if respond_to?(:source_url)
+version          '1.7.1'
+issues_url       'https://github.com/afklm/bamboo/issues' if respond_to?(:issues_url)
+source_url       'https://github.com/afklm/bamboo.git' if respond_to?(:source_url)
 
 recipe 'bamboo::default',     'Installs the bamboo server with optional backup in place and logging to graylog.'
 recipe 'bamboo::server',      'Only installs the bamboo server.'
@@ -21,6 +21,7 @@ depends 'apt'
 depends 'ark'
 depends 'apache2'
 depends 'cron'
+depends 'patch'
 depends 'backup',          '= 0.3.0'
 depends 'database',        '~> 4.0'
 depends 'git'

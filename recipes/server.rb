@@ -18,6 +18,7 @@
 #
 include_recipe 'ark'
 include_recipe 'java'
+include_recipe 'patch'
 
 # Create group and users
 group node[:bamboo][:group] do
@@ -71,13 +72,9 @@ template '/etc/init.d/bamboo' do
   notifies :restart, 'service[bamboo]', :delayed
 end
 
-template 'bamboo-init.properties' do
-  path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties"
-  source 'bamboo-init.properties.erb'
-  owner node[:bamboo][:user]
-  group node[:bamboo][:group]
-  mode '0644'
-  notifies :restart, 'service[bamboo]', :delayed
+replace_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties" do
+    replace /.*bamboo.home=.*/
+    with    "bamboo.home=#{node[:bamboo][:data_dir]}"
 end
 
 template 'seraph-config.xml' do
