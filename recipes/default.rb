@@ -25,5 +25,6 @@
 include_recipe 'bamboo::database'
 include_recipe 'bamboo::apache2'
 include_recipe 'bamboo::server'
+include_recipe 'bamboo::crowd_sso' unless node[:bamboo][:crowd] == false
 include_recipe 'bamboo::backup' unless node[:bamboo][:backup][:enabled] == false
 include_recipe 'bamboo::graylog' unless node[:bamboo][:graylog][:enabled] == false
