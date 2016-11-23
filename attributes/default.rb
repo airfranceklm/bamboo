@@ -31,14 +31,14 @@ default[:bamboo][:version]                        = '5.13.2'
 default[:bamboo][:download_url]                   = nil
 default[:bamboo][:checksum]                       = nil
 
+
 default[:bamboo][:database][:external]            = false
 default[:bamboo][:database][:type]                = 'postgresql'
+
 case node[:bamboo][:database][:type]
 when 'mysql'
   default[:bamboo][:database][:version]           = '5.6'
   default[:bamboo][:database][:host]              = '127.0.0.1'
-  default[:bamboo][:database][:port]              = 3306
-  default[:bamboo][:database][:root_user_name]    = 'root'
   default[:bamboo][:database_type]                = 'MySQL'
 when 'postgresql'
   default[:postgresql][:version]                  = '9.4'
@@ -47,10 +47,8 @@ when 'postgresql'
   default[:postgresql][:server][:packages]        = ['postgresql-9.4']
   default[:postgresql][:contrib][:packages]       = ['postgresql-contrib-9.4']
   default[:bamboo][:database][:host]              = 'localhost'
-  default[:bamboo][:database][:port]              = 5432
   default[:postgresql][:config_pgtune][:db_type]  = 'web'
-  default[:bamboo][:database][:root_user_name]    = 'postgres'
-  default[:bamboo][:database_type]                = 'PostgreSQL'
+  default[:bamboo][:database_type]                = 'PostgreSQL' 
 end
 default[:bamboo][:database][:name]                = 'bamboo'
 default[:bamboo][:database][:user]                = 'bamboo'
