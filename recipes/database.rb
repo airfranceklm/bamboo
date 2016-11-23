@@ -21,7 +21,7 @@ when 'mysql'
   end
 
   mysql_database settings['database']['name'] do
-    connection confluence_database_connection
+    connection bamboo_database_connection
     collation 'utf8_bin'
     encoding 'utf8'
     action :create
@@ -29,13 +29,13 @@ when 'mysql'
 
   # See this MySQL bug: http://bugs.mysql.com/bug.php?id=31061
   mysql_database_user '' do
-    connection confluence_database_connection
+    connection bamboo_database_connection
     host 'localhost'
     action :drop
   end
 
   mysql_database_user settings['database']['user'] do
-    connection confluence_database_connection
+    connection bamboo_database_connection
     host '%'
     password settings['database']['password']
     database_name settings['database']['name']
@@ -43,23 +43,20 @@ when 'mysql'
   end
 
 when 'postgresql'
-  include_recipe 'postgresql::server' unless node[:bamboo][:database][:external] == true
+  include_recipe 'postgresql::server' unless node['bamboo']['database']['external'] == true
   include_recipe 'database::postgresql'
 
-  #database_connection[:username] = node[:bamboo][:database][:root_user_name]
-  #database_connection[:password] = node[:postgresql][:password][:postgres]
-
-  postgresql_database settings[:database][:name] do
-    connection database_connection
+  postgresql_database settings['database']['user'] do
+    connection bamboo_database_connection
     connection_limit '-1'
     encoding 'utf8'
     action :create
   end
 
-  postgresql_database_user settings[:database][:user] do
-    connection database_connection
-    password settings[:database][:password]
-    database_name settings[:database][:name]
+  postgresql_database_user settings['database']['user'] do
+    connection bamboo_database_connection
+    password settings['database']['password']
+    database_name settings['database']['name']
     action [:create, :grant]
   end
 

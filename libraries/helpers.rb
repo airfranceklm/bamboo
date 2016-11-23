@@ -12,7 +12,7 @@ module Bamboo
     def bamboo_database_connection
       settings = merge_bamboo_settings
 
-      database_connection = {
+      database_connection = {        
         host: settings['database']['host'],
         port: settings['database']['port']
       }
