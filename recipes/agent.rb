@@ -63,31 +63,59 @@ execute "java -Ddisable_agent_auto_capability_detection=#{node[:bamboo][:agent][
   not_if { ::File.exist?("#{node[:bamboo][:agent][:data_dir]}/installer.properties") }
 end
 
-# Install templates
-template 'bamboo-agent.sh' do
-  path   "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-agent.sh"
-  source 'bamboo-agent.sh.erb'
-  owner  node[:bamboo][:agent][:user]
-  group  node[:bamboo][:agent][:group]
-  mode   '0755'
-  notifies :restart, 'service[bamboo-agent]', :delayed
-end
+# make a service out of it
+if %w{mac_os_x}.include?(node['platform_family'])
 
-link '/etc/init.d/bamboo-agent' do
-  to "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-agent.sh"
-  not_if { node[:platform_family] == 'mac_os_x' }
-end
+  template '/Library/LaunchDaemons/bamboo-agent.plist' do
+    source 'bamboo-agent.plist.erb'
+    owner 'root'
+    group 'wheel'
+    mode '0644'
+    variables(
+      :username => node[:bamboo][:agent][:user],
+      :data_dir => node[:bamboo][:agent][:data_dir]
+    )
+  end
 
-template '/Library/LaunchDaemons/bamboo-agent.plist' do
-  source 'bamboo-agent.plist.erb'
-  owner 'root'
-  group 'wheel'
-  mode '0644'
-  variables(
-    :username => node[:bamboo][:agent][:user],
-    :data_dir => node[:bamboo][:agent][:data_dir]
-  )
-  only_if { node[:platform_family] == 'mac_os_x' }
+elsif node['init_package'] == 'systemd'
+
+  execute 'systemctl-daemon-reload' do
+    command '/bin/systemctl --system daemon-reload'
+    action :nothing
+  end
+
+  template '/etc/systemd/system/bamboo-agent.service' do
+    source 'bamboo-agent.service.erb'
+    owner 'root'
+    group 'root'
+    mode 00755
+    action :create
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
+    notifies :restart, 'service[bamboo-agent]', :delayed
+  end
+
+  else
+
+    # when using a previous version of this cookbook remove the link
+    if File.symlink?('/etc/init.d/bamboo-agent')
+      delete_resource(:template, 'bamboo-agent.sh')
+
+      link '/etc/init.d/bamboo-agent' do
+        to "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-agent.sh"
+        action :delete
+        #only_if { File.symlink?('/etc/init.d/bamboo-agent') }
+      end
+    end
+
+    #install init.d script
+    template '/etc/init.d/bamboo-agent' do
+      source 'bamboo-agent.init.erb'
+      owner 'root'
+      group 'root'
+      mode 00755
+      action :create
+      notifies :restart, 'service[bamboo-agent]', :delayed
+    end
 end
 
 capabilities = node[:bamboo][:agent_capabilities]
@@ -110,7 +138,7 @@ service 'bamboo-agent' do
   action [:enable, :start]
 end
 
-# Setup monit
+Setup monit
 package 'monit' do
   action :install
   not_if { node[:platform_family] == 'mac_os_x' }

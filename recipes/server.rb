@@ -36,22 +36,35 @@ user node[:bamboo][:user] do
 end
 
 # Create required directories
-directory node[:bamboo][:data_dir] do
+directory File.dirname(node[:bamboo][:data_dir]) do
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
-  mode '0775'
+  mode 00755
   action :create
+  recursive true
 end
 
 # Download and install the bamboo package
-ark node[:bamboo][:name] do
-  url      node[:bamboo][:download_url]
+# ark node[:bamboo][:name] do
+#   url      node[:bamboo][:download_url]
+#   home_dir node[:bamboo][:home_dir]
+#   checksum node[:bamboo][:checksum]
+#   version  node[:bamboo][:version]
+#   owner    node[:bamboo][:user]
+#   group    node[:bamboo][:group]
+#   notifies :restart, 'service[bamboo]', :delayed
+# end
+
+Chef::Resource::Ark.send(:include, Bamboo::Helpers)
+
+ark 'bamboo' do
+  url bamboo_artifact_url
   home_dir node[:bamboo][:home_dir]
-  checksum node[:bamboo][:checksum]
-  version  node[:bamboo][:version]
-  owner    node[:bamboo][:user]
-  group    node[:bamboo][:group]
-  notifies :restart, 'service[bamboo]', :delayed
+  checksum bamboo_artifact_checksum
+  version node[:bamboo][:version]
+  owner node[:bamboo][:user]
+  group node[:bamboo][:group]
+  notifies :restart, 'service[bamboo]'
 end
 
 if node[:bamboo][:database][:type] == 'mysql'
@@ -65,11 +78,30 @@ if node[:bamboo][:database][:type] == 'mysql'
   mysql_connector_j "#{node[:bamboo][:home_dir]}/lib"
 end
 
-# Install templates
-template '/etc/init.d/bamboo' do
-  source 'bamboo.init.erb'
-  mode '0755'
-  notifies :restart, 'service[bamboo]', :delayed
+if node['init_package'] == 'systemd'
+
+  execute 'systemctl-daemon-reload' do
+    command '/bin/systemctl --system daemon-reload'
+    action :nothing
+  end
+
+  template '/etc/systemd/system/bamboo.service' do
+    source 'bamboo.service.erb'
+    owner 'root'
+    group 'root'
+    mode 00755
+    action :create
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
+    notifies :restart, 'service[bamboo]', :delayed
+  end
+
+  else
+  # install an init.d script
+  template '/etc/init.d/bamboo' do
+    source 'bamboo.init.erb'
+    mode '0755'
+    notifies :restart, 'service[bamboo]', :delayed
+  end
 end
 
 replace_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties" do
@@ -77,14 +109,14 @@ replace_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bambo
     with    "bamboo.home=#{node[:bamboo][:data_dir]}"
 end
 
-template 'seraph-config.xml' do
-  path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
-  source 'seraph-config.xml.erb'
-  owner node[:bamboo][:user]
-  group node[:bamboo][:group]
-  mode '0644'
-  notifies :restart, 'service[bamboo]', :delayed
-end
+# template 'seraph-config.xml' do
+#   path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
+#   source 'seraph-config.xml.erb'
+#   owner node[:bamboo][:user]
+#   group node[:bamboo][:group]
+#   mode '0644'
+#   notifies :restart, 'service[bamboo]', :delayed
+# end
 
 template "#{node[:bamboo][:home_dir]}/bin/setenv.sh" do
   source 'setenv.sh.erb'

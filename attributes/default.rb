@@ -26,17 +26,10 @@ default[:bamboo][:group]                          = 'bamboo'                    
 default[:bamboo][:user_home]                      = '/home/bamboo'                      # bamboo system user home directory
 default[:bamboo][:name]                           = 'bamboo'                            # bamboo application/service name
 default[:bamboo][:version]                        = '5.13.2'
-default[:bamboo][:download_url]                   = "http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-#{node[:bamboo][:version]}.tar.gz"
-default[:bamboo][:checksum] =
-  case node[:bamboo][:version]
-  when '5.10.3' then 'da6326d49dd5234319518f4b55fdfe521918931971c48bd43a48d6f6fb2717a6'
-  when '5.12.3.1' then '012d40a06aeda188ccd9d84d5b520d51e92dfd5ef081d1a8a8e9a9f333e01a5b'
-  when '5.12.4' then '9d1b6bf54db4bbc8e62c7197f875ff2509a9c4074871ccd3574641001583bb14'
-  when '5.12.5' then '2b598b71adbffb67627e1a9fe0c182e4ce8f7e6e3f3e63c0d83ea146b13c4d12'
-  when '5.13.1' then '59fc8c585199e0051c6f63fc6e1cb4e56c05e29ba6b66507618bf554dc81fac3'
-  when '5.13.2' then '02e7fa07f5955e62327c2bec6b8850807f164aeffe30741d2073a5e422a6f1b6'
-  when '5.14.1' then '2c758729c8d144dbaa1273ae5e6d7f955c9c195f69ee819e995e9394f72325f4'
-  end
+
+# Defaults are automatically selected from version via helper functions
+default[:bamboo][:download_url]                   = nil
+default[:bamboo][:checksum]                       = nil
 
 default[:bamboo][:database][:external]            = false
 default[:bamboo][:database][:type]                = 'postgresql'
@@ -66,14 +59,16 @@ default[:mysql][:server_root_password]            = 'changeme'
 default[:postgresql][:password][:postgres]        = 'changeme'
 
 default[:bamboo][:jvm][:minimum_memory]           = '512m'
-default[:bamboo][:jvm][:maximum_memory]           = '2048m'
+default[:bamboo][:jvm][:maximum_memory]           = '2G'
 default[:bamboo][:jvm][:maximum_permgen]          = '256m'
 default[:bamboo][:jvm][:support_args]             = ''
 
 default[:bamboo][:catalina][:opts]                = ''
 
-default[:java][:install_flavor]                   = 'openjdk'
+# set to oracle default due to ssl exception with openjdk
+default[:java][:install_flavor]                   = 'oracle'
 default[:java][:jdk_version]                      = '8'
+default[:java][:oracle][:accept_oracle_download_terms] = true
 
 # bamboo agent
 default[:bamboo][:agent][:home_dir]               = '/opt/bamboo'                       # bamboo installation directory
