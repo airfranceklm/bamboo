@@ -2,7 +2,7 @@
 # Cookbook Name:: bamboo
 # Recipe:: apache2
 #
-# Copyright 2014
+# Copyright 2013, Brian Flad
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,14 +16,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-node.default[:apache][:listen] += ["*:#{node[:bamboo][:apache2][:port]}"]
-node.default[:apache][:listen] += ["*:#{node[:bamboo][:apache2][:ssl][:port]}"]
+if node['apache'].attribute?('listen_ports')
+  # Compatibility with cookbook 'apache' < 3.2.0
+  node.default['apache']['listen_ports'] |= [
+    node['bamboo']['apache2']['port'],
+    node['bamboo']['apache2']['ssl']['port']
+  ]
+else
+  node.default['apache']['listen'] |= [
+    "*:#{node['bamboo']['apache2']['port']}",
+    "*:#{node['bamboo']['apache2']['ssl']['port']}"
+  ]
+end
 
 include_recipe 'apache2'
 include_recipe 'apache2::mod_proxy'
 include_recipe 'apache2::mod_proxy_http'
 include_recipe 'apache2::mod_ssl'
 
-web_app 'bamboo' do
+web_app bamboo_virtual_host_alias do
+  cookbook node['bamboo']['apache2']['template_cookbook']
 end

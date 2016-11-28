@@ -98,11 +98,6 @@ module Bamboo
         '5.14.1' => '2c758729c8d144dbaa1273ae5e6d7f955c9c195f69ee819e995e9394f72325f4'
       }
     end
-
-    # symlink check for cookbook users <= 1.7.0
-    def file_dir_or_symlink_exists?(path_to_file)
-      File.exist?(path_to_file) || File.symlink?(path_to_file)
-    end
   end
 end
 
