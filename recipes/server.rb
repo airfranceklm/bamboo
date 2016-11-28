@@ -44,17 +44,6 @@ directory File.dirname(node[:bamboo][:data_dir]) do
   recursive true
 end
 
-# Download and install the bamboo package
-# ark node[:bamboo][:name] do
-#   url      node[:bamboo][:download_url]
-#   home_dir node[:bamboo][:home_dir]
-#   checksum node[:bamboo][:checksum]
-#   version  node[:bamboo][:version]
-#   owner    node[:bamboo][:user]
-#   group    node[:bamboo][:group]
-#   notifies :restart, 'service[bamboo]', :delayed
-# end
-
 Chef::Resource::Ark.send(:include, Bamboo::Helpers)
 
 ark 'bamboo' do
@@ -108,15 +97,6 @@ replace_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bambo
   replace(/.*bamboo.home=.*/)
   with "bamboo.home=#{node[:bamboo][:data_dir]}"
 end
-
-# template 'seraph-config.xml' do
-#   path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/seraph-config.xml"
-#   source 'seraph-config.xml.erb'
-#   owner node[:bamboo][:user]
-#   group node[:bamboo][:group]
-#   mode '0644'
-#   notifies :restart, 'service[bamboo]', :delayed
-# end
 
 template "#{node[:bamboo][:home_dir]}/bin/setenv.sh" do
   source 'setenv.sh.erb'
