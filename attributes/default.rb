@@ -48,7 +48,7 @@ when 'postgresql'
   default[:postgresql][:contrib][:packages]       = ['postgresql-contrib-9.4']
   default[:bamboo][:database][:host]              = 'localhost'
   default[:postgresql][:config_pgtune][:db_type]  = 'web'
-  default[:bamboo][:database_type]                = 'PostgreSQL' 
+  default[:bamboo][:database_type]                = 'PostgreSQL'
 end
 default[:bamboo][:database][:name]                = 'bamboo'
 default[:bamboo][:database][:user]                = 'bamboo'
@@ -58,7 +58,6 @@ default[:postgresql][:password][:postgres]        = 'changeme'
 
 default[:bamboo][:jvm][:minimum_memory]           = '512m'
 default[:bamboo][:jvm][:maximum_memory]           = '2G'
-default[:bamboo][:jvm][:maximum_permgen]          = '256m'
 default[:bamboo][:jvm][:support_args]             = ''
 
 default[:bamboo][:catalina][:opts]                = ''
