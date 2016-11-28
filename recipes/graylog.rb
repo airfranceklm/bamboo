@@ -31,11 +31,36 @@ cookbook_file "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/lib/json-sim
   mode '0775'
 end
 
-template 'log4j.properties' do
-  path "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties"
-  source 'log4j.properties.erb'
-  owner  node[:bamboo][:user]
-  group  node[:bamboo][:group]
-  mode '0644'
-  notifies :restart, 'service[bamboo]', :delayed
+# configure log4j for graylog
+replace "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
+    replace "log4j.rootLogger=INFO, console, filelog"
+    with    "log4j.rootLogger=INFO, console, filelog, graylog"
+end
+
+append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
+    line "log4j.appender.graylog=org.graylog2.log.GelfAppender"
+end
+
+append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
+    line "log4j.appender.graylog.graylogHost=#{node[:bamboo][:graylog][:host]}"
+end
+
+append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
+    line "log4j.appender.graylog.originHost=#{node[:bamboo][:graylog][:origin]}"
+end
+
+append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
+    line "log4j.appender.graylog.facility=#{node[:bamboo][:graylog][:facility]}"
+end
+
+append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
+    line "log4j.appender.graylog.Threshold=INFO"
+end
+
+append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
+    line "log4j.appender.graylog.layout=org.apache.log4j.PatternLayout"
+end
+
+append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
+    line "log4j.appender.graylog.layout.ConversionPattern=%d %p [%t] [%c{1}] %m%n"
 end
