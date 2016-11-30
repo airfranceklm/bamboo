@@ -1,0 +1,75 @@
+# Java Application
+wrapper.java.command=java
+
+# Java Main class.
+wrapper.java.mainclass=org.tanukisoftware.wrapper.WrapperSimpleApp
+
+# Java Classpath (include wrapper.jar)
+wrapper.java.classpath.1=../lib/wrapper.jar
+wrapper.java.classpath.2=../lib/bamboo-agent-bootstrap.jar
+
+# Java Library Path (location of Wrapper.DLL or libwrapper.so)
+wrapper.java.library.path.1=../lib
+
+# The Bamboo Agent home configuration file
+wrapper.java.additional.1=-Dbamboo.home=<%= node[:bamboo][:agent][:data_dir] %>
+wrapper.java.additional.2=-Dbamboo.agent.ignoreServerCertName=false
+#wrapper.java.additional.3=-agentlib:yjpagent
+
+# Application parameters.  Add parameters as needed starting from 1
+wrapper.app.parameter.1=com.atlassian.bamboo.agent.bootstrap.AgentBootstrap
+wrapper.app.parameter.2=<%= node[:bamboo][:url] %>/agentServer/
+
+# Disable shutdown hook so that
+wrapper.disable_shutdown_hook=TRUE
+
+# Set a wrapper timeout
+wrapper.ping.timeout=<%= node[:bamboo][:agent][:ping_timeout] %>
+
+# Initial Java Heap Size (in MB)
+wrapper.java.initmemory=256
+
+# Maximum Java Heap Size (in MB)
+wrapper.java.maxmemory=512
+
+
+#********************************************************************
+# Wrapper Logging Properties
+#********************************************************************
+wrapper.working.dir=.
+
+wrapper.console.format=LPTM
+wrapper.console.loglevel=INFO
+wrapper.console.flush=true
+wrapper.logfile=../atlassian-bamboo-agent.log
+wrapper.logfile.format=LPTM
+wrapper.logfile.loglevel=INFO
+wrapper.logfile.maxsize=10m
+wrapper.logfile.maxfiles=10
+wrapper.syslog.loglevel=INFO
+
+# How long should the wrapper wait before it considers an invocation successful?  3 seconds should be long
+# enough for any configuration errors to have been determined.
+wrapper.successful_invocation_time=3
+
+#********************************************************************
+# Wrapper Windows Properties
+#********************************************************************
+# Title to use when running as a console
+wrapper.console.title=Bamboo Remote Agent
+
+# Name of the service
+wrapper.ntservice.name=bamboo-remote-agent
+
+# Display name of the service
+wrapper.ntservice.displayname=Bamboo Remote Agent
+
+# Description of the service
+wrapper.ntservice.description=A remote agent for building Bamboo build plans.
+
+# Mode in which the service is installed.  AUTO_START or DEMAND_START
+wrapper.ntservice.starttype=AUTO_START
+
+# Allow the service to interact with the desktop.
+wrapper.ntservice.interactive=false
+

@@ -24,6 +24,8 @@ Installs/Configures [Atlassian Bamboo](https://www.atlassian.com/software/Bamboo
 
 ### Platforms
 
+* CentOS 6.x
+* Mac OS X 10.10
 * Ubuntu 14.04
 
 ### Databases
@@ -75,6 +77,7 @@ data_dir | Bamboo data directory | String | /var/bamboo
 user | user to run Bamboo | String | bamboo
 group | group for user bamboo | String | bamboo
 user_home | home dir for user bamboo | String | /home/bamboo
+ping_timeout | timeout until wrapper restarts unresponsive JVM | Integer | 30
 disable_agent_auto_capability_detection | sets the flag on the agent | String | true
 additional_path | will be added to the $PATH of the agent process | String |
 

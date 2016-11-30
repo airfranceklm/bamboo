@@ -81,6 +81,7 @@ default[:bamboo][:agent][:data_dir]               = '/var/bamboo'               
 default[:bamboo][:agent][:user]                   = 'bamboo'                            # bamboo user
 default[:bamboo][:agent][:group]                  = 'bamboo'                            # bamboo group
 default[:bamboo][:agent][:user_home]              = '/home/bamboo'                      # bamboo system user home directory
+default[:bamboo][:agent][:ping_timeout]           = 30                                  # JVM timeout before wrapper restarts agent
 default[:bamboo][:agent][:disable_agent_auto_capability_detection] = true
 default[:bamboo][:agent][:additional_path]        = ''
 default[:bamboo][:agent_capabilities]             = {}
@@ -111,4 +112,4 @@ default[:bamboo][:backup][:minute]                = '*'
 
 # damn postgresql:ruby recipe still builds at compile time
 default[:apt][:compile_time_update] = true
-default['build-essential']['compile_time'] = true
+default['build-essential']['compile_time'] = true # ~FC019
