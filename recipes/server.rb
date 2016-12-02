@@ -73,8 +73,8 @@ template '/etc/init.d/bamboo' do
 end
 
 replace_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties" do
-    replace /.*bamboo.home=.*/
-    with    "bamboo.home=#{node[:bamboo][:data_dir]}"
+  replace /.*bamboo.home=.*/
+  with    "bamboo.home=#{node[:bamboo][:data_dir]}"
 end
 
 template 'seraph-config.xml' do

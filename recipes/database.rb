@@ -20,7 +20,8 @@ when 'mysql'
     data_dir node[:mysql][:data_dir] if node[:mysql][:data_dir]
     initial_root_password node[:mysql][:server_root_password]
     action [:create, :start]
-  end unless node[:bamboo][:database][:external] == true
+    unless node[:bamboo][:database][:external] == true
+  end
 
   database_connection[:username] = node[:bamboo][:database][:root_user_name]
   database_connection[:password] = node[:mysql][:server_root_password]

@@ -1,4 +1,4 @@
-# Bamboo status [![Build Status](https://travis-ci.org/ramonskie/bamboo.png?branch=master)](https://travis-ci.org/ramonskie/bamboo)
+# Bamboo status [![Build Status](https://travis-ci.org/afklm/bamboo.png?branch=master)](https://travis-ci.org/afklm/bamboo)
 
 ## Description
 
@@ -149,7 +149,7 @@ Here's how you can quickly get testing or developing against the cookbook thanks
     git clone git://github.com/ramonskie/bamboo.git
     cd bamboo
     see [TESTING.md](TESTING.md)
-    
+
 
 
 The running Bamboo server is accessible from the host machine:
@@ -172,3 +172,4 @@ Please see license information in: [LICENSE](LICENSE)
 
 * ramonskie (ramonmakkelie@gmail.com)
 * soudmaijer (soudmaijer@gmail.com)
+* mvdkleijn (martijn.niji@gmail.com)
