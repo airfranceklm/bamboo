@@ -13,6 +13,11 @@ when 'mysql'
     action :create
   end
 
+  mysql2_chef_gem 'Default' do
+    client_version node[:bamboo][:database][:version]
+    action :install
+  end
+
   mysql_service 'default' do
     version node[:bamboo][:database][:version]
     bind_address node[:bamboo][:database][:host]

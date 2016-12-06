@@ -24,6 +24,8 @@ suites:
       - recipe[bamboo]
     attributes:
       bamboo:
+        jvm:
+          minimum_memory: '64m'
         name: bamboo-dev
         backup:
           enabled: false
@@ -31,3 +33,13 @@ suites:
         agent:
           data_dir: /var/bamboo-agent
           home_dir: /opt/bamboo-agent
+  - name: mysql-56
+    run_list:
+      - recipe[bamboo]
+    attributes:
+      bamboo:
+        jvm:
+          minimum_memory: '64m'
+        database:
+          type: 'mysql'
+          version: '5.6'
