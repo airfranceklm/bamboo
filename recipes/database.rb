@@ -18,14 +18,16 @@ when 'mysql'
     action :install
   end
 
-  mysql_service 'default' do
-    version node[:bamboo][:database][:version]
-    bind_address node[:bamboo][:database][:host]
-    port '3306'
-    data_dir node[:mysql][:data_dir] if node[:mysql][:data_dir]
-    initial_root_password node[:mysql][:server_root_password]
-    action [:create, :start]
-  end unless node[:bamboo][:database][:external] == true
+  unless node[:bamboo][:database][:external] == true
+    mysql_service 'default' do
+      version node[:bamboo][:database][:version]
+      bind_address node[:bamboo][:database][:host]
+      port '3306'
+      data_dir node[:mysql][:data_dir] if node[:mysql][:data_dir]
+      initial_root_password node[:mysql][:server_root_password]
+      action [:create, :start]
+    end
+  end
 
   database_connection[:username] = node[:bamboo][:database][:root_user_name]
   database_connection[:password] = node[:mysql][:server_root_password]
