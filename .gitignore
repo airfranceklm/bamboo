@@ -1,9 +1,12 @@
-.rake_test_cache
-
-#
-# rbenv files
-#
-.ruby-version
+# Ignore all hidden files & folders except gitignore & kitchen
+.*
+!/.gitignore
+!/.kitchen*.yml
+!/.rubocop.yml
+!/.foodcritic
+!/.rspec.yml
+!/.drone.yml
+!/.travis.yml
 
 #
 # Ignore Chef key files and secrets
@@ -22,35 +25,13 @@ data_bags/encrypted_data_bag_secret
 #
 # OSX
 #
-.DS_Store
-.AppleDouble
-.LSOverride
 Icon
-# Thumbnails
-._*
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
 
 # vagrant
-.vagrant
 Berksfile.lock
 Gemfile.lock
-*~
-*#
-.#*
-\#*#
-.*.sw[a-z]
-*.un~
 /cookbooks
 
 # Bundler
-Gemfile.lock
 bin/*
-.bundle/*
-
-.kitchen/
 .kitchen.local.yml
-test/kitchen/.kitchen/
-
-
