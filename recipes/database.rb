@@ -19,7 +19,7 @@ when 'mysql'
   end
 
   unless node[:bamboo][:database][:external] == true
-    mysql_service 'default' do
+    mysql_service settings[:database][:name] do
       version node[:bamboo][:database][:version]
       bind_address node[:bamboo][:database][:host]
       port '3306'
@@ -31,6 +31,7 @@ when 'mysql'
 
   database_connection[:username] = node[:bamboo][:database][:root_user_name]
   database_connection[:password] = node[:mysql][:server_root_password]
+  database_connection[:socket] = "/var/run/mysql-#{settings[:database][:name]}/mysqld.sock"
 
   mysql_database settings[:database][:name] do
     connection database_connection
