@@ -89,7 +89,7 @@ module Bamboo
 
     # Returns SHA256 checksum map for Bamboo artifacts
     def bamboo_checksum_map
-      {        
+      {
         '5.12.4' => '9d1b6bf54db4bbc8e62c7197f875ff2509a9c4074871ccd3574641001583bb14',
         '5.12.5' => '2b598b71adbffb67627e1a9fe0c182e4ce8f7e6e3f3e63c0d83ea146b13c4d12',
         '5.13.1' => '59fc8c585199e0051c6f63fc6e1cb4e56c05e29ba6b66507618bf554dc81fac3',

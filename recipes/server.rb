@@ -93,9 +93,11 @@ else
   end
 end
 
-replace_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties" do
-  replace(/.*bamboo.home=.*/)
-  with "bamboo.home=#{node[:bamboo][:data_dir]}"
+template "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties" do
+  source 'bamboo-init.properties.erb'
+  owner node[:bamboo][:user]
+  mode '0644'
+  notifies :restart, 'service[bamboo]', :delayed
 end
 
 template "#{node[:bamboo][:home_dir]}/bin/setenv.sh" do

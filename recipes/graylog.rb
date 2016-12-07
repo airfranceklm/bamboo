@@ -33,34 +33,34 @@ end
 
 # configure log4j for graylog
 replace "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
-    replace "log4j.rootLogger=INFO, console, filelog"
-    with    "log4j.rootLogger=INFO, console, filelog, graylog"
+  replace 'log4j.rootLogger=INFO, console, filelog'
+  with 'log4j.rootLogger=INFO, console, filelog, graylog'
 end
 
 append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
-    line "log4j.appender.graylog=org.graylog2.log.GelfAppender"
+  line 'log4j.appender.graylog=org.graylog2.log.GelfAppender'
 end
 
 append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
-    line "log4j.appender.graylog.graylogHost=#{node[:bamboo][:graylog][:host]}"
+  line "log4j.appender.graylog.graylogHost=#{node[:bamboo][:graylog][:host]}"
 end
 
 append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
-    line "log4j.appender.graylog.originHost=#{node[:bamboo][:graylog][:origin]}"
+  line "log4j.appender.graylog.originHost=#{node[:bamboo][:graylog][:origin]}"
 end
 
 append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
-    line "log4j.appender.graylog.facility=#{node[:bamboo][:graylog][:facility]}"
+  line "log4j.appender.graylog.facility=#{node[:bamboo][:graylog][:facility]}"
 end
 
 append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
-    line "log4j.appender.graylog.Threshold=INFO"
+  line 'log4j.appender.graylog.Threshold=INFO'
 end
 
 append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
-    line "log4j.appender.graylog.layout=org.apache.log4j.PatternLayout"
+  line 'log4j.appender.graylog.layout=org.apache.log4j.PatternLayout'
 end
 
 append_line "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/log4j.properties" do
-    line "log4j.appender.graylog.layout.ConversionPattern=%d %p [%t] [%c{1}] %m%n"
+  line 'log4j.appender.graylog.layout.ConversionPattern=%d %p [%t] [%c{1}] %m%n'
 end

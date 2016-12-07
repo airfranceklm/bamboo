@@ -1,4 +1,3 @@
-
 # Update config to activate Crowd's authenticator to enable SSO
 # See: https://confluence.atlassian.com/crowd/integrating-crowd-with-atlassian-bamboo-198785.html
 default_fragment = '<authenticator class="com.atlassian.bamboo.user.authentication.BambooAuthenticator"/>'

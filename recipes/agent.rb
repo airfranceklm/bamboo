@@ -64,7 +64,7 @@ execute "java -Ddisable_agent_auto_capability_detection=#{node[:bamboo][:agent][
 end
 
 # make a service out of it
-if %w{mac_os_x}.include?(node['platform_family'])
+if %w(mac_os_x).include?(node['platform_family'])
 
   template '/Library/LaunchDaemons/bamboo-agent.plist' do
     source 'bamboo-agent.plist.erb'
