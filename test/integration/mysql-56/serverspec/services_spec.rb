@@ -7,7 +7,7 @@ services = if os[:family] == 'redhat'
              # site on a external server.
              %w(httpd bamboo)
            else
-             %w(mysql-default apache2 bamboo)
+             %w(mysql-db1 apache2 bamboo)
            end
 
 services.each do |service|

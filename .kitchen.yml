@@ -41,5 +41,6 @@ suites:
         jvm:
           minimum_memory: '64m'
         database:
+          name: 'db1'
           type: 'mysql'
           version: '5.6'
