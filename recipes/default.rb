@@ -22,8 +22,6 @@
 #   # only_if { platform_family?('debian') }
 # end
 
-settings = merge_bamboo_settings
-
 include_recipe 'bamboo::database'
 include_recipe 'bamboo::apache2'
 include_recipe 'bamboo::server'

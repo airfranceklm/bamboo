@@ -28,10 +28,10 @@ namespace :integration do
 end
 
 desc 'Run all style checks'
-task :style => ['style:rubocop', 'style:foodcritic']
+task style: ['style:rubocop', 'style:foodcritic']
 
 # Default
-task :default => [:style, :spec]
+task default: [:style, :spec]
 
 # Full integration testing
-task :full => [:style, 'integration:cloud']
+task full: [:style, 'integration:cloud']

@@ -31,7 +31,6 @@ default[:bamboo][:version]                        = '5.13.2'
 default[:bamboo][:download_url]                   = nil
 default[:bamboo][:checksum]                       = nil
 
-
 default[:bamboo][:database][:external]            = false
 default[:bamboo][:database][:type]                = 'postgresql'
 
