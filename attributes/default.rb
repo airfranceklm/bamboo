@@ -31,7 +31,7 @@ default[:bamboo][:download_url]                   = nil
 default[:bamboo][:checksum]                       = nil
 
 default[:bamboo][:database][:external]            = false
-default[:bamboo][:database][:type]                = 'mysql'
+default[:bamboo][:database][:type]                = 'postgresql'
 
 case node[:bamboo][:database][:type]
 when 'mysql'

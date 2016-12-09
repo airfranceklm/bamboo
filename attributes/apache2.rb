@@ -30,6 +30,7 @@ default['bamboo']['apache2']['port']               = 80
 default['bamboo']['apache2']['template_cookbook']  = 'bamboo'
 default['bamboo']['apache2']['virtual_host_name']  = nil
 default['bamboo']['apache2']['virtual_host_alias'] = nil
+default['bamboo']['apache2']['error_docs']['e503'] = ''
 
 default['bamboo']['apache2']['ssl']['access_log']       = ''
 default['bamboo']['apache2']['ssl']['chain_file']       = ''
