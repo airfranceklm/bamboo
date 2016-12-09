@@ -43,6 +43,19 @@ module Bamboo
       case settings['database']['type']
       when 'mysql'
         settings['database']['port'] ||= 3306
+        # bamboo requires at least mysql version 5.6
+        case node['platform']
+        when 'debian'
+          if node['platform_version'].to_i <= 8
+            settings['database']['version'] ||= '5.6'
+          end
+        when 'ubuntu'
+          if node['platform_version'] <= '14.04'
+            settings['database']['version'] ||= '5.6'
+          end
+        when 'amazon'
+          settings['database']['version'] ||= '5.6'
+        end
       when 'postgresql'
         settings['database']['port'] ||= 5432
       when 'hsqldb'

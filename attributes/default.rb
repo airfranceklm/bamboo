@@ -18,27 +18,27 @@
 #
 
 # bamboo server
-default[:bamboo][:url]                            = 'http://localhost'                  # bamboo server URL
-default[:bamboo][:home_dir]                       = '/opt/bamboo'                       # bamboo installation directory
-default[:bamboo][:data_dir]                       = '/var/bamboo'                       # bamboo data directory
-default[:bamboo][:user]                           = 'bamboo'                            # bamboo user
-default[:bamboo][:group]                          = 'bamboo'                            # bamboo group
-default[:bamboo][:user_home]                      = '/home/bamboo'                      # bamboo system user home directory
-default[:bamboo][:name]                           = 'bamboo'                            # bamboo application/service name
-default[:bamboo][:version]                        = '5.13.2'
+default[:bamboo][:url]                            = 'http://localhost'          # bamboo server URL
+default[:bamboo][:home_dir]                       = '/opt/bamboo'               # bamboo installation directory
+default[:bamboo][:data_dir]                       = '/var/bamboo'               # bamboo data directory
+default[:bamboo][:user]                           = 'bamboo'                    # bamboo user
+default[:bamboo][:group]                          = 'bamboo'                    # bamboo group
+default[:bamboo][:user_home]                      = '/home/bamboo'              # bamboo system user home directory
+default[:bamboo][:name]                           = 'bamboo'                    # bamboo application/service name
+default[:bamboo][:version]                        = '5.13.2'                    # bamboo version
 
 # Defaults are automatically selected from version via helper functions
 default[:bamboo][:download_url]                   = nil
 default[:bamboo][:checksum]                       = nil
 
 default[:bamboo][:database][:external]            = false
-default[:bamboo][:database][:type]                = 'postgresql'
+default[:bamboo][:database][:type]                = 'mysql'
 
 case node[:bamboo][:database][:type]
 when 'mysql'
-  default[:bamboo][:database][:version]           = '5.6'
   default[:bamboo][:database][:host]              = '127.0.0.1'
   default[:bamboo][:database_type]                = 'MySQL'
+  # default[:bamboo][:database][:version]         = 5.6 # autoselected via helper functions
 when 'postgresql'
   default[:postgresql][:version]                  = '9.4'
   default[:postgresql][:dir]                      = '/etc/postgresql/9.4/main'
@@ -62,9 +62,9 @@ default[:bamboo][:jvm][:support_args]             = ''
 default[:bamboo][:catalina][:opts]                = ''
 
 # set to oracle default due to ssl exception with openjdk
-default[:java][:install_flavor]                   = 'oracle'
+default[:java][:install_flavor]                   = 'openjdk'
 default[:java][:jdk_version]                      = '8'
-default[:java][:oracle][:accept_oracle_download_terms] = true
+# default[:java][:oracle][:accept_oracle_download_terms] = true
 
 # bamboo agent
 default[:bamboo][:agent][:home_dir]               = '/opt/bamboo'                       # bamboo installation directory

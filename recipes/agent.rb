@@ -146,7 +146,7 @@ service 'bamboo-agent' do
   action [:enable, :start]
 end
 
-Setup monit
+# Setup monit
 package 'monit' do
   action :install
   not_if { node[:platform_family] == 'mac_os_x' }

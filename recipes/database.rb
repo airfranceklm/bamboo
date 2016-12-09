@@ -2,33 +2,24 @@ settings = merge_bamboo_settings
 
 case settings['database']['type']
 when 'mysql'
-  mysql_client 'default' do
+  mysql_client settings['database']['name'] do
     action :create
   end
 
-  mysql2_chef_gem 'Default' do
-    client_version node[:bamboo][:database][:version]
+  mysql2_chef_gem settings['database']['name'] do
+    client_version settings['database']['version'] if settings['database']['version']
     action :install
   end
 
-  unless node[:bamboo][:database][:external] == true
-    mysql_service 'default' do
-      version node[:bamboo][:database][:version]
-      bind_address node[:bamboo][:database][:host]
-      port '3306'
-      data_dir node[:mysql][:data_dir] if node[:mysql][:data_dir]
-      initial_root_password node[:mysql][:server_root_password]
+  unless node['bamboo']['database']['external'] == true
+    mysql_service settings['database']['name'] do
+      version settings['database']['version'] if settings['database']['version']
+      bind_address settings['database']['host']
+      port settings['database']['port'].to_s
+      data_dir node['mysql']['data_dir'] if node['mysql']['data_dir']
+      initial_root_password node['mysql']['server_root_password']
       action [:create, :start]
     end
-  end
-
-  mysql_service 'bamboo' do
-    version settings['database']['version'] if settings['database']['version']
-    bind_address settings['database']['host']
-    port settings['database']['port'].to_s
-    data_dir node['mysql']['data_dir'] if node['mysql']['data_dir']
-    initial_root_password node['mysql']['server_root_password']
-    action [:create, :start]
   end
 
   mysql_database settings['database']['name'] do
@@ -57,20 +48,21 @@ when 'postgresql'
   include_recipe 'postgresql::server' unless node['bamboo']['database']['external'] == true
   include_recipe 'database::postgresql'
 
-  postgresql_database settings[:database][:name] do
-    connection database_connection
-    postgresql_database settings['database']['user'] do
-    connection bamboo_database_connection
-    connection_limit '-1'
-    encoding 'utf8'
-    action :create
-  end
-
   postgresql_database_user settings['database']['user'] do
     connection bamboo_database_connection
     password settings['database']['password']
-    database_name settings['database']['name']
-    action [:create, :grant]
+    action :create
+  end
+
+  postgresql_database settings['database']['name'] do
+    connection bamboo_database_connection
+    connection_limit '-1'
+    # See: https://confluence.atlassian.com/display/JIRAKB/Health+Check%3A+Database+Collation
+    encoding 'utf8'
+    collation 'C'
+    template 'template0'
+    owner settings['database']['user']
+    action :create
   end
 
 when 'hsqldb'
