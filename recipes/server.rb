@@ -39,7 +39,7 @@ end
 directory File.dirname(node[:bamboo][:data_dir]) do
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
-  mode 00755
+  mode '0755'
   action :create
   recursive true
 end
@@ -53,7 +53,7 @@ ark 'bamboo' do
   version node[:bamboo][:version]
   owner node[:bamboo][:user]
   group node[:bamboo][:group]
-  notifies :restart, 'service[bamboo]'
+  notifies :restart, 'service[bamboo]', :delayed
 end
 
 if node[:bamboo][:database][:type] == 'mysql'
@@ -78,7 +78,7 @@ if node['init_package'] == 'systemd'
     source 'bamboo.service.erb'
     owner 'root'
     group 'root'
-    mode 00755
+    mode '0755'
     action :create
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately
     notifies :restart, 'service[bamboo]', :delayed

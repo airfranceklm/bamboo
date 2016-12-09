@@ -7,7 +7,7 @@
 #
 #  Occasionally Atlassian Support may recommend that you set some specific JVM arguments.  You can use this variable below to do that.
 #
-JVM_SUPPORT_RECOMMENDED_ARGS=""
+JVM_SUPPORT_RECOMMENDED_ARGS="<%= node['bamboo']['jvm']['support_args'] %>"
 
 #
 # The following 2 settings control the minimum and maximum given to the Bamboo Java virtual machine.  In larger Bamboo instances, the maximum amount will need to be increased.
@@ -33,7 +33,8 @@ JVM_AGENT_AUTO_CAP_DET="-DDISABLE_AGENT_AUTO_CAPABILITY_DETECTION=<%= node['bamb
 
 PRGDIR=`dirname "$0"`
 cat "${PRGDIR}"/bamboobanner.txt
-
+export CATALINA_PID=<%= node[:bamboo][:data_dir] %>/<%= node[:bamboo][:name] %>.pid
+ 
 BAMBOO_HOME_MINUSD=""
 if [ "$BAMBOO_HOME" != "" ]; then
     echo $BAMBOO_HOME | grep -q " "

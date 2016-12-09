@@ -75,11 +75,11 @@ default[:bamboo][:agent][:disable_agent_auto_capability_detection] = true
 default[:bamboo][:agent][:additional_path]        = ''
 default[:bamboo][:agent_capabilities]             = {}
 
-# If you're authenticating against a Crowd server you can use this authenticator for single sign-on.
-# Enable it after configuring your Crowd properties through user management and restart Bamboo. It does not support
-# Crowd property changes at runtime. If you need to switch back to local users, revert the change and
-# restart Bamboo again.
-default[:bamboo][:crowd]                          = false
+# crowd sso
+default[:bamboo][:crowd][:enabled] = false
+default[:bamboo][:crowd][:app_name] = nil
+default[:bamboo][:crowd][:app_password] = nil
+default[:bamboo][:crowd][:crowd_base_url] = 'http://crowd.example.com:8095/crowd'
 
 # graylog2 integrations
 default[:bamboo][:graylog][:enabled]              = false

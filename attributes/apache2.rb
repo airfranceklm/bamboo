@@ -15,7 +15,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
+# use mpm for eventh ttps://httpd.apache.org/docs/2.4/mod/event.html
+if node[:platform] == 'ubuntu' && node[:platform_version].to_f >= 13.10
+  default[:apache][:mpm] = 'event'
+end
 
 # Defaults are automatically selected from fqdn and hostname via helper functions
 default['bamboo']['apache2']['access_log']         = ''

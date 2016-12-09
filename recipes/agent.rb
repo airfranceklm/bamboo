@@ -138,14 +138,14 @@ template 'wrapper.conf' do
   notifies :restart, 'service[bamboo-agent]', :delayed
 end
 
-# Create and enable service
+# create and enable service
 service 'bamboo-agent' do
   supports :restart => true, :status => true, :start => true, :stop => true
   provider Chef::Provider::Service::Macosx if node[:platform_family] == 'mac_os_x'
   action [:enable, :start]
 end
 
-Setup monit
+# setup monit
 package 'monit' do
   action :install
   not_if { node[:platform_family] == 'mac_os_x' }
@@ -160,7 +160,7 @@ template 'procfile.monitrc' do
   not_if { node[:platform_family] == 'mac_os_x' }
 end
 
-# Create and enable service
+# create and enable service
 service 'monit' do
   supports :restart => true, :status => true, :start => true, :stop => true
   action [:enable, :start]

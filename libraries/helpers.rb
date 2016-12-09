@@ -57,10 +57,13 @@ module Bamboo
         end
       when 'postgresql'
         settings['database']['port'] ||= 5432
+      when 'sqlserver'
+        settings['database']['port'] ||= 1433
       when 'hsqldb'
         # No-op. HSQLDB doesn't require any configuration.
       else
         raise "Unsupported database type: #{settings['database']['type']}"
+        raise 'Please add to Bamboo cookbook or hard set Bamboo database port.'
       end
 
       settings
