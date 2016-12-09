@@ -18,10 +18,11 @@
 #
 include_recipe 'java'
 
-# issue with openjdk and ssl
+# issue http://stackoverflow.com/questions/6784463/error-trustanchors-parameter-must-be-non-empty
 execute 'configcacerts' do
   command '/var/lib/dpkg/info/ca-certificates-java.postinst configure'
   only_if { node['platform'] == 'ubuntu' && node['platform_version'] == '14.04' }
+  only_if { node['java']['install_flavor'] == 'openjdk' }
 end
 
 # Create group and users
