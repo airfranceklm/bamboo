@@ -102,7 +102,6 @@ else
     link '/etc/init.d/bamboo-agent' do
       to "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-agent.sh"
       action :delete
-      # only_if { File.symlink?('/etc/init.d/bamboo-agent') }
     end
   end
 
@@ -146,7 +145,7 @@ service 'bamboo-agent' do
   action [:enable, :start]
 end
 
-# Setup monit
+Setup monit
 package 'monit' do
   action :install
   not_if { node[:platform_family] == 'mac_os_x' }

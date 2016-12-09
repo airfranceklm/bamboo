@@ -16,7 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 # bamboo server
 default[:bamboo][:url]                            = 'http://localhost'          # bamboo server URL
 default[:bamboo][:home_dir]                       = '/opt/bamboo'               # bamboo installation directory
@@ -64,7 +63,6 @@ default[:bamboo][:catalina][:opts]                = ''
 # set to oracle default due to ssl exception with openjdk
 default[:java][:install_flavor]                   = 'openjdk'
 default[:java][:jdk_version]                      = '8'
-# default[:java][:oracle][:accept_oracle_download_terms] = true
 
 # bamboo agent
 default[:bamboo][:agent][:home_dir]               = '/opt/bamboo'                       # bamboo installation directory
