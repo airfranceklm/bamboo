@@ -18,6 +18,12 @@
 #
 include_recipe 'java'
 
+# issue with openjdk and ssl
+execute 'configcacerts' do
+  command '/var/lib/dpkg/info/ca-certificates-java.postinst configure'
+  only_if { node['platform'] == 'ubuntu' && node['platform_version'] == '14.04' }
+end
+
 # Create group and users
 group node[:bamboo][:agent][:group] do
   action :create

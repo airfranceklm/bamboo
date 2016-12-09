@@ -60,7 +60,6 @@ default[:bamboo][:jvm][:support_args]             = ''
 
 default[:bamboo][:catalina][:opts]                = ''
 
-# set to oracle default due to ssl exception with openjdk
 default[:java][:install_flavor]                   = 'openjdk'
 default[:java][:jdk_version]                      = '8'
 

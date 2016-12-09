@@ -63,7 +63,7 @@ module Bamboo
         # No-op. HSQLDB doesn't require any configuration.
       else
         raise "Unsupported database type: #{settings['database']['type']}"
-        raise 'Please add to Bamboo cookbook or hard set Bamboo database port.'
+        # raise 'Please add to Bamboo cookbook or hard set Bamboo database port.'
       end
 
       settings
