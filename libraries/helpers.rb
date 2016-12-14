@@ -43,18 +43,6 @@ module Bamboo
       case settings['database']['type']
       when 'mysql'
         settings['database']['port'] ||= 3306
-        case node['platform']
-        when 'debian'
-          if node['platform_version'].to_i <= 8
-            settings['database']['version'] ||= '5.6'
-          end
-        when 'ubuntu'
-          if node['platform_version'] <= '14.04'
-            settings['database']['version'] ||= '5.6'
-          end
-        when 'amazon'
-          settings['database']['version'] ||= '5.6'
-        end
       when 'postgresql'
         settings['database']['port'] ||= 5432
       when 'sqlserver'
@@ -109,7 +97,8 @@ module Bamboo
         '5.12.5' => '2b598b71adbffb67627e1a9fe0c182e4ce8f7e6e3f3e63c0d83ea146b13c4d12',
         '5.13.1' => '59fc8c585199e0051c6f63fc6e1cb4e56c05e29ba6b66507618bf554dc81fac3',
         '5.13.2' => '02e7fa07f5955e62327c2bec6b8850807f164aeffe30741d2073a5e422a6f1b6',
-        '5.14.1' => '2c758729c8d144dbaa1273ae5e6d7f955c9c195f69ee819e995e9394f72325f4'
+        '5.14.1' => '2c758729c8d144dbaa1273ae5e6d7f955c9c195f69ee819e995e9394f72325f4',
+        '5.14.3.1' => '22f5945b3e1b5a25dba9d9fd16e9be58a88dd89aecc4ea5531a8b2d9ced23481'
       }
     end
   end

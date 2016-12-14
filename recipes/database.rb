@@ -6,7 +6,6 @@ when 'mysql'
     action :create
   end
 
-
   mysql2_chef_gem settings['database']['name'] do
     client_version settings['database']['version'] if settings['database']['version']
     action :install

@@ -31,22 +31,45 @@ default[:bamboo][:download_url]                   = nil
 default[:bamboo][:checksum]                       = nil
 
 default[:bamboo][:database][:external]            = false
+default[:bamboo][:database][:host]                = '127.0.0.1'
 default[:bamboo][:database][:type]                = 'postgresql'
 
 case node[:bamboo][:database][:type]
 when 'mysql'
-  default[:bamboo][:database][:host]              = '127.0.0.1'
+  # default[:bamboo][:database][:host]              = '127.0.0.1'
   default[:bamboo][:database_type]                = 'MySQL'
-  # default[:bamboo][:database][:version]         = 5.6 # autoselected via helper functions
+  default[:bamboo][:database][:version]           =
+    # Atlassian's Bamboo minimum requirement for mysql is version 5.6 check https://confluence.atlassian.com/bamboo/supported-platforms-289276764.html
+    case node[:platform]
+    when 'debian'
+      '5.6' if node[:platform_version].to_i <= 8
+    when 'ubuntu'
+      '5.6' if node[:platform_version] <= '14.04'
+    when 'amazon'
+      '5.6'
+    end
 when 'postgresql'
-  default[:postgresql][:version]                  = '9.4'
-  default[:postgresql][:dir]                      = '/etc/postgresql/9.4/main'
-  default[:postgresql][:client][:packages]        = ['postgresql-client-9.4', 'libpq-dev']
-  default[:postgresql][:server][:packages]        = ['postgresql-9.4']
-  default[:postgresql][:contrib][:packages]       = ['postgresql-contrib-9.4']
-  default[:bamboo][:database][:host]              = 'localhost'
   default[:postgresql][:config_pgtune][:db_type]  = 'web'
   default[:bamboo][:database_type]                = 'PostgreSQL'
+  # Being backwards compatible with previous cookbook (was set on 9.4) Atlassian bamboo currently supports postgresql 9.2 -> 9.5
+  case node['platform']
+  when 'debian'
+    if node['platform_version'].to_i <= 7
+      default[:postgresql][:version]                  = '9.4'
+      default[:postgresql][:dir]                      = '/etc/postgresql/9.4/main'
+      default[:postgresql][:client][:packages]        = ['postgresql-client-9.4', 'libpq-dev']
+      default[:postgresql][:server][:packages]        = ['postgresql-9.4']
+      default[:postgresql][:contrib][:packages]       = ['postgresql-contrib-9.4']
+    end
+  when 'ubuntu'
+    if node['platform_version'].to_f <= 14.04
+      default[:postgresql][:version]                  = '9.4'
+      default[:postgresql][:dir]                      = '/etc/postgresql/9.4/main'
+      default[:postgresql][:client][:packages]        = ['postgresql-client-9.4', 'libpq-dev']
+      default[:postgresql][:server][:packages]        = ['postgresql-9.4']
+      default[:postgresql][:contrib][:packages]       = ['postgresql-contrib-9.4']
+    end
+  end
 end
 default[:bamboo][:database][:name]                = 'bamboo'
 default[:bamboo][:database][:user]                = 'bamboo'

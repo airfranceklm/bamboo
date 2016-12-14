@@ -13,8 +13,10 @@ recipe 'bamboo::agent',   'Installs/configures an Atlassian bamboo agent'
 recipe 'bamboo::crowd_sso', 'Configures user authentication with Atlassian Crowd single sign-on'
 recipe 'bamboo::upgrade', 'WIP'
 
+supports 'ubuntu', '>= 12.04'
+
 # We only test on ubuntu, so debian and ubuntu should be rather safe
-%w(debian ubuntu centos redhat amazon).each do |os|
+%w(debian centos redhat amazon).each do |os|
   supports os
 end
 
