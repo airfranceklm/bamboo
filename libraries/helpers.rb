@@ -48,7 +48,7 @@ module Bamboo
       when 'sqlserver'
         settings['database']['port'] ||= 1433
       when 'hsqldb'
-        # No-op. HSQLDB doesn't require any configuration.
+        Chef::Log.warn('hsqldb is not for production purpose.')
       else
         raise "Unsupported database type: #{settings['database']['type']}"
         # raise 'Please add to Bamboo cookbook or hard set Bamboo database port.'

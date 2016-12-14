@@ -67,4 +67,5 @@ when 'postgresql'
 
 when 'hsqldb'
   # No-op. HSQLDB doesn't require any configuration.
+  Chef::Log.warn('hsqldb is not for production purpose.')
 end

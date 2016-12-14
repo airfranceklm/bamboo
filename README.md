@@ -105,21 +105,7 @@ minimum_memory | JVM minimum memory | String | 512m
 maximum_memory | JVM maximum memory | String | 2048m
 support_args | additional JAVA_OPTS recommended by Atlassian support for Bamboo JVM during startup | String | ""
 
-### Bamboo Graylog Attributes
-
-These attributes are under the `node[:bamboo][:graylog]` namespace.
-
-Attribute | Description | Type | Default
-----------|-------------|------|--------
-enabled | Enable graylog True/Falseyes/no | String | false
-facility | The facility name in graylog | string | bamboo
-host | Hostname of the graylog server | string | graylog.yourdomain.com
-origin | origin of the host | string | auto-detected (see attributes/default.rb)
-
-### Bamboo Graylog Attributes
-
-These attributes are under the `node[:bamboo][:graylog]` namespace.
-
+### Bamboo Error Docs Attributes
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
 error_docs| Provide custom error docs | Array | e503 - empty
