@@ -30,4 +30,4 @@ Style/SpaceBeforeFirstArg:
 # libraries/bamboo is to complex for rubocop
 #
 Metrics/AbcSize:
- Max: 17
+ Max: 20
