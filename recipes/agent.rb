@@ -152,24 +152,11 @@ service 'bamboo-agent' do
   action [:enable, :start]
 end
 
-# setup monit
-package 'monit' do
-  action :install
-  not_if { node[:platform_family] == 'mac_os_x' }
-end
+unless %w(mac_os_x).include?(node['platform_family'])
+  include_recipe 'monit'
 
-template 'procfile.monitrc' do
-  path   '/etc/monit/conf.d/bamboo-agent.conf'
-  owner  'root'
-  group  'root'
-  mode '0644'
-  notifies :restart, 'service[monit]', :delayed unless node[:platform_family] == 'mac_os_x'
-  not_if { node[:platform_family] == 'mac_os_x' }
-end
-
-# create and enable service
-service 'monit' do
-  supports :restart => true, :status => true, :start => true, :stop => true
-  action [:enable, :start]
-  not_if { node[:platform_family] == 'mac_os_x' }
+  monitrc 'bamboo-agent' do
+    template_cookbook 'bamboo'
+    template_source 'procfile.monitrc.erb'
+  end
 end
