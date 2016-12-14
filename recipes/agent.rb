@@ -95,7 +95,7 @@ elsif node['init_package'] == 'systemd'
     source 'bamboo-agent.service.erb'
     owner 'root'
     group 'root'
-    mode 00755
+    mode '0755'
     action :create
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately
     notifies :restart, 'service[bamboo-agent]', :delayed
@@ -117,7 +117,7 @@ else
     source 'bamboo-agent.init.erb'
     owner 'root'
     group 'root'
-    mode 00755
+    mode '0755'
     action :create
     notifies :restart, 'service[bamboo-agent]', :delayed
   end
