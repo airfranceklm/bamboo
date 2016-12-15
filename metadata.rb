@@ -3,16 +3,20 @@ maintainer       'Ramon Makkelie, Stephan Oudmaijer'
 maintainer_email 'ramonmakkelie@gmail.com, soudmaijer@gmail.com'
 license          'Apache 2.0'
 description      'Installs and configures Bamboo'
-version          '1.7.1'
+version          '2.0.0'
 issues_url       'https://github.com/afklm/bamboo/issues' if respond_to?(:issues_url)
 source_url       'https://github.com/afklm/bamboo.git' if respond_to?(:source_url)
 
-recipe 'bamboo::default',     'Installs the bamboo server with optional backup in place and logging to graylog.'
-recipe 'bamboo::server',      'Only installs the bamboo server.'
-recipe 'bamboo::agent',       'Installs a bamboo agent.'
+recipe 'bamboo::default', 'Installs/configures Atlassian bamboo server with apache2 and database'
+recipe 'bamboo::server',  'Installs/configures Atlassian bamboo server'
+recipe 'bamboo::agent',   'Installs/configures an Atlassian bamboo agent'
+recipe 'bamboo::crowd_sso', 'Configures user authentication with Atlassian Crowd single sign-on'
+recipe 'bamboo::upgrade', 'WIP'
+
+supports 'ubuntu', '>= 14.04'
 
 # We only test on ubuntu, so debian and ubuntu should be rather safe
-%w(debian ubuntu centos redhat amazon).each do |os|
+%w(debian centos redhat amazon).each do |os|
   supports os
 end
 
@@ -22,13 +26,14 @@ depends 'ark'
 depends 'apache2'
 depends 'cron'
 depends 'patch'
-depends 'backup',          '= 0.3.0'
-depends 'database',        '~> 4.0'
+depends 'backup', '= 0.3.0'
+depends 'database'
 depends 'git'
 depends 'java'
-depends 'mysql'
-depends 'mysql_connector', '~> 0.7'
+depends 'monit'
+depends 'mysql', '< 8.0'
+depends 'mysql_connector'
 depends 'perl'
-depends 'mysql2_chef_gem', '~> 1.0'
-depends 'postgresql',      '~> 4.0.6'
+depends 'mysql2_chef_gem'
+depends 'postgresql'
 depends 'build-essential'

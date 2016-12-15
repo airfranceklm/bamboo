@@ -23,11 +23,11 @@ Style/SpaceBeforeFirstArg:
 #
 # couldn't figure it out so set this
 #
-ClassAndModuleChildren:
-  EnforcedStyle: compact
+#ClassAndModuleChildren:
+#  EnforcedStyle: compact
 
 #
 # libraries/bamboo is to complex for rubocop
 #
 Metrics/AbcSize:
- Max: 17
+ Max: 20

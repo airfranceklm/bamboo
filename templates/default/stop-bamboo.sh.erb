@@ -16,7 +16,7 @@ $PRGDIR/shutdown.sh $@
 
 
 echo 'Now checking if Bamboo is still running...'
-PID="<%= node[:bamboo][:data_dir] %>/<%= node[:bamboo][:name] %>.pid"
+PID="<%= @data_dir %>/<%= @name %>.pid"
 NUM=`cat $PID|awk '{print $1}'`
 TEMP=`pgrep -o -f bamboo`
 echo 'num' $NUM

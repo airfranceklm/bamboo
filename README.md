@@ -18,6 +18,7 @@ Installs/Configures [Atlassian Bamboo](https://www.atlassian.com/software/Bamboo
 
 * recipe "bamboo::default", "Installs the bamboo server with optional backup in place and logging to graylog."
 * recipe "bamboo::server", "Only installs the bamboo server."
+* recipe "bamboo::database", "Only installs the bamboo database."
 * recipe "bamboo::agent", "Installs a bamboo agent."
 
 ## Requirements
@@ -26,7 +27,7 @@ Installs/Configures [Atlassian Bamboo](https://www.atlassian.com/software/Bamboo
 
 * CentOS 6.x
 * Mac OS X 10.10
-* Ubuntu 14.04
+* Ubuntu >= 14.04
 
 ### Databases
 
@@ -88,7 +89,7 @@ These attributes are under the `node[:bamboo][:database]` namespace.
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
 type | Bamboo database type | String | mysql (no other database supported atm)
-host | FQDN or "localhost" (localhost automatically installs `['database']['type']` server) | String | localhost
+host | FQDN or "127.0.0.1" (localhost automatically installs `['database']['type']` server) | String | localhost
 name | Bamboo database name | String | Bamboo
 password | Bamboo database user password | String | changeit
 port | Bamboo database port | Fixnum | 3306
@@ -102,24 +103,10 @@ These attributes are under the `node[:bamboo][:jvm]` namespace.
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
 minimum_memory | JVM minimum memory | String | 512m
-maximum_memory | JVM maximum memory | String | 2048m
+maximum_memory | JVM maximum memory | String | 2G
 support_args | additional JAVA_OPTS recommended by Atlassian support for Bamboo JVM during startup | String | ""
 
-### Bamboo Graylog Attributes
-
-These attributes are under the `node[:bamboo][:graylog]` namespace.
-
-Attribute | Description | Type | Default
-----------|-------------|------|--------
-enabled | Enable graylog True/Falseyes/no | String | false
-facility | The facility name in graylog | string | bamboo
-host | Hostname of the graylog server | string | graylog.yourdomain.com
-origin | origin of the host | string | auto-detected (see attributes/default.rb)
-
-### Bamboo Graylog Attributes
-
-These attributes are under the `node[:bamboo][:graylog]` namespace.
-
+### Bamboo Error Docs Attributes
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
 error_docs| Provide custom error docs | Array | e503 - empty

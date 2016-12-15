@@ -3,6 +3,6 @@
 # bamboo-agent
 # ---------------------------------------------------------------
 
-check process bamboo with pidfile "<%= node[:bamboo][:agent][:data_dir] %>/bin/bamboo-agent.pid"
-start program "/bin/bash -c 'PID_FILE=<%= node[:bamboo][:agent][:data_dir] %>/bin/bamboo-agent.pid /etc/init.d/bamboo-agent start'" with timeout 60 seconds
-stop program  = "/bin/bash -c 'PID_FILE=<%= node[:bamboo][:agent][:data_dir] %>/bin/bamboo-agent.pid /etc/init.d/bamboo-agent stop'"
+check process bamboo with pidfile "<%= node['bamboo']['agent']['data_dir'] %>/bin/bamboo-agent.pid"
+start program "/bin/bash -c 'PID_FILE=<%= node['bamboo']['agent']['data_dir'] %>/bin/bamboo-agent.pid service bamboo-agent start'" with timeout 60 seconds
+stop program  = "/bin/bash -c 'PID_FILE=<%= node['bamboo']['agent']['data_dir'] %>/bin/bamboo-agent.pid service bamboo-agent stop'"
