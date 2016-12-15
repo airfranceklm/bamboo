@@ -69,6 +69,12 @@ when 'postgresql'
       default['postgresql']['client']['packages']   = ['postgresql-client-9.4', 'libpq-dev']
       default['postgresql']['server']['packages']   = ['postgresql-9.4']
       default['postgresql']['contrib']['packages']  = ['postgresql-contrib-9.4']
+    else
+      default['postgresql']['version']              = '9.5'
+      default['postgresql']['dir']                  = '/etc/postgresql/9.5/main'
+      default['postgresql']['client']['packages']   = ['postgresql-client-9.5', 'libpq-dev']
+      default['postgresql']['server']['packages']   = ['postgresql-9.5']
+      default['postgresql']['contrib']['packages']  = ['postgresql-contrib-9.5']
     end
   end
 end
@@ -118,4 +124,4 @@ default['bamboo']['backup']['minute']                = '*'
 
 # damn postgresql:ruby recipe still builds at compile time
 default['apt']['compile_time_update']      = true
-default['build-essential']['compile_time'] = true # ~FC019
+default['build-essential']['compile_time'] = true
