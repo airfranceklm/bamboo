@@ -17,25 +17,25 @@
 # limitations under the License.
 
 # use mpm for eventh ttps://httpd.apache.org/docs/2.4/mod/event.html
-if node[:platform] == 'ubuntu' && node[:platform_version].to_f >= 13.10
-  default[:apache][:mpm] = 'event'
+if node['platform'] == 'ubuntu' && node['platform_version'].to_f >= 13.10
+  default['apache']['mpm'] = 'event'
 end
 
 # Defaults are automatically selected from fqdn and hostname via helper functions
-default['bamboo']['apache2']['access_log']         = ''
-default['bamboo']['apache2']['error_log']          = ''
-default['bamboo']['apache2']['port']               = 80
+default['bamboo']['apache2']['access_log']  = ''
+default['bamboo']['apache2']['error_log']   = ''
+default['bamboo']['apache2']['port']        = 80
 
 # Defaults are automatically selected from fqdn and hostname via helper functions
-default['bamboo']['apache2']['template_cookbook']  = 'bamboo'
-default['bamboo']['apache2']['virtual_host_name']  = nil
-default['bamboo']['apache2']['virtual_host_alias'] = nil
-default['bamboo']['apache2']['error_docs']['e503'] = ''
+default['bamboo']['apache2']['template_cookbook']   = 'bamboo'
+default['bamboo']['apache2']['virtual_host_name']   = nil
+default['bamboo']['apache2']['virtual_host_alias']  = nil
+default['bamboo']['apache2']['error_docs']['e503']  = ''
 
-default['bamboo']['apache2']['ssl']['access_log']       = ''
-default['bamboo']['apache2']['ssl']['chain_file']       = ''
-default['bamboo']['apache2']['ssl']['error_log']        = ''
-default['bamboo']['apache2']['ssl']['port']             = 443
+default['bamboo']['apache2']['ssl']['access_log'] = ''
+default['bamboo']['apache2']['ssl']['chain_file'] = ''
+default['bamboo']['apache2']['ssl']['error_log']  = ''
+default['bamboo']['apache2']['ssl']['port']       = 443
 
 case node['platform_family']
 when 'rhel'

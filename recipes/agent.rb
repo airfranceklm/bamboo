@@ -26,14 +26,14 @@ execute 'configcacerts' do
 end
 
 # Create group and users
-group node[:bamboo][:agent][:group] do
+group node['bamboo']['agent']['group'] do
   action :create
 end
 
-user node[:bamboo][:agent][:user] do
+user node['bamboo']['agent']['user'] do
   comment 'Bamboo Service Account'
-  gid  node[:bamboo][:agent][:group]
-  home node[:bamboo][:agent][:user_home]
+  gid  node['bamboo']['agent']['group']
+  home node['bamboo']['agent']['user_home']
   supports :manage_home => true
   shell  '/bin/bash'
   system true
@@ -41,33 +41,33 @@ user node[:bamboo][:agent][:user] do
 end
 
 # Create required directories
-directory node[:bamboo][:agent][:home_dir] do
-  owner   node[:bamboo][:agent][:user]
-  group   node[:bamboo][:agent][:group]
+directory node['bamboo']['agent']['home_dir'] do
+  owner   node['bamboo']['agent']['user']
+  group   node['bamboo']['agent']['group']
   mode '0775'
   action :create
 end
 
-directory node[:bamboo][:agent][:data_dir] do
-  owner   node[:bamboo][:agent][:user]
-  group   node[:bamboo][:agent][:group]
+directory node['bamboo']['agent']['data_dir'] do
+  owner   node['bamboo']['agent']['user']
+  group   node['bamboo']['agent']['group']
   mode '0775'
   action :create
 end
 
 # Download and install the bamboo package
-remote_file "#{node[:bamboo][:agent][:home_dir]}/atlassian-bamboo-agent-installer.jar" do
-  source "#{node[:bamboo][:url]}/agentServer/agentInstaller/atlassian-bamboo-agent-installer-#{node[:bamboo][:version]}.jar"
+remote_file "#{node['bamboo']['agent']['home_dir']}/atlassian-bamboo-agent-installer.jar" do
+  source "#{node['bamboo']['url']}/agentServer/agentInstaller/atlassian-bamboo-agent-installer-#{node['bamboo']['version']}.jar"
   mode '0644'
-  owner  node[:bamboo][:agent][:user]
-  group  node[:bamboo][:agent][:group]
-  not_if { ::File.exist?("#{node[:bamboo][:agent][:home_dir]}/atlassian-bamboo-agent-installer.jar") }
+  owner  node['bamboo']['agent']['user']
+  group  node['bamboo']['agent']['group']
+  not_if { ::File.exist?("#{node['bamboo']['agent']['home_dir']}/atlassian-bamboo-agent-installer.jar") }
 end
 
-execute "java -Ddisable_agent_auto_capability_detection=#{node[:bamboo][:agent][:disable_agent_auto_capability_detection]} -Dbamboo.home=#{node[:bamboo][:agent][:data_dir]} -jar #{node[:bamboo][:agent][:home_dir]}/atlassian-bamboo-agent-installer.jar #{node[:bamboo][:url]}/agentServer/ install" do
-  user  node[:bamboo][:agent][:user]
-  group node[:bamboo][:agent][:group]
-  not_if { ::File.exist?("#{node[:bamboo][:agent][:data_dir]}/installer.properties") }
+execute "java -Ddisable_agent_auto_capability_detection=#{node['bamboo']['agent']['disable_agent_auto_capability_detection']} -Dbamboo.home=#{node['bamboo']['agent']['data_dir']} -jar #{node['bamboo']['agent']['home_dir']}/atlassian-bamboo-agent-installer.jar #{node['bamboo']['url']}/agentServer/ install" do
+  user  node['bamboo']['agent']['user']
+  group node['bamboo']['agent']['group']
+  not_if { ::File.exist?("#{node['bamboo']['agent']['data_dir']}/installer.properties") }
 end
 
 # make a service out of it
@@ -79,8 +79,8 @@ if %w(mac_os_x).include?(node['platform_family'])
     group 'wheel'
     mode '0644'
     variables(
-      :username => node[:bamboo][:agent][:user],
-      :data_dir => node[:bamboo][:agent][:data_dir]
+      :user => node['bamboo']['agent']['user'],
+      :data_dir => node['bamboo']['agent']['data_dir']
     )
   end
 
@@ -99,6 +99,11 @@ elsif node['init_package'] == 'systemd'
     action :create
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately
     notifies :restart, 'service[bamboo-agent]', :delayed
+    variables(
+      :user => node['bamboo']['agent']['user'],
+      :group => node['bamboo']['agent']['group'],
+      :data_dir => node['bamboo']['agent']['data_dir']
+    )
   end
 
 else
@@ -107,7 +112,7 @@ else
     delete_resource(:template, 'bamboo-agent.sh')
 
     link '/etc/init.d/bamboo-agent' do
-      to "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-agent.sh"
+      to "#{node['bamboo']['agent']['data_dir']}/bin/bamboo-agent.sh"
       action :delete
     end
   end
@@ -120,15 +125,19 @@ else
     mode '0755'
     action :create
     notifies :restart, 'service[bamboo-agent]', :delayed
+    variables(
+      :user => node['bamboo']['agent']['user'],
+      :data_dir => node['bamboo']['agent']['data_dir']
+    )
   end
 end
 
-capabilities = node[:bamboo][:agent_capabilities]
+capabilities = node['bamboo']['agent_capabilities']
 template 'bamboo-capabilities.properties' do
-  path "#{node[:bamboo][:agent][:data_dir]}/bin/bamboo-capabilities.properties"
+  path "#{node['bamboo']['agent']['data_dir']}/bin/bamboo-capabilities.properties"
   source 'bamboo-capabilities.properties.erb'
-  owner  node[:bamboo][:agent][:user]
-  group  node[:bamboo][:agent][:group]
+  owner  node['bamboo']['agent']['user']
+  group  node['bamboo']['agent']['group']
   mode '0644'
   variables(
     :options => capabilities
@@ -137,18 +146,23 @@ template 'bamboo-capabilities.properties' do
 end
 
 template 'wrapper.conf' do
-  path "#{node[:bamboo][:agent][:data_dir]}/conf/wrapper.conf"
+  path "#{node['bamboo']['agent']['data_dir']}/conf/wrapper.conf"
   source 'agent-wrapper.conf.erb'
-  owner  node[:bamboo][:agent][:user]
-  group  node[:bamboo][:agent][:group]
+  owner  node['bamboo']['agent']['user']
+  group  node['bamboo']['agent']['group']
   mode '0644'
   notifies :restart, 'service[bamboo-agent]', :delayed
+  variables(
+    :data_dir => node['bamboo']['agent']['data_dir'],
+    :url => node['bamboo']['url'],
+    :ping_timeout => node['bamboo']['agent']['ping_timeout']
+  )
 end
 
 # create and enable service
 service 'bamboo-agent' do
   supports :restart => true, :status => true, :start => true, :stop => true
-  provider Chef::Provider::Service::Macosx if node[:platform_family] == 'mac_os_x'
+  provider Chef::Provider::Service::Macosx if node['platform_family'] == 'mac_os_x'
   action [:enable, :start]
 end
 

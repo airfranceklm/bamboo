@@ -7,13 +7,13 @@
 #
 #  Occasionally Atlassian Support may recommend that you set some specific JVM arguments.  You can use this variable below to do that.
 #
-JVM_SUPPORT_RECOMMENDED_ARGS="<%= node['bamboo']['jvm']['support_args'] %>"
+JVM_SUPPORT_RECOMMENDED_ARGS="<%= @support_args %>"
 
 #
 # The following 2 settings control the minimum and maximum given to the Bamboo Java virtual machine.  In larger Bamboo instances, the maximum amount will need to be increased.
 #
-JVM_MINIMUM_MEMORY="<%= node['bamboo']['jvm']['minimum_memory'] %>"
-JVM_MAXIMUM_MEMORY="<%= node['bamboo']['jvm']['maximum_memory'] %>"
+JVM_MINIMUM_MEMORY="<%= @minimum_memory %>"
+JVM_MAXIMUM_MEMORY="<%= @maximum_memory %>"
 
 #
 # The following are the required arguments need for Bamboo standalone.
@@ -23,7 +23,7 @@ JVM_REQUIRED_ARGS=""
 #
 # Needs to be set on the bamboo server to disable agent capability detection
 #
-JVM_AGENT_AUTO_CAP_DET="-DDISABLE_AGENT_AUTO_CAPABILITY_DETECTION=<%= node['bamboo']['agent']['disable_agent_auto_capability_detection'] %>"
+JVM_AGENT_AUTO_CAP_DET="-DDISABLE_AGENT_AUTO_CAPABILITY_DETECTION=<%= @disable_agent_auto_capability_detection %>"
 
 #-----------------------------------------------------------------------------------
 #
@@ -33,8 +33,8 @@ JVM_AGENT_AUTO_CAP_DET="-DDISABLE_AGENT_AUTO_CAPABILITY_DETECTION=<%= node['bamb
 
 PRGDIR=`dirname "$0"`
 cat "${PRGDIR}"/bamboobanner.txt
-export CATALINA_PID=<%= node[:bamboo][:data_dir] %>/<%= node[:bamboo][:name] %>.pid
- 
+export CATALINA_PID=<%= @data_dir %>/<%= @name %>.pid
+
 BAMBOO_HOME_MINUSD=""
 if [ "$BAMBOO_HOME" != "" ]; then
     echo $BAMBOO_HOME | grep -q " "

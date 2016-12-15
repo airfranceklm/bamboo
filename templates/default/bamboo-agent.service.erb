@@ -4,10 +4,10 @@ After=syslog.target network.target
 
 [Service]
 Type=forking
-User=<%= node[:bamboo][:agent][:user] %>
-Group=<%= node[:bamboo][:agent][:group] %>
-ExecStart=<%= node[:bamboo][:agent][:data_dir] %>/bin/bamboo-agent.sh start
-ExecStop=<%= node[:bamboo][:agent][:data_dir] %>/bin/bamboo-agent.sh stop
+User=<%= @user %>
+Group=<%= @group %>
+ExecStart=<%= @data_dir %>/bin/bamboo-agent.sh start
+ExecStop=<%= @data_dir %>/bin/bamboo-agent.sh stop
 
 [Install]
 WantedBy=multi-user.target

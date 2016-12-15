@@ -12,19 +12,19 @@ wrapper.java.classpath.2=../lib/bamboo-agent-bootstrap.jar
 wrapper.java.library.path.1=../lib
 
 # The Bamboo Agent home configuration file
-wrapper.java.additional.1=-Dbamboo.home=<%= node[:bamboo][:agent][:data_dir] %>
+wrapper.java.additional.1=-Dbamboo.home=<%= @data_dir %>
 wrapper.java.additional.2=-Dbamboo.agent.ignoreServerCertName=false
 #wrapper.java.additional.3=-agentlib:yjpagent
 
 # Application parameters.  Add parameters as needed starting from 1
 wrapper.app.parameter.1=com.atlassian.bamboo.agent.bootstrap.AgentBootstrap
-wrapper.app.parameter.2=<%= node[:bamboo][:url] %>/agentServer/
+wrapper.app.parameter.2=<%= @url %>/agentServer/
 
 # Disable shutdown hook so that
 wrapper.disable_shutdown_hook=TRUE
 
 # Set a wrapper timeout
-wrapper.ping.timeout=<%= node[:bamboo][:agent][:ping_timeout] %>
+wrapper.ping.timeout=<%= @ping_timeout %>
 
 # Initial Java Heap Size (in MB)
 wrapper.java.initmemory=256
@@ -72,4 +72,3 @@ wrapper.ntservice.starttype=AUTO_START
 
 # Allow the service to interact with the desktop.
 wrapper.ntservice.interactive=false
-

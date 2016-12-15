@@ -17,110 +17,105 @@
 # limitations under the License.
 #
 # bamboo server
-default[:bamboo][:url]                            = 'http://localhost'          # bamboo server URL
-default[:bamboo][:home_dir]                       = '/opt/bamboo'               # bamboo installation directory
-default[:bamboo][:data_dir]                       = '/var/bamboo'               # bamboo data directory
-default[:bamboo][:user]                           = 'bamboo'                    # bamboo user
-default[:bamboo][:group]                          = 'bamboo'                    # bamboo group
-default[:bamboo][:user_home]                      = '/home/bamboo'              # bamboo system user home directory
-default[:bamboo][:name]                           = 'bamboo'                    # bamboo application/service name
-default[:bamboo][:version]                        = '5.13.2'                    # bamboo version
+default['bamboo']['url']        = 'http://localhost'  # bamboo server URL
+default['bamboo']['home_dir']   = '/opt/bamboo'       # bamboo installation directory
+default['bamboo']['data_dir']   = '/var/bamboo'       # bamboo data directory
+default['bamboo']['user']       = 'bamboo'            # bamboo user
+default['bamboo']['group']      = 'bamboo'            # bamboo group
+default['bamboo']['user_home']  = '/home/bamboo'      # bamboo system user home directory
+default['bamboo']['name']       = 'bamboo'            # bamboo application/service name
+default['bamboo']['version']    = '5.13.2'            # bamboo version
 
 # Defaults are automatically selected from version via helper functions
-default[:bamboo][:download_url]                   = nil
-default[:bamboo][:checksum]                       = nil
+default['bamboo']['download_url'] = nil
+default['bamboo']['checksum']     = nil
 
-default[:bamboo][:database][:external]            = false
-default[:bamboo][:database][:host]                = '127.0.0.1'
-default[:bamboo][:database][:type]                = 'postgresql'
+default['bamboo']['database']['external'] = false
+default['bamboo']['database']['host']     = '127.0.0.1'
+default['bamboo']['database']['type']     = 'postgresql'
 
-case node[:bamboo][:database][:type]
+case node['bamboo']['database']['type']
 when 'mysql'
-  # default[:bamboo][:database][:host]              = '127.0.0.1'
-  default[:bamboo][:database_type]                = 'MySQL'
-  default[:bamboo][:database][:version]           =
-    # Atlassian's Bamboo minimum requirement for mysql is version 5.6 check https://confluence.atlassian.com/bamboo/supported-platforms-289276764.html
-    case node[:platform]
+  default['bamboo']['database_type'] = 'MySQL'
+  default['bamboo']['database']['version'] =
+    # Atlassian's Bamboo minimum requirement for mysql is version 5.6
+    # check https://confluence.atlassian.com/bamboo/supported-platforms-289276764.html
+    case node['platform']
     when 'debian'
-      '5.6' if node[:platform_version].to_i <= 8
+      '5.6' if node['platform_version'].to_i <= 8
     when 'ubuntu'
-      '5.6' if node[:platform_version] <= '14.04'
+      '5.6' if node['platform_version'] <= '14.04'
     when 'amazon'
       '5.6'
     end
 when 'postgresql'
-  default[:postgresql][:config_pgtune][:db_type]  = 'web'
-  default[:bamboo][:database_type]                = 'PostgreSQL'
-  # Being backwards compatible with previous cookbook (was set on 9.4) Atlassian bamboo currently supports postgresql 9.2 -> 9.5
+  default['postgresql']['config_pgtune']['db_type'] = 'web'
+  default['bamboo']['database_type']                = 'PostgreSQL'
+  # Being backwards compatible with previous cookbook (was set on 9.4)
+  # Atlassian bamboo currently supports postgresql 9.2 -> 9.5
   case node['platform']
   when 'debian'
     if node['platform_version'].to_i <= 7
-      default[:postgresql][:version]                  = '9.4'
-      default[:postgresql][:dir]                      = '/etc/postgresql/9.4/main'
-      default[:postgresql][:client][:packages]        = ['postgresql-client-9.4', 'libpq-dev']
-      default[:postgresql][:server][:packages]        = ['postgresql-9.4']
-      default[:postgresql][:contrib][:packages]       = ['postgresql-contrib-9.4']
+      default['postgresql']['version']              = '9.4'
+      default['postgresql']['dir']                  = '/etc/postgresql/9.4/main'
+      default['postgresql']['client']['packages']   = ['postgresql-client-9.4', 'libpq-dev']
+      default['postgresql']['server']['packages']   = ['postgresql-9.4']
+      default['postgresql']['contrib']['packages']  = ['postgresql-contrib-9.4']
     end
   when 'ubuntu'
     if node['platform_version'].to_f <= 14.04
-      default[:postgresql][:version]                  = '9.4'
-      default[:postgresql][:dir]                      = '/etc/postgresql/9.4/main'
-      default[:postgresql][:client][:packages]        = ['postgresql-client-9.4', 'libpq-dev']
-      default[:postgresql][:server][:packages]        = ['postgresql-9.4']
-      default[:postgresql][:contrib][:packages]       = ['postgresql-contrib-9.4']
+      default['postgresql']['version']              = '9.4'
+      default['postgresql']['dir']                  = '/etc/postgresql/9.4/main'
+      default['postgresql']['client']['packages']   = ['postgresql-client-9.4', 'libpq-dev']
+      default['postgresql']['server']['packages']   = ['postgresql-9.4']
+      default['postgresql']['contrib']['packages']  = ['postgresql-contrib-9.4']
     end
   end
 end
-default[:bamboo][:database][:name]                = 'bamboo'
-default[:bamboo][:database][:user]                = 'bamboo'
-default[:bamboo][:database][:password]            = 'bamboo'
-default[:mysql][:server_root_password]            = 'changeme'
-default[:postgresql][:password][:postgres]        = 'changeme'
+default['bamboo']['database']['name']         = 'bamboo'
+default['bamboo']['database']['user']         = 'bamboo'
+default['bamboo']['database']['password']     = 'bamboo'
+default['mysql']['server_root_password']      = 'changeme'
+default['postgresql']['password']['postgres'] = 'changeme'
 
-default[:bamboo][:jvm][:minimum_memory]           = '512m'
-default[:bamboo][:jvm][:maximum_memory]           = '2G'
-default[:bamboo][:jvm][:support_args]             = ''
+default['bamboo']['jvm']['minimum_memory']  = '512m'
+default['bamboo']['jvm']['maximum_memory']  = '2G'
+default['bamboo']['jvm']['support_args']    = ''
 
-default[:bamboo][:catalina][:opts]                = ''
+default['bamboo']['catalina']['opts'] = ''
 
-default[:java][:install_flavor]                   = 'openjdk'
-default[:java][:jdk_version]                      = '8'
+default['java']['install_flavor'] = 'openjdk'
+default['java']['jdk_version']    = '8'
 
 # bamboo agent
-default[:bamboo][:agent][:home_dir]               = '/opt/bamboo'                       # bamboo installation directory
-default[:bamboo][:agent][:data_dir]               = '/var/bamboo'                       # bamboo data directory
-default[:bamboo][:agent][:user]                   = 'bamboo'                            # bamboo user
-default[:bamboo][:agent][:group]                  = 'bamboo'                            # bamboo group
-default[:bamboo][:agent][:user_home]              = '/home/bamboo'                      # bamboo system user home directory
-default[:bamboo][:agent][:ping_timeout]           = 30                                  # JVM timeout before wrapper restarts agent
-default[:bamboo][:agent][:disable_agent_auto_capability_detection] = true
-default[:bamboo][:agent][:additional_path]        = ''
-default[:bamboo][:agent_capabilities]             = {}
+default['bamboo']['agent']['home_dir']                                = '/opt/bamboo'                       # bamboo installation directory
+default['bamboo']['agent']['data_dir']                                = '/var/bamboo'                       # bamboo data directory
+default['bamboo']['agent']['user']                                    = 'bamboo'                            # bamboo user
+default['bamboo']['agent']['group']                                   = 'bamboo'                            # bamboo group
+default['bamboo']['agent']['user_home']                               = '/home/bamboo'                      # bamboo system user home directory
+default['bamboo']['agent']['ping_timeout']                            = 30 # JVM timeout before wrapper restarts agent
+default['bamboo']['agent']['disable_agent_auto_capability_detection'] = true
+default['bamboo']['agent']['additional_path']                         = ''
+default['bamboo']['agent_capabilities']                               = {}
 
 # crowd sso
-default[:bamboo][:crowd][:enabled] = false
-default[:bamboo][:crowd][:app_name] = nil
-default[:bamboo][:crowd][:app_password] = nil
-default[:bamboo][:crowd][:crowd_base_url] = 'http://crowd.example.com:8095/crowd'
-
-# graylog2 integrations
-default[:bamboo][:graylog][:enabled]              = false
-default[:bamboo][:graylog][:facility]             = 'bamboo'
-default[:bamboo][:graylog][:host]                 = 'change_me'
-default[:bamboo][:graylog][:origin]               = node[:fqdn]
+default['bamboo']['crowd']['enabled']        = false
+default['bamboo']['crowd']['app_name']       = nil
+default['bamboo']['crowd']['app_password']   = nil
+default['bamboo']['crowd']['crowd_base_url'] = 'http://crowd.example.com:8095/crowd'
 
 # backup to an s3 bucket
-default[:bamboo][:backup][:ceph]                  = false
-default[:bamboo][:backup][:enabled]               = false
-default[:bamboo][:backup][:s3_host]               = 's3.amazonaws.com'
-default[:bamboo][:backup][:s3_scheme]             = 'http'
-default[:bamboo][:backup][:s3_port]               = 80
-default[:bamboo][:backup][:s3_access_key_id]      = 'change_me'
-default[:bamboo][:backup][:s3_secret_access_key]  = 'change_me'
-default[:bamboo][:backup][:s3_bucket]             = 'change_me'
-default[:bamboo][:backup][:hour]                  = '1'
-default[:bamboo][:backup][:minute]                = '*'
+default['bamboo']['backup']['ceph']                  = false
+default['bamboo']['backup']['enabled']               = false
+default['bamboo']['backup']['s3_host']               = 's3.amazonaws.com'
+default['bamboo']['backup']['s3_scheme']             = 'http'
+default['bamboo']['backup']['s3_port']               = 80
+default['bamboo']['backup']['s3_access_key_id']      = 'change_me'
+default['bamboo']['backup']['s3_secret_access_key']  = 'change_me'
+default['bamboo']['backup']['s3_bucket']             = 'change_me'
+default['bamboo']['backup']['hour']                  = '1'
+default['bamboo']['backup']['minute']                = '*'
 
 # damn postgresql:ruby recipe still builds at compile time
-default[:apt][:compile_time_update] = true
+default['apt']['compile_time_update']      = true
 default['build-essential']['compile_time'] = true # ~FC019

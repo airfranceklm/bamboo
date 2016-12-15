@@ -19,11 +19,11 @@ module Bamboo
 
       case settings['database']['type']
       when 'mysql'
-        database_connection[:username] = 'root'
-        database_connection[:password] = node['mysql']['server_root_password']
+        database_connection['username'] = 'root'
+        database_connection['password'] = node['mysql']['server_root_password']
       when 'postgresql'
-        database_connection[:username] = 'postgres'
-        database_connection[:password] = node['postgresql']['password']['postgres']
+        database_connection['username'] = 'postgres'
+        database_connection['password'] = node['postgresql']['password']['postgres']
       end
 
       database_connection

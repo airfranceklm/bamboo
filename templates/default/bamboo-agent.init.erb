@@ -26,9 +26,9 @@
 # Name of app ( bamboo, Confluence, etc )
 APP=bamboo-agent
 # Name of the user to run as
-USER=<%= node[:bamboo][:agent][:user] %>
+USER=<%= @user %>
 # Location of application's bin directory
-BASE=<%= node[:bamboo][:agent][:data_dir] %>
+BASE=<%= @data_dir %>
 
 start() {
   echo "Starting $APP"

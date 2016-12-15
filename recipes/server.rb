@@ -21,24 +21,24 @@ include_recipe 'java'
 include_recipe 'patch'
 
 # Create group and users
-group node[:bamboo][:group] do
+group node['bamboo']['group'] do
   action :create
 end
 
-user node[:bamboo][:user] do
+user node['bamboo']['user'] do
   comment 'Bamboo Service Account'
-  home node[:bamboo][:user_home]
+  home node['bamboo']['user_home']
   shell '/bin/bash'
   supports :manage_home => true
-  gid node[:bamboo][:group]
+  gid node['bamboo']['group']
   system true
   action :create
 end
 
 # Create required directories
-directory File.dirname(node[:bamboo][:data_dir]) do
-  owner node[:bamboo][:user]
-  group node[:bamboo][:group]
+directory File.dirname(node['bamboo']['data_dir']) do
+  owner node['bamboo']['user']
+  group node['bamboo']['group']
   mode '0755'
   action :create
   recursive true
@@ -48,23 +48,23 @@ Chef::Resource::Ark.send(:include, Bamboo::Helpers)
 
 ark 'bamboo' do
   url bamboo_artifact_url
-  home_dir node[:bamboo][:home_dir]
+  home_dir node['bamboo']['home_dir']
   checksum bamboo_artifact_checksum
-  version node[:bamboo][:version]
-  owner node[:bamboo][:user]
-  group node[:bamboo][:group]
+  version node['bamboo']['version']
+  owner node['bamboo']['user']
+  group node['bamboo']['group']
   notifies :restart, 'service[bamboo]', :delayed
 end
 
-if node[:bamboo][:database][:type] == 'mysql'
-  directory "#{node[:bamboo][:home_dir]}/lib" do
-    owner node[:bamboo][:user]
-    group node[:bamboo][:group]
+if node['bamboo']['database']['type'] == 'mysql'
+  directory "#{node['bamboo']['home_dir']}/lib" do
+    owner node['bamboo']['user']
+    group node['bamboo']['group']
     mode '0775'
     action :create
   end
 
-  mysql_connector_j "#{node[:bamboo][:home_dir]}/lib"
+  mysql_connector_j "#{node['bamboo']['home_dir']}/lib"
 end
 
 if node['init_package'] == 'systemd'
@@ -82,6 +82,11 @@ if node['init_package'] == 'systemd'
     action :create
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately
     notifies :restart, 'service[bamboo]', :delayed
+    variables(
+      :user => node['bamboo']['user'],
+      :group => node['bamboo']['group'],
+      :home_dir => node['bamboo']['home_dir']
+    )
   end
 
 else
@@ -90,27 +95,48 @@ else
     source 'bamboo.init.erb'
     mode '0755'
     notifies :restart, 'service[bamboo]', :delayed
+    variables(
+      :user => node['bamboo']['user'],
+      :home_dir => node['bamboo']['home_dir'],
+      :data_dir => node['bamboo']['data_dir'],
+      :name => node['bamboo']['name']
+    )
   end
 end
 
-template "#{node[:bamboo][:home_dir]}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties" do
+template "#{node['bamboo']['home_dir']}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties" do
   source 'bamboo-init.properties.erb'
-  owner node[:bamboo][:user]
+  owner node['bamboo']['user']
   mode '0644'
   notifies :restart, 'service[bamboo]', :delayed
+  variables(
+    :data_dir => node['bamboo']['data_dir']
+  )
 end
 
-template "#{node[:bamboo][:home_dir]}/bin/setenv.sh" do
+template "#{node['bamboo']['home_dir']}/bin/setenv.sh" do
   source 'setenv.sh.erb'
-  owner node[:bamboo][:user]
+  owner node['bamboo']['user']
   mode '0755'
   notifies :restart, 'service[bamboo]', :delayed
+  variables(
+    :support_args => node['bamboo']['jvm']['support_args'],
+    :minimum_memory => node['bamboo']['jvm']['minimum_memory'],
+    :maximum_memory => node['bamboo']['jvm']['maximum_memory'],
+    :disable_agent_auto_capability_detection => node['bamboo']['agent']['disable_agent_auto_capability_detection'],
+    :data_dir => node['bamboo']['data_dir'],
+    :name => node['bamboo']['name']
+  )
 end
 
-template "#{node[:bamboo][:home_dir]}/bin/stop-bamboo.sh" do
+template "#{node['bamboo']['home_dir']}/bin/stop-bamboo.sh" do
   source 'stop-bamboo.sh.erb'
-  owner node[:bamboo][:user]
+  owner node['bamboo']['user']
   mode '0755'
+  variables(
+    :data_dir => node['bamboo']['data_dir'],
+    :name => node['bamboo']['name']
+  )
 end
 
 # Create and enable service
