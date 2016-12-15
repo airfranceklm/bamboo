@@ -11,15 +11,14 @@ when 'mysql'
     action :install
   end
 
-  unless node['bamboo']['database']['external'] == true
-    mysql_service settings['database']['name'] do
-      version settings['database']['version'] if settings['database']['version']
-      bind_address settings['database']['host']
-      port settings['database']['port'].to_s
-      data_dir node['mysql']['data_dir'] if node['mysql']['data_dir']
-      initial_root_password node['mysql']['server_root_password']
-      action [:create, :start]
-    end
+  mysql_service settings['database']['name'] do
+    version settings['database']['version'] if settings['database']['version']
+    bind_address settings['database']['host']
+    port settings['database']['port'].to_s
+    data_dir node['mysql']['data_dir'] if node['mysql']['data_dir']
+    initial_root_password node['mysql']['server_root_password']
+    action [:create, :start]
+    not_if { node['bamboo']['database']['external'] == true }
   end
 
   mysql_database settings['database']['name'] do
