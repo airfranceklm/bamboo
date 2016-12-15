@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
-## v2.0.0 (December 14, 2016)
+## v2.0.0 (December 15, 2016)
 
 BACKWARDS INCOMPATIBILITIES:
 - Drop support of ubuntu < 14.04 LTS
