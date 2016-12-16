@@ -5,6 +5,12 @@
 #BAMBOO_HOME=""
 
 #
+# Sometimes required to select
+#
+CATALINA_OPTS="${CATALINA_OPTS} <%= @catalina_opts %>"
+export CATALINA_OPTS
+
+#
 #  Occasionally Atlassian Support may recommend that you set some specific JVM arguments.  You can use this variable below to do that.
 #
 JVM_SUPPORT_RECOMMENDED_ARGS="<%= @support_args %>"

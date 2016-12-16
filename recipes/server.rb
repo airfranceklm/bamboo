@@ -20,6 +20,12 @@ include_recipe 'ark'
 include_recipe 'java'
 include_recipe 'patch'
 
+execute 'configcacerts' do
+  command '/var/lib/dpkg/info/ca-certificates-java.postinst configure'
+  only_if { node['platform'] == 'ubuntu' && node['platform_version'] == '14.04' }
+  only_if { node['java']['install_flavor'] == 'openjdk' }
+end
+
 # Create group and users
 group node['bamboo']['group'] do
   action :create
@@ -125,7 +131,8 @@ template "#{node['bamboo']['home_dir']}/bin/setenv.sh" do
     :maximum_memory => node['bamboo']['jvm']['maximum_memory'],
     :disable_agent_auto_capability_detection => node['bamboo']['agent']['disable_agent_auto_capability_detection'],
     :data_dir => node['bamboo']['data_dir'],
-    :name => node['bamboo']['name']
+    :name => node['bamboo']['name'],
+    :catalina_opts => node['bamboo']['catalina']['opts']
   )
 end
 
