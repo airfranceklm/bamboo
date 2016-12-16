@@ -53,7 +53,7 @@ Third-Party Cookbooks
 
 ## Bamboo attributes
 
-These attributes are under the `node[:bamboo]` namespace.
+These attributes are under the `node['bamboo']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
@@ -69,7 +69,7 @@ checksum | SHA256 checksum for Bamboo install | String | auto-detected (see attr
 
 ## Bamboo agent attributes
 
-These attributes are under the `node[:bamboo][:agent]` namespace. Agents attributes can be different than the server attributes.
+These attributes are under the `node['bamboo']['agent']` namespace. Agents attributes can be different than the server attributes.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
@@ -84,7 +84,7 @@ additional_path | will be added to the $PATH of the agent process | String |
 
 ### Bamboo Database Attributes
 
-These attributes are under the `node[:bamboo][:database]` namespace.
+These attributes are under the `node['bamboo']['database']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
@@ -92,19 +92,28 @@ type | Bamboo database type | String | mysql (no other database supported atm)
 host | FQDN or "127.0.0.1" (localhost automatically installs `['database']['type']` server) | String | localhost
 name | Bamboo database name | String | Bamboo
 password | Bamboo database user password | String | changeit
-port | Bamboo database port | Fixnum | 3306
-type | Bamboo database type - "mysql" | String | mysql
+port | Bamboo database port | Fixnum | 3306 for MySQL, 5432 for PostgreSQL
+type | Bamboo database type eg postgresql or mysql | String | postgresql
 user | Bamboo database user | String | Bamboo
 
 ### Bamboo JVM Attributes
 
-These attributes are under the `node[:bamboo][:jvm]` namespace.
+These attributes are under the `node['bamboo']['jvm']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
 minimum_memory | JVM minimum memory | String | 512m
 maximum_memory | JVM maximum memory | String | 2G
 support_args | additional JAVA_OPTS recommended by Atlassian support for Bamboo JVM during startup | String | ""
+
+### Bamboo Crowd Attributes
+
+These attributes are under the `node['bamboo']['crowd']` namespace.
+For initial setup first run without crowd enabled, run the setup process and activate crowd via the webui
+
+Attribute | Description | Type | Default
+----------|-------------|------|--------
+enabled | enables crowd sso | Boolean | false
 
 ### Bamboo Error Docs Attributes
 Attribute | Description | Type | Default
@@ -114,7 +123,7 @@ error_docs| Provide custom error docs | Array | e503 - empty
 
 ### Bamboo Backup Attributes
 
-These attributes are under the `node[:bamboo][:backup]` namespace.
+These attributes are under the `node['bamboo']['backup']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
