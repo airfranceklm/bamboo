@@ -3,7 +3,7 @@ maintainer       'Ramon Makkelie, Stephan Oudmaijer'
 maintainer_email 'ramonmakkelie@gmail.com, soudmaijer@gmail.com'
 license          'Apache 2.0'
 description      'Installs and configures Bamboo'
-version          '2.0.1'
+version          '2.0.2'
 issues_url       'https://github.com/afklm/bamboo/issues' if respond_to?(:issues_url)
 source_url       'https://github.com/afklm/bamboo.git' if respond_to?(:source_url)
 
@@ -23,7 +23,7 @@ end
 # Always specify the version of your dependencies
 depends 'apt'
 depends 'ark'
-depends 'apache2'
+depends 'apache2', '= 3.2.1'
 depends 'cron'
 depends 'patch'
 depends 'backup', '= 0.3.0'

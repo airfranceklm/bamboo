@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
+## v2.0.2 (December 20, 2016)
+
+Fixes:
+- Pin apache 3.2.1 due to issue 422 in 3.2.2
+
 ## v2.0.1 (December 20, 2016)
 
 Fixes:
