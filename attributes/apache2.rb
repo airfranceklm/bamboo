@@ -33,8 +33,8 @@ default['bamboo']['apache2']['virtual_host_alias']  = nil
 default['bamboo']['apache2']['error_docs']['e503']  = ''
 
 default['bamboo']['apache2']['ssl']['access_log'] = ''
-default['bamboo']['apache2']['ssl']['chain_file'] = ''
 default['bamboo']['apache2']['ssl']['error_log']  = ''
+default['bamboo']['apache2']['ssl']['chain_file'] = ''
 default['bamboo']['apache2']['ssl']['port']       = 443
 
 case node['platform_family']
