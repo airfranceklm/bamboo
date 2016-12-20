@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
+## v2.0.1 (December 20, 2016)
+
+Fixes:
+- Crowd can be configured within the ui, only sso enable disable as was before
+- Fix pid file loc
+- Update readme
+
 ## v2.0.0 (December 15, 2016)
 
 BACKWARDS INCOMPATIBILITIES:

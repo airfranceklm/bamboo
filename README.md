@@ -82,6 +82,29 @@ ping_timeout | timeout until wrapper restarts unresponsive JVM | Integer | 30
 disable_agent_auto_capability_detection | sets the flag on the agent | String | true
 additional_path | will be added to the $PATH of the agent process | String |
 
+### Bamboo Apache2 Attributes
+Apache2 is used default as reverse proxy
+These attributes are under the `node['bamboo']['apache']` namespace.
+
+Attribute | Description | Type | Default
+----------|-------------|------|--------
+access_log | acces log location | String | ''
+error_log | error log location | String | ''
+port | port | Integer | 80
+template_cookbook | from which cookbook to take the template | String | bamboo
+virtual_host_name | vhost  | String | ''
+virtual_host_alias | vhost alias | String | ''
+error_docs | custom error docs | String | ''
+
+#### Bamboo Apache2 SSL
+These attributes are under the `node['bamboo']['apache']['ssl']` namespace.
+access_log | ssl access log | String | ''
+error_log | ssl access log | String | ''
+chain_file | chain file  | String | ''
+port | port  | Integer | 443
+certificate_file | cert file to use | String | localhost.crt for rhel, ssl-cert-snakeoil.pem for ubuntu
+key_file | key file to use | String | localhost.key for rhel, ssl-cert-snakeoil.key for ubuntu
+
 ### Bamboo Database Attributes
 
 These attributes are under the `node['bamboo']['database']` namespace.
