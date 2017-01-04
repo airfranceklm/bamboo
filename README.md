@@ -82,6 +82,14 @@ ping_timeout | timeout until wrapper restarts unresponsive JVM | Integer | 30
 disable_agent_auto_capability_detection | sets the flag on the agent | String | true
 additional_path | will be added to the $PATH of the agent process | String |
 
+These attributes are under the `node['bamboo']['agent']['monit']` namespace.
+
+Attribute | Description | Type | Default
+----------|-------------|------|--------
+template_cookbook | cookbook loc of monitrc template | String | bamboo
+template_source | template file name for monitrc | String | procfile.monitrc.erb
+
+
 ### Bamboo Apache2 Attributes
 Apache2 is used default as reverse proxy
 These attributes are under the `node['bamboo']['apache']` namespace.

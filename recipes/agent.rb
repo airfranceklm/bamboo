@@ -170,7 +170,7 @@ unless %w(mac_os_x).include?(node['platform_family'])
   include_recipe 'monit'
 
   monitrc 'bamboo-agent' do
-    template_cookbook 'bamboo'
-    template_source 'procfile.monitrc.erb'
+    template_cookbook node['bamboo']['agent']['monit']['template_cookbook']
+    template_source node['bamboo']['agent']['monit']['template_source']
   end
 end

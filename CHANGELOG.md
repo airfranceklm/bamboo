@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
+## v2.0.3 (January 4 , 2017)
+
+IMPROVEMENTS:
+- Make bamboo agent monitrc cookbook loc and template configurable via attributes
+
 ## v2.0.2 (December 20, 2016)
 
 Fixes:

@@ -103,6 +103,8 @@ default['bamboo']['agent']['ping_timeout']                            = 30 # JVM
 default['bamboo']['agent']['disable_agent_auto_capability_detection'] = true
 default['bamboo']['agent']['additional_path']                         = ''
 default['bamboo']['agent_capabilities']                               = {}
+default['bamboo']['agent']['monit']['template_cookbook']              = 'bamboo'
+default['bamboo']['agent']['monit']['template_source']                = 'procfile.monitrc.erb'
 
 # If you're authenticating against a Crowd server you can use this authenticator for single sign-on.
 # Enable it after configuring your Crowd properties through user management and restart Bamboo. It does not support
