@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
+## v2.0.5 (January 10, 2017)
+
+Fixes:
+- Make sure additional_path is in PATH for systemd and initd systems
+
 ## v2.0.4 (January 10, 2017)
 
 Fixes:

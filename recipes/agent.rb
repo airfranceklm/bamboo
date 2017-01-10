@@ -70,6 +70,15 @@ execute "java -Ddisable_agent_auto_capability_detection=#{node['bamboo']['agent'
   not_if { ::File.exist?("#{node['bamboo']['agent']['data_dir']}/installer.properties") }
 end
 
+template 'bamboo-agent.sh' do
+  path   "#{node['bamboo']['agent']['data_dir']}/bin/bamboo-agent.sh"
+  source 'bamboo-agent.sh.erb'
+  owner  node['bamboo']['agent']['user']
+  group  node['bamboo']['agent']['group']
+  mode   '0755'
+  notifies :restart, 'service[bamboo-agent]', :delayed
+end
+
 # make a service out of it
 if %w(mac_os_x).include?(node['platform_family'])
 
@@ -102,8 +111,7 @@ elsif node['init_package'] == 'systemd'
     variables(
       :user => node['bamboo']['agent']['user'],
       :group => node['bamboo']['agent']['group'],
-      :data_dir => node['bamboo']['agent']['data_dir'],
-      :additional_path => node['bamboo']['agent']['additional_path']
+      :data_dir => node['bamboo']['agent']['data_dir']
     )
   end
 
