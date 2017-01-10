@@ -6,7 +6,6 @@ After=syslog.target network.target
 Type=forking
 User=<%= @user %>
 Group=<%= @group %>
-Environment=PATH=<%= node[:bamboo][:agent][:additional_path] %>:$JAVA_HOME/bin:$PATH
 ExecStart=<%= @home_dir %>/bin/start-bamboo.sh
 ExecStop=<%= @home_dir %>/bin/stop-bamboo.sh
 
