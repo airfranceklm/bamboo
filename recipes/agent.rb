@@ -102,7 +102,8 @@ elsif node['init_package'] == 'systemd'
     variables(
       :user => node['bamboo']['agent']['user'],
       :group => node['bamboo']['agent']['group'],
-      :data_dir => node['bamboo']['agent']['data_dir']
+      :data_dir => node['bamboo']['agent']['data_dir'],
+      :additional_path => node['bamboo']['agent']['additional_path']
     )
   end
 
