@@ -6,6 +6,7 @@ After=syslog.target network.target
 Type=forking
 User=<%= @user %>
 Group=<%= @group %>
+ExecPreStart=/usr/bin/systemctl set-environment PATH=<%= @additional_path %>:$PATH
 ExecStart=<%= @data_dir %>/bin/bamboo-agent.sh start
 ExecStop=<%= @data_dir %>/bin/bamboo-agent.sh stop
 
