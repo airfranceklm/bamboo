@@ -2,7 +2,12 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
-## v2.0.3 (January 4 , 2017)
+## v2.0.4 (January 10, 2017)
+
+Fixes:
+- Make sure additional_path is in PATH via systemd unit file
+
+## v2.0.3 (January 4, 2017)
 
 IMPROVEMENTS:
 - Make bamboo agent monitrc cookbook loc and template configurable via attributes
