@@ -90,6 +90,14 @@ template_cookbook | cookbook loc of monitrc template | String | bamboo
 template_source | template file name for monitrc | String | procfile.monitrc.erb
 
 
+These attributes are under the `node['bamboo']['agent']['wrapper']` namespace.
+
+Attribute | Description | Type | Default
+----------|-------------|------|--------
+java_additionals | additional java args | Array | 
+app_params | additional app params | Array |
+
+
 ### Bamboo Apache2 Attributes
 Apache2 is used default as reverse proxy
 These attributes are under the `node['bamboo']['apache']` namespace.

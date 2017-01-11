@@ -12,13 +12,14 @@ wrapper.java.classpath.2=../lib/bamboo-agent-bootstrap.jar
 wrapper.java.library.path.1=../lib
 
 # The Bamboo Agent home configuration file
-wrapper.java.additional.1=-Dbamboo.home=<%= @data_dir %>
-wrapper.java.additional.2=-Dbamboo.agent.ignoreServerCertName=false
-#wrapper.java.additional.3=-agentlib:yjpagent
+<% @java_additionals.each_with_index do |additonal, index| %>
+<%= "wrapper.java.additional.#{index+1}=#{additonal}" %>
+<% end %>
 
 # Application parameters.  Add parameters as needed starting from 1
-wrapper.app.parameter.1=com.atlassian.bamboo.agent.bootstrap.AgentBootstrap
-wrapper.app.parameter.2=<%= @url %>/agentServer/
+<% @app_params.each_with_index do |param, index| %>
+<%= "wrapper.app.parameter.#{index+1}=#{param}" %>
+<% end %>
 
 # Disable shutdown hook so that
 wrapper.disable_shutdown_hook=TRUE

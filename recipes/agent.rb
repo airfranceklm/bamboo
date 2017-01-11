@@ -162,9 +162,9 @@ template 'wrapper.conf' do
   mode '0644'
   notifies :restart, 'service[bamboo-agent]', :delayed
   variables(
-    :data_dir => node['bamboo']['agent']['data_dir'],
-    :url => node['bamboo']['url'],
-    :ping_timeout => node['bamboo']['agent']['ping_timeout']
+    :ping_timeout => node['bamboo']['agent']['ping_timeout'],
+    :java_additionals => node['bamboo']['agent']['wrapper']['java_additionals'],
+    :app_params => node['bamboo']['agent']['wrapper']['app_params']
   )
 end
 

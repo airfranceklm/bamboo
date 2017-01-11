@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
+## v2.0.6 (? ?, 2017)
+
+Improvements:
+- Unlimited wrapper java additionals and app param config via attributes
+
 ## v2.0.5 (January 10, 2017)
 
 Fixes:
@@ -14,7 +19,7 @@ Fixes:
 
 ## v2.0.3 (January 4, 2017)
 
-IMPROVEMENTS:
+Improvements:
 - Make bamboo agent monitrc cookbook loc and template configurable via attributes
 
 ## v2.0.2 (December 20, 2016)
@@ -37,7 +42,7 @@ BACKWARDS INCOMPATIBILITIES:
 - Only support jdk8 (Atlassian Bamboo requirement) removed permgem option
 - Drop graylog support (if needed implement it via a wrapper cookbook)
 
-IMPROVEMENTS:
+Improvements:
 - Support of systemd for Bamboo server and agent
 - Update .gitignore
 - Rubocop fixes
