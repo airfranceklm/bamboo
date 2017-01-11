@@ -94,8 +94,7 @@ These attributes are under the `node['bamboo']['agent']['wrapper']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
-java_additionals | additional java args | Array | 
-app_params | additional app params | Array |
+java_additionals | additional java args | Array |
 
 
 ### Bamboo Apache2 Attributes

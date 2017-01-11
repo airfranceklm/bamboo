@@ -17,9 +17,8 @@ wrapper.java.library.path.1=../lib
 <% end %>
 
 # Application parameters.  Add parameters as needed starting from 1
-<% @app_params.each_with_index do |param, index| %>
-<%= "wrapper.app.parameter.#{index+1}=#{param}" %>
-<% end %>
+wrapper.app.parameter.1=com.atlassian.bamboo.agent.bootstrap.AgentBootstrap
+wrapper.app.parameter.2=<%= @url %>/agentServer/
 
 # Disable shutdown hook so that
 wrapper.disable_shutdown_hook=TRUE

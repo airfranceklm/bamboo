@@ -112,12 +112,6 @@ default['bamboo']['agent']['wrapper']['java_additionals'] = [
   '-Dbamboo.agent.ignoreServerCertName=false'
 ]
 
-# additonal app params
-default['bamboo']['agent']['wrapper']['app_params'] = [
-  'com.atlassian.bamboo.agent.bootstrap.AgentBootstrap',
-  "#{node['bamboo']['url']}/agentServer/"
-]
-
 # If you're authenticating against a Crowd server you can use this authenticator for single sign-on.
 # Enable it after configuring your Crowd properties through user management and restart Bamboo. It does not support
 # Crowd property changes at runtime. If you need to switch back to local users, revert the change and

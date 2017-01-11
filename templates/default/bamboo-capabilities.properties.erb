@@ -1,5 +1,5 @@
 <% if @options -%>
-<%   @options.sort.map do | option, value | -%>
-<%= option %>=	<%= value %>
+<% @options.sort.map do | option, value | -%>
+<%= "#{option}=#{value}" %>
 <%   end -%>
 <% end -%>

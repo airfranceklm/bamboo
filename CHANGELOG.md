@@ -5,7 +5,7 @@ This file is used to list changes made in each version of the bamboo cookbook.
 ## v2.0.6 (? ?, 2017)
 
 Improvements:
-- Unlimited wrapper java additionals and app param config via attributes
+- Unlimited wrapper java additionals config via attributes
 
 ## v2.0.5 (January 10, 2017)
 

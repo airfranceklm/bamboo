@@ -163,8 +163,8 @@ template 'wrapper.conf' do
   notifies :restart, 'service[bamboo-agent]', :delayed
   variables(
     :ping_timeout => node['bamboo']['agent']['ping_timeout'],
-    :java_additionals => node['bamboo']['agent']['wrapper']['java_additionals'],
-    :app_params => node['bamboo']['agent']['wrapper']['app_params']
+    :url => node['bamboo']['url'],
+    :java_additionals => node['bamboo']['agent']['wrapper']['java_additionals']
   )
 end
 
