@@ -2,12 +2,9 @@ require 'spec_helper'
 
 # Check if all services are running
 services = if os[:family] == 'redhat'
-             # mysqld doesn't seem to be running as a service.  This should be
-             # fine since I would assume most people are going to run mysql off
-             # site on a external server.
-             %w(httpd bamboo)
+             %w(postgresql httpd bamboo)
            else
-             %w(mysql-default apache2 bamboo)
+             %w(postgresql apache2 bamboo)
            end
 
 services.each do |service|
@@ -17,8 +14,8 @@ services.each do |service|
   end
 end
 
-# Ports: mysql, apache, bamboo
-ports = [3306, 80, 8085]
+# Ports: postgres, apache, bamboo
+ports = [5432, 80, 8085]
 
 ports.each do |port|
   describe port(port) do

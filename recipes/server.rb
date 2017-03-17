@@ -42,7 +42,7 @@ user node['bamboo']['user'] do
 end
 
 # Create required directories
-directory File.dirname(node['bamboo']['data_dir']) do
+directory node['bamboo']['data_dir'] do
   owner node['bamboo']['user']
   group node['bamboo']['group']
   mode '0755'

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # Test groups
-describe group('mysql') do
+describe group('postgres') do
   it { should exist }
 end
 
@@ -16,9 +16,9 @@ describe user('bamboo') do
   it { should have_login_shell '/bin/bash' }
 end
 
-describe user('mysql') do
+describe user('postgres') do
   it { should exist }
-  it { should belong_to_group 'mysql' }
+  it { should belong_to_group 'postgres' }
 end
 
 describe 'am i running' do

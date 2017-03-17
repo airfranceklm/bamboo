@@ -2,6 +2,17 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
+## v???
+
+Fixes:
+- Error when data_dir does not exist
+- Misc issues with Kitchen tests (please maintain them)
+
+Improvements:
+- Add version 5.15.3
+- Remove Kitchen tests for Unbuntu 12.04 since EOL is April 2017
+- Use CentOS 6.8 for Kitchen tests
+
 ## v2.0.6 (January 13, 2017)
 
 Improvements:
