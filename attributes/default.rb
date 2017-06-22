@@ -24,7 +24,7 @@ default['bamboo']['user']       = 'bamboo'            # bamboo user
 default['bamboo']['group']      = 'bamboo'            # bamboo group
 default['bamboo']['user_home']  = '/home/bamboo'      # bamboo system user home directory
 default['bamboo']['name']       = 'bamboo'            # bamboo application/service name
-default['bamboo']['version']    = '5.13.2'            # bamboo version
+default['bamboo']['version']    = '5.15.7'            # bamboo version
 
 # Defaults are automatically selected from version via helper functions
 default['bamboo']['download_url'] = nil
