@@ -3,6 +3,18 @@ driver_config:
   openstack_username: <%= ENV['OPENSTACK_USERNAME'] %>
   openstack_api_key: <%= ENV['OPENSTACK_API_KEY'] %>
   openstack_auth_url: <%= ENV['OPENSTACK_AUTH_URL'] %>
+  key_name: <%= ENV['KEY_NAME'] %>
+  private_key_path: <%= ENV['PRIVATE_KEY_PATH'] %>
+  floating_ip_pool: nova
+  flavor_ref: gold.large
+  image_ref: Ubuntu Server 14.04 - RAW
+  server_name: bamboo-int
+transport:
+  ssh_key: <%= ENV['PRIVATE_KEY_PATH'] %>
+  connection_timeout: 10
+  connection_retries: 5
+  username: ubuntu
+  disable_ssl_validation: true
 
 provisioner:
   name: chef_zero
@@ -15,12 +27,6 @@ platforms:
     image_ref: Ubuntu Server 14.04
     flavor_ref: mx.medium
     floating_ip_pool: nova
-    key_name: <%= ENV['KEY_NAME'] %>
-    private_key_path: <%= ENV['PRIVATE_KEY_PATH'] %>
-    server_name: bamboo-dev
-  transport:
-    username: ubuntu
-    disable_ssl_validation: true
   run_list:
     - recipe[apt]
 
