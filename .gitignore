@@ -35,3 +35,4 @@ Gemfile.lock
 # Bundler
 bin/*
 .kitchen.local.yml
+.kitchen.cloud.yml

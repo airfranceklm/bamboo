@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the bamboo cookbook.
 
+## v2.0.8 (July 10, 2017)
+
+Improvements:
+- Add versions 5.15.7, 6.0.0, 6.0.1, 6.0.2
+- Pin chef omnibus
+- Update .gitignore
+
 ## v2.0.7 (May 10, 2017)
 
 Fixes:
