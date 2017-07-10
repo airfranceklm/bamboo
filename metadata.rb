@@ -13,6 +13,7 @@ recipe 'bamboo::agent',   'Installs/configures an Atlassian bamboo agent'
 recipe 'bamboo::crowd_sso', 'Configures user authentication with Atlassian Crowd single sign-on'
 recipe 'bamboo::upgrade', 'WIP'
 
+chef_version '~> 12'
 supports 'ubuntu', '>= 14.04'
 
 # We only test on ubuntu, so debian and ubuntu should be rather safe
