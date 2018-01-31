@@ -1,3 +1,8 @@
+LOOKING FOR NEW MAINTAINER
+==========================
+
+We've moved away from Chef and as such we're looking for a new maintainer for this cookbook. If you're interested, please let us know by making an issue for it.
+
 # Bamboo status [![Build Status](https://travis-ci.org/afklm/bamboo.png?branch=master)](https://travis-ci.org/afklm/bamboo)
 
 ## Description
