@@ -131,7 +131,6 @@ These attributes are under the `node['bamboo']['database']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
-type | Bamboo database type | String | mysql (no other database supported atm)
 host | FQDN or "127.0.0.1" (localhost automatically installs `['database']['type']` server) | String | localhost
 name | Bamboo database name | String | Bamboo
 password | Bamboo database user password | String | changeit
